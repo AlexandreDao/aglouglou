@@ -1,3 +1,3 @@
 export enum DateFormat { 
-  DATE_TIME = 'YYYY-MM-DD HH:mm:ss',
+  DATE_TIME = 'yyyy-MM-dd HH:mm:ss',
 }

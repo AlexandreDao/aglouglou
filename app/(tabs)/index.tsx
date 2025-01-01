@@ -1,8 +1,10 @@
 import FavItem from '@/components/ui/FavItem'
 import useCocktailSearchByFirstLetter from '@/hooks/services/useCocktailSearchByFirstLetter'
-import { Text, View, ActivityIndicator, FlatList, StyleSheet } from 'react-native'
-import { CocktailSearchDrink, CocktailDetail, CocktailItem, CocktailSearchResult, CocktailLookupResult } from '@/types/Cocktail'
+import { View, ActivityIndicator, StyleSheet } from 'react-native'
 import { FlashList } from "@shopify/flash-list";
+import { useAppSelector } from '@/hooks/store/useAppSelector';
+import { useAppDispatch } from '@/hooks/store/useAppDisptach';
+import { addToFavorite, removeFromFavorite } from '@/store/slices/favoritesSlice';
 
 const styles = StyleSheet.create({
   container: {
@@ -18,9 +20,10 @@ const styles = StyleSheet.create({
 export default function Index() {
   const {data, isLoading, error, fetchNextPage, isRefetching, refetch} = useCocktailSearchByFirstLetter()
   const cocktailList = data?.pages.flat() || []
+  const favorites = useAppSelector(state => state.favorites)
+  const dispatch = useAppDispatch()
 // console.log(JSON.stringify(data?.pages, null, 4))
-
-return (
+  return (
     <View style={styles.container}>
       {
         isLoading 
@@ -37,7 +40,23 @@ return (
               keyExtractor={(item) => item.id}
               data={cocktailList} 
               renderItem={({item}) => {
-                return <FavItem name={item.name} img={item.thumbnail} />
+                const isFavorite = favorites.findIndex(favorite => favorite.id === item.id) !== -1
+                
+                return (
+                  <FavItem 
+                    name={item.name} 
+                    img={item.thumbnail} 
+                    isFavorite={isFavorite}
+                    onPress={() => {
+                      if (isFavorite) {
+                        dispatch(removeFromFavorite(item.id))
+                      }
+                      else {
+                        dispatch(addToFavorite(item))
+                      }
+                    }}
+                  />
+                )
               }}
               onEndReachedThreshold={0.5}
               onEndReached={() => {

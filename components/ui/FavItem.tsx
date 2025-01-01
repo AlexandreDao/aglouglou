@@ -6,6 +6,7 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 interface FavItemProps {
   img: string
   name: string
+  isFavorite: boolean
   onPress: () => void
 }
 
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
   },
 })
 
-function FavItem({img, name, onPress}: FavItemProps) {
+function FavItem({img, name, isFavorite, onPress}: FavItemProps) {
   return (
     <Pressable style={styles.container}>
       <Image
@@ -38,8 +39,8 @@ function FavItem({img, name, onPress}: FavItemProps) {
       allowDownscaling
       />
       <Text>{name}</Text>
-      <Pressable style={{paddingHorizontal: 16}} >
-        <IconSymbol name="star.fill" size={32} color="red" />
+      <Pressable style={{paddingHorizontal: 16}} onPress={onPress}>
+        <IconSymbol name="star.fill" size={32} color={isFavorite ? "red" : "gray"} />
       </Pressable>
     </Pressable>
   )

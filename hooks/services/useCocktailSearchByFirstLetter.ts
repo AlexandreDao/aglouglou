@@ -14,6 +14,7 @@ const useCocktailSearchByFirstLetter = (firstLetter?: Letter) => {
     queryKey: ['search', firstLetter],
     queryFn: async ({pageParam}) => {
       const {data} = await get(`search.php?f=${firstLetter || String.fromCharCode(firstLetterAsciiCode + pageParam)}`)
+
       return mapCocktailSearchResultToCocktailItems(data)
     },
     initialPageParam: 0,
