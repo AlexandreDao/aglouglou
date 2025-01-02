@@ -1,4 +1,4 @@
-import FavItem from '@/components/ui/FavItem'
+import FavoriteItem from '@/components/ui/FavoriteItem'
 import useCocktailSearchByFirstLetter from '@/hooks/services/useCocktailSearchByFirstLetter'
 import { View, ActivityIndicator, StyleSheet } from 'react-native'
 import { FlashList } from "@shopify/flash-list";
@@ -23,12 +23,10 @@ const styles = StyleSheet.create({
 })
 
 export default function Index() {
-  const {data, isLoading, error, fetchNextPage, isRefetching, refetch} = useCocktailSearchByFirstLetter()
+  const {data, isLoading, fetchNextPage, isFetchingNextPage} = useCocktailSearchByFirstLetter()
   const cocktailList = data?.pages.flat() || []
   const favorites = useAppSelector(state => state.favorites)
-  const dispatch = useAppDispatch()
   const { open } = useDetailsBottomSheet()
-// console.log(JSON.stringify(data?.pages, null, 4))
 
   return (
     <View style={styles.container}>
@@ -41,8 +39,7 @@ export default function Index() {
           )
         : (
             <FlashList
-              onRefresh={refetch}
-              refreshing={isRefetching}
+              refreshing={isFetchingNextPage}
               estimatedItemSize={20}
               keyExtractor={(item) => item.id}
               data={cocktailList}
@@ -51,7 +48,7 @@ export default function Index() {
                 const isFavorite = favorites.findIndex(favorite => favorite.id === item.id) !== -1
                 
                 return (
-                  <FavItem 
+                  <FavoriteItem 
                     item={item}
                     isFavorite={isFavorite}
                     onPress={() => {

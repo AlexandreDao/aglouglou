@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
   textContainer: {
     paddingTop: 12,
     paddingHorizontal: 16,
+    paddingBottom: 28,
     gap: 12
   },
   h1: {

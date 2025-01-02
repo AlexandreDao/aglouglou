@@ -1,5 +1,5 @@
-import DetailsBottomSheetContext from "@/contexts/detailsBottomSheet/DetailsBottomSheetContext";
-import { useContext } from "react";
+import DetailsBottomSheetContext from "@/contexts/detailsBottomSheet/DetailsBottomSheetContext"
+import { useContext } from "react"
 
 export function useDetailsBottomSheet() {
   const context = useContext(DetailsBottomSheetContext)
