@@ -46,16 +46,14 @@ const styles = StyleSheet.create({
 
 const Details = forwardRef((props, ref) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null)
-  const [cocktailDetail, setCocktailDetail] = useState<CocktailDetail | null>(
-    null
-  )
+  const [cocktailDetail, setCocktailDetail] = useState<CocktailDetail | null>(null)
 
   React.useImperativeHandle(ref, () => ({
     open: (detail: CocktailDetail) => {
       setCocktailDetail(detail)
       bottomSheetModalRef.current?.present(detail)
     },
-    close: () => bottomSheetModalRef.current?.dismiss(),
+    close: () => bottomSheetModalRef.current?.close(),
   }))
 
   return (
@@ -65,6 +63,7 @@ const Details = forwardRef((props, ref) => {
       enableDynamicSizing={false}
       backgroundStyle={{ backgroundColor: BACKGROUND_COLOR }}
       handleIndicatorStyle={{ backgroundColor: INACTIVE_COLOR }}
+      // enableDismissOnClose={false}
     >
       <BottomSheetScrollView style={styles.contentContainer}>
         {cocktailDetail && (
