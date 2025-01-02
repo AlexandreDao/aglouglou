@@ -37,3 +37,7 @@ yarn-error.*
 
 # expo template
 app-example
+
+# native folders
+android/
+ios/
