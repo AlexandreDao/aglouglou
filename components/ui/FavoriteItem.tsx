@@ -51,7 +51,7 @@ function FavoriteItem({item, isFavorite, onPress, shouldAnimateRemove = false}: 
 
   const onPressRemove = () => {
     if (shouldAnimateRemove) {
-      height.value = withTiming(0, { duration: 400 }, () => {
+      height.value = withTiming(0, { duration: 200 }, () => {
         runOnJS(handleRemove)()
       })
     }
