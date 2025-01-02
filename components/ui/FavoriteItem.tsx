@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    gap: 12
   },
   image: {
     width: 100,
@@ -39,6 +40,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: TEXT_COLOR,
+    flex: 1,
   },
 })
 
