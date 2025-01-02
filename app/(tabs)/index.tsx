@@ -3,7 +3,7 @@ import useCocktailSearchByFirstLetter from '@/hooks/services/useCocktailSearchBy
 import { View, ActivityIndicator, StyleSheet, Text } from 'react-native'
 import { FlashList, ListRenderItem } from '@shopify/flash-list'
 import { useAppSelector } from '@/hooks/store/useAppSelector'
-import { BACKGROUND_COLOR, SEPARATOR_COLOR, TEXT_COLOR } from '@/constants/colors'
+import { BACKGROUND_COLOR, INACTIVE_COLOR, SEPARATOR_COLOR, TEXT_COLOR } from '@/constants/colors'
 import { CocktailDetail } from '@/types/Cocktail'
 
 const styles = StyleSheet.create({
@@ -38,7 +38,7 @@ export default function Index() {
     <View style={styles.container}>
       {isLoading ? (
         <View style={styles.activityContainer}>
-          <ActivityIndicator />
+          <ActivityIndicator color={INACTIVE_COLOR} />
         </View>
       ) : (
         <FlashList
