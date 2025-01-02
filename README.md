@@ -39,6 +39,12 @@ In the output, you'll find options to open the app in a
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
+## Running test
+
+```bash
+ pnpm run test
+```
+
 ## Learn more
 
 To learn more about developing your project with Expo, look at the following resources:

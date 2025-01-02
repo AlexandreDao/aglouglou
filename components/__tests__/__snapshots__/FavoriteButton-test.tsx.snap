@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FavoriteButton /> FavoriteButton snapshot 1`] = `
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    {
+      "padding": 16,
+    }
+  }
+  testID="favorite-button"
+>
+  <View
+    style={
+      {
+        "transform": [
+          {
+            "rotateY": "0deg",
+          },
+          {
+            "translateY": 0,
+          },
+        ],
+      }
+    }
+  >
+    <ViewManagerAdapter_SymbolModule
+      animated={false}
+      colors={[]}
+      name="star.fill"
+      resizeMode="scaleAspectFit"
+      style={
+        [
+          {
+            "height": 24,
+            "width": 24,
+          },
+          [
+            {
+              "height": 32,
+              "width": 32,
+            },
+            undefined,
+          ],
+        ]
+      }
+      tintColor="#a78d9b"
+      type="monochrome"
+      weight="regular"
+    />
+  </View>
+</View>
+`;

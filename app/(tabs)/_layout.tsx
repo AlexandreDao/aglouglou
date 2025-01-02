@@ -5,11 +5,7 @@ import { Platform } from 'react-native'
 import { HapticTab } from '@/components/HapticTab'
 import { IconSymbol } from '@/components/ui/IconSymbol'
 import TabBarBackground from '@/components/ui/TabBarBackground'
-import {
-  ACTIVE_COLOR,
-  BACKGROUND_COLOR,
-  INACTIVE_COLOR,
-} from '@/constants/colors'
+import { ACTIVE_COLOR, BACKGROUND_COLOR, INACTIVE_COLOR } from '@/constants/colors'
 
 export default function TabLayout() {
   return (
@@ -35,18 +31,14 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
-          ),
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
         }}
       />
       <Tabs.Screen
         name="favorite"
         options={{
           title: 'Favorite',
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="star.fill" color={color} />
-          ),
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="star.fill" color={color} />,
         }}
       />
     </Tabs>

@@ -2,20 +2,11 @@ import { Text, StyleSheet, Pressable, Alert } from 'react-native'
 import React from 'react'
 import { Image } from 'expo-image'
 import { useAppDispatch } from '@/hooks/store/useAppDisptach'
-import {
-  addToFavorite,
-  removeFromFavorite,
-} from '@/store/slices/favoritesSlice'
+import { addToFavorite, removeFromFavorite } from '@/store/slices/favoritesSlice'
 import { CocktailDetail } from '@/types/Cocktail'
 import { TEXT_COLOR } from '@/constants/colors'
 import FavoriteButton from '@/components/ui/FavoriteButton'
-import Animated, {
-  runOnJS,
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-  withTiming,
-} from 'react-native-reanimated'
+import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated'
 import { useDetailsBottomSheet } from '@/hooks/useDetailsBottomSheet'
 
 interface FavItemProps {
@@ -32,7 +23,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    gap: 12
+    gap: 12,
   },
   image: {
     width: 100,
@@ -46,11 +37,7 @@ const styles = StyleSheet.create({
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 
-function FavoriteItem({
-  item,
-  isFavorite,
-  shouldAnimateRemove = false,
-}: FavItemProps) {
+function FavoriteItem({ item, isFavorite, shouldAnimateRemove = false }: FavItemProps) {
   const dispatch = useAppDispatch()
   const { open } = useDetailsBottomSheet()
   const height = useSharedValue(100)
@@ -77,10 +64,7 @@ function FavoriteItem({
   const onPress = () => open(item)
 
   return (
-    <AnimatedPressable
-      style={[styles.container, animatedStyle]}
-      onPress={onPress}
-    >
+    <AnimatedPressable style={[styles.container, animatedStyle]} onPress={onPress}>
       <Image
         style={styles.image}
         source={item.thumbnail}
@@ -96,17 +80,13 @@ function FavoriteItem({
           dispatch(addToFavorite(item))
         }}
         unfavorite={() => {
-          Alert.alert(
-            `Are you sure you want to remove ${item.name} from your favorites ?`,
-            '',
-            [
-              { text: 'cancel' },
-              {
-                text: 'Remove',
-                onPress: onPressRemove,
-              },
-            ]
-          )
+          Alert.alert(`Are you sure you want to remove ${item.name} from your favorites ?`, '', [
+            { text: 'cancel' },
+            {
+              text: 'Remove',
+              onPress: onPressRemove,
+            },
+          ])
         }}
       />
     </AnimatedPressable>

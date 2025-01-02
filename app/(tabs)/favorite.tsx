@@ -4,6 +4,7 @@ import useSortedFavorites from '@/hooks/useSortedFavorites'
 import { CocktailDetail } from '@/types/Cocktail'
 import { FlashList, ListRenderItem } from '@shopify/flash-list'
 import { StyleSheet, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const styles = StyleSheet.create({
   container: {
@@ -19,14 +20,14 @@ const styles = StyleSheet.create({
 export default function Index() {
   const favorites = useSortedFavorites()
 
-  const renderItem: ListRenderItem<CocktailDetail> = ({item}) => {
+  const renderItem: ListRenderItem<CocktailDetail> = ({ item }) => {
     const isFavorite = favorites.findIndex((favorite) => favorite.id === item.id) !== -1
 
     return <FavoriteItem shouldAnimateRemove item={item} isFavorite={isFavorite} />
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <FlashList
         estimatedItemSize={20}
         keyExtractor={(item) => item.id}
@@ -34,6 +35,6 @@ export default function Index() {
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         renderItem={renderItem}
       />
-    </View>
+    </SafeAreaView>
   )
 }

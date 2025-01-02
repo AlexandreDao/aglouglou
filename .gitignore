@@ -41,3 +41,6 @@ app-example
 # native folders
 android/
 ios/
+
+# test coverage
+coverage/**/*

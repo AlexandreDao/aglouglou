@@ -1,8 +1,6 @@
 import useCocktailApi from '@/hooks/services/useCocktailApi'
 import { mapCocktailSearchResultToCocktailItems } from '@/utils/mapper/CocktailApiMapper'
-import {
-  useInfiniteQuery,
-} from '@tanstack/react-query'
+import { useInfiniteQuery } from '@tanstack/react-query'
 
 const firstLetterAsciiCode = 'a'.charCodeAt(0)
 
@@ -12,12 +10,11 @@ const fetchByFirstLetter = async ({ pageParam = firstLetterAsciiCode }) => {
   const { get } = useCocktailApi()
 
   try {
-    const letter = String.fromCharCode(pageParam);
+    const letter = String.fromCharCode(pageParam)
     const { data } = await get(`search.php?f=${letter}`)
 
     return { drinks: mapCocktailSearchResultToCocktailItems(data), letter }
-  }
-  catch (error) {
+  } catch (error) {
     console.error(error)
     throw new Error('Unexpected error')
   }

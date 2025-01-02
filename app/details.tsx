@@ -3,12 +3,8 @@ import { View, Text, StyleSheet } from 'react-native'
 import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import { CocktailDetail } from '@/types/Cocktail'
 import { Image } from 'expo-image'
-import { capitalizeFirstLetter } from '@/utils/string'
-import {
-  BACKGROUND_COLOR,
-  INACTIVE_COLOR,
-  TEXT_COLOR,
-} from '@/constants/colors'
+import { capitalizeFirstLetter } from '@/utils/stringUtils'
+import { BACKGROUND_COLOR, INACTIVE_COLOR, TEXT_COLOR } from '@/constants/colors'
 
 export interface DetailsRef {
   open: (detail: CocktailDetail) => void
@@ -63,27 +59,17 @@ const Details = forwardRef((props, ref) => {
       enableDynamicSizing={false}
       backgroundStyle={{ backgroundColor: BACKGROUND_COLOR }}
       handleIndicatorStyle={{ backgroundColor: INACTIVE_COLOR }}
-      // enableDismissOnClose={false}
     >
       <BottomSheetScrollView style={styles.contentContainer}>
         {cocktailDetail && (
           <>
-            <Image
-              style={styles.image}
-              source={cocktailDetail.thumbnail}
-              contentFit="cover"
-              allowDownscaling
-            />
+            <Image style={styles.image} source={cocktailDetail.thumbnail} contentFit="cover" allowDownscaling />
             <View style={styles.textContainer}>
               <Text style={styles.h1}>{cocktailDetail.name}</Text>
               <Text style={styles.h2}>Ingredients</Text>
               <Text style={styles.regular}>
                 {cocktailDetail.ingredients.map((ingredient, index) => {
-                  return (
-                    <Text key={`ingredient-${index}`}>
-                      {`• ${ingredient}\n`}
-                    </Text>
-                  )
+                  return <Text key={`ingredient-${index}`}>{`• ${ingredient}\n`}</Text>
                 })}
               </Text>
               <Text style={styles.h2}>Instructions</Text>
@@ -93,9 +79,7 @@ const Details = forwardRef((props, ref) => {
                   .filter((instruction) => instruction.trim())
                   .map((instruction, index) => {
                     return (
-                      <Text
-                        key={`instruction-${index}`}
-                      >{`• ${capitalizeFirstLetter(instruction.trim())}\n`}</Text>
+                      <Text key={`instruction-${index}`}>{`• ${capitalizeFirstLetter(instruction.trim())}\n`}</Text>
                     )
                   })}
               </Text>

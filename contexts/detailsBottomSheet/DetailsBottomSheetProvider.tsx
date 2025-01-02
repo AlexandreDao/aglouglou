@@ -8,10 +8,7 @@ interface DetailBottomSheetProviderProps {
   detailsBottomSheetRef: React.RefObject<DetailsRef>
 }
 
-function DetailsBottomSheetProvider({
-  children,
-  detailsBottomSheetRef,
-}: DetailBottomSheetProviderProps) {
+function DetailsBottomSheetProvider({ children, detailsBottomSheetRef }: DetailBottomSheetProviderProps) {
   const open = useCallback((detail: CocktailDetail) => {
     detailsBottomSheetRef.current?.open(detail)
   }, [])
@@ -20,11 +17,7 @@ function DetailsBottomSheetProvider({
     detailsBottomSheetRef.current?.close()
   }, [])
 
-  return (
-    <DetailsBottomSheetContext.Provider value={{ open, close }}>
-      {children}
-    </DetailsBottomSheetContext.Provider>
-  )
+  return <DetailsBottomSheetContext.Provider value={{ open, close }}>{children}</DetailsBottomSheetContext.Provider>
 }
 
 export default DetailsBottomSheetProvider
