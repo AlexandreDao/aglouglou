@@ -1,4 +1,4 @@
-export interface CocktailItem { 
+export interface CocktailItem {
   id: string
   name: string
   thumbnail: string
@@ -63,7 +63,7 @@ export interface CocktailSearchDrink {
   strMeasure15: NullableString
   strImageSource: NullableString
   strImageAttribution: NullableString
-  strCreativeCommonsConfirmed: "Yes" | "No"
+  strCreativeCommonsConfirmed: 'Yes' | 'No'
   dateModified: string
 }
 

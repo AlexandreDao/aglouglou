@@ -1,10 +1,18 @@
-import { CocktailSearchDrink, CocktailDetail, CocktailItem, CocktailSearchResult, CocktailLookupResult } from '@/types/Cocktail'
+import {
+  CocktailSearchDrink,
+  CocktailDetail,
+  CocktailItem,
+  CocktailSearchResult,
+  CocktailLookupResult,
+} from '@/types/Cocktail'
 import { parseDate } from '@/utils/date'
 
 const INGREDIENT_PREFIX = 'strIngredient'
 const MEASURE_PREFIX = 'strMeasure'
 
-export const mapCocktailDrinkToCocktailItem = (drink: CocktailSearchDrink): CocktailItem => {
+export const mapCocktailDrinkToCocktailItem = (
+  drink: CocktailSearchDrink
+): CocktailItem => {
   const cocktailItem = {} as CocktailItem
 
   cocktailItem.id = drink.idDrink
@@ -13,28 +21,36 @@ export const mapCocktailDrinkToCocktailItem = (drink: CocktailSearchDrink): Cock
   return cocktailItem
 }
 
-export const mapCocktailDrinkToCocktailDetail = (drink: CocktailSearchDrink): CocktailDetail => {
+export const mapCocktailDrinkToCocktailDetail = (
+  drink: CocktailSearchDrink
+): CocktailDetail => {
   const cocktailDetail = mapCocktailDrinkToCocktailItem(drink) as CocktailDetail
 
   cocktailDetail.alcoholic = drink.strAlcoholic === 'Alcoholic'
   cocktailDetail.instructions = drink.strInstructions
   // Concatenate measure and ingredient props and map them to a single array
-  cocktailDetail.ingredients = Array.from({length: 15}, (x, i) => i + 1)
+  cocktailDetail.ingredients = Array.from({ length: 15 }, (x, i) => i + 1)
     .map((nb) => {
-      const measure = drink[`${MEASURE_PREFIX}${nb}` as keyof CocktailSearchDrink];
-      const ingredient = drink[`${INGREDIENT_PREFIX}${nb}` as keyof CocktailSearchDrink];
+      const measure =
+        drink[`${MEASURE_PREFIX}${nb}` as keyof CocktailSearchDrink]
+      const ingredient =
+        drink[`${INGREDIENT_PREFIX}${nb}` as keyof CocktailSearchDrink]
 
-      return (measure ? `${measure} ` : '') + (ingredient ? ingredient : '');
+      return (measure ? `${measure} ` : '') + (ingredient ? ingredient : '')
     })
-    .filter(ingredient => ingredient !== '')
+    .filter((ingredient) => ingredient !== '')
   cocktailDetail.dateModified = parseDate(drink.dateModified).toISOString()
   return cocktailDetail
 }
 
-export const mapCocktailSearchResultToCocktailItems = (result: CocktailSearchResult): CocktailDetail[] => {
+export const mapCocktailSearchResultToCocktailItems = (
+  result: CocktailSearchResult
+): CocktailDetail[] => {
   return result.drinks?.map(mapCocktailDrinkToCocktailDetail) || []
 }
 
-export const mapCocktailLookupResultToCocktailDetail = (result: CocktailLookupResult): CocktailDetail => {
+export const mapCocktailLookupResultToCocktailDetail = (
+  result: CocktailLookupResult
+): CocktailDetail => {
   return mapCocktailDrinkToCocktailDetail(result.drinks[0])
 }

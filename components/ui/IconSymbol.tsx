@@ -11,7 +11,7 @@ const MAPPING = {
   // See SF Symbols in the SF Symbols app on Mac.
   'house.fill': 'home',
   'star.fill': 'star',
-  'magnifyingglass': 'search'
+  magnifyingglass: 'search',
 } as Partial<
   Record<
     import('expo-symbols').SymbolViewProps['name'],

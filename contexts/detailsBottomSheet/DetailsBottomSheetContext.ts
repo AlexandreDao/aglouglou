@@ -1,4 +1,4 @@
-import { CocktailDetail } from '@/types/Cocktail';
+import { CocktailDetail } from '@/types/Cocktail'
 import { createContext } from 'react'
 import { NOOP } from '@/constants/function'
 

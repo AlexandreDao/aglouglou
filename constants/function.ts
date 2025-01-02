@@ -1,1 +1,1 @@
-const NOOP = () => {}
+export const NOOP = () => {}

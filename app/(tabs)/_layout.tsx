@@ -5,19 +5,18 @@ import { Platform } from 'react-native'
 import { HapticTab } from '@/components/HapticTab'
 import { IconSymbol } from '@/components/ui/IconSymbol'
 import TabBarBackground from '@/components/ui/TabBarBackground'
-import CocktailDetail from '@/app/details'
-import { ACTIVE_COLOR, BACKGROUND_COLOR, INACTIVE_COLOR } from '@/constants/colors'
-// import { Colors } from '@/constants/Colors';
-// import { useColorScheme } from '@/hooks/useColorScheme';
+import {
+  ACTIVE_COLOR,
+  BACKGROUND_COLOR,
+  INACTIVE_COLOR,
+} from '@/constants/colors'
 
 export default function TabLayout() {
-  // const colorScheme = useColorScheme();
-
   return (
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: ACTIVE_COLOR,
-        tabBarInactiveBackgroundColor:BACKGROUND_COLOR,
+        tabBarInactiveBackgroundColor: BACKGROUND_COLOR,
         tabBarActiveBackgroundColor: BACKGROUND_COLOR,
         tabBarInactiveTintColor: INACTIVE_COLOR,
         headerShown: false,

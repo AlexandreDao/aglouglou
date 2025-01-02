@@ -1,8 +1,5 @@
 import { Stack } from 'expo-router'
-import {
-  QueryClient,
-  QueryClientProvider,
-} from '@tanstack/react-query'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useReactQueryDevTools } from '@dev-plugins/react-query'
 import { Provider } from 'react-redux'
 import { persistor, store } from '@/store'
@@ -16,8 +13,8 @@ import { useRef } from 'react'
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-  }
+    flex: 1,
+  },
 })
 
 const queryClient = new QueryClient()
@@ -33,16 +30,21 @@ export default function RootLayout() {
         <QueryClientProvider client={queryClient}>
           <GestureHandlerRootView style={styles.container}>
             <BottomSheetModalProvider>
-              <DetailsBottomSheetProvider detailsBottomSheetRef={detailsBottomSheetRef}>
+              <DetailsBottomSheetProvider
+                detailsBottomSheetRef={detailsBottomSheetRef}
+              >
                 <Stack>
-                  <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                  <Stack.Screen
+                    name="(tabs)"
+                    options={{ headerShown: false }}
+                  />
                 </Stack>
-                <CocktailDetail ref={detailsBottomSheetRef}/>
+                <CocktailDetail ref={detailsBottomSheetRef} />
               </DetailsBottomSheetProvider>
             </BottomSheetModalProvider>
           </GestureHandlerRootView>
         </QueryClientProvider>
       </PersistGate>
-      </Provider>
+    </Provider>
   )
 }

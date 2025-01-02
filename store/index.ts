@@ -15,13 +15,13 @@ import {
 const persistConfig = {
   key: 'root', // Key for the persisted state
   storage: mmkvStorage, // Use MMKV storage
-};
+}
 
 const rootReducer = combineReducers({
-    favorites: favoritesReducer
+  favorites: favoritesReducer,
 })
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export const store = configureStore({
   reducer: persistedReducer,
