@@ -39,14 +39,17 @@ export const mapCocktailDrinkToCocktailDetail = (
       return (measure ? `${measure} ` : '') + (ingredient ? ingredient : '')
     })
     .filter((ingredient) => ingredient !== '')
-  cocktailDetail.dateModified = parseDate(drink.dateModified).toISOString()
+  cocktailDetail.dateModified = drink.dateModified ? parseDate(drink.dateModified).toISOString() : null
   return cocktailDetail
 }
 
 export const mapCocktailSearchResultToCocktailItems = (
   result: CocktailSearchResult
 ): CocktailDetail[] => {
-  return result.drinks?.map(mapCocktailDrinkToCocktailDetail) || []
+  if (!result || !result.drinks || result.drinks ===	'no data found') {
+    return []
+  }
+  return result.drinks.map(mapCocktailDrinkToCocktailDetail)
 }
 
 export const mapCocktailLookupResultToCocktailDetail = (

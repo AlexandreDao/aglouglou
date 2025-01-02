@@ -4,14 +4,15 @@ export interface CocktailItem {
   thumbnail: string
 }
 
+type NullableString = string | null
+
 export interface CocktailDetail extends CocktailItem {
   alcoholic: boolean
   instructions: string
   ingredients: string[]
-  dateModified: string
+  dateModified: NullableString
 }
 
-type NullableString = string | null
 
 export interface CocktailSearchDrink {
   idDrink: string
@@ -64,11 +65,11 @@ export interface CocktailSearchDrink {
   strImageSource: NullableString
   strImageAttribution: NullableString
   strCreativeCommonsConfirmed: 'Yes' | 'No'
-  dateModified: string
+  dateModified: NullableString
 }
 
 export interface CocktailSearchResult {
-  drinks: CocktailSearchDrink[] | null
+  drinks: CocktailSearchDrink[] | null | 'no data found'
 }
 
 export interface CocktailLookupResult {

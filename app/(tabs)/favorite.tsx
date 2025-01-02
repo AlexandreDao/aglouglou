@@ -1,7 +1,8 @@
 import FavoriteItem from '@/components/ui/FavoriteItem'
 import { BACKGROUND_COLOR, SEPARATOR_COLOR } from '@/constants/colors'
 import useSortedFavorites from '@/hooks/useSortedFavorites'
-import { FlashList } from '@shopify/flash-list'
+import { CocktailDetail } from '@/types/Cocktail'
+import { FlashList, ListRenderItem } from '@shopify/flash-list'
 import { StyleSheet, View } from 'react-native'
 
 const styles = StyleSheet.create({
@@ -18,6 +19,12 @@ const styles = StyleSheet.create({
 export default function Index() {
   const favorites = useSortedFavorites()
 
+  const renderItem: ListRenderItem<CocktailDetail> = ({item}) => {
+    const isFavorite = favorites.findIndex((favorite) => favorite.id === item.id) !== -1
+
+    return <FavoriteItem shouldAnimateRemove item={item} isFavorite={isFavorite} />
+  }
+
   return (
     <View style={styles.container}>
       <FlashList
@@ -25,18 +32,7 @@ export default function Index() {
         keyExtractor={(item) => item.id}
         data={favorites}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
-        renderItem={({ item }) => {
-          const isFavorite =
-            favorites.findIndex((favorite) => favorite.id === item.id) !== -1
-
-          return (
-            <FavoriteItem
-              shouldAnimateRemove
-              item={item}
-              isFavorite={isFavorite}
-            />
-          )
-        }}
+        renderItem={renderItem}
       />
     </View>
   )
