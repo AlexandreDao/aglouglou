@@ -5,10 +5,15 @@ import { FlashList } from "@shopify/flash-list";
 import { useAppSelector } from '@/hooks/store/useAppSelector';
 import { useAppDispatch } from '@/hooks/store/useAppDisptach';
 import { addToFavorite, removeFromFavorite } from '@/store/slices/favoritesSlice';
+import CocktailDetail from '@/app/details';
+import { useBottomSheet, useBottomSheetModal } from '@gorhom/bottom-sheet';
+import { useDetailsBottomSheet } from '@/hooks/useDetailsBottomSheet';
+import { BACKGROUND_COLOR, SEPARATOR_COLOR } from '@/constants/colors';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: BACKGROUND_COLOR
   },
   activityContainer: {
     flex: 1,
@@ -22,7 +27,9 @@ export default function Index() {
   const cocktailList = data?.pages.flat() || []
   const favorites = useAppSelector(state => state.favorites)
   const dispatch = useAppDispatch()
+  const { open } = useDetailsBottomSheet()
 // console.log(JSON.stringify(data?.pages, null, 4))
+
   return (
     <View style={styles.container}>
       {
@@ -38,22 +45,17 @@ export default function Index() {
               refreshing={isRefetching}
               estimatedItemSize={20}
               keyExtractor={(item) => item.id}
-              data={cocktailList} 
+              data={cocktailList}
+              ItemSeparatorComponent={() => <View style={{height: 1, backgroundColor: SEPARATOR_COLOR}} />}
               renderItem={({item}) => {
                 const isFavorite = favorites.findIndex(favorite => favorite.id === item.id) !== -1
                 
                 return (
                   <FavItem 
-                    name={item.name} 
-                    img={item.thumbnail} 
+                    item={item}
                     isFavorite={isFavorite}
                     onPress={() => {
-                      if (isFavorite) {
-                        dispatch(removeFromFavorite(item.id))
-                      }
-                      else {
-                        dispatch(addToFavorite(item))
-                      }
+                      open(item)
                     }}
                   />
                 )
