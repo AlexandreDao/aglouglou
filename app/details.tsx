@@ -42,8 +42,8 @@ const styles = StyleSheet.create({
     color: TEXT_COLOR,
     fontSize: 14,
     lineHeight: 24,
-    fontStyle: 'italic'
-  }
+    fontStyle: 'italic',
+  },
 })
 
 const Details = forwardRef((props, ref) => {

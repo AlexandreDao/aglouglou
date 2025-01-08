@@ -10,6 +10,7 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import DetailsBottomSheetProvider from '@/contexts/detailsBottomSheet/DetailsBottomSheetProvider'
 import { useRef } from 'react'
 import { persistStore } from 'redux-persist'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 const queryClient = new QueryClient()
 const store = setupStore()
@@ -27,9 +28,11 @@ export default function RootLayout() {
           <GestureHandlerRootView>
             <BottomSheetModalProvider>
               <DetailsBottomSheetProvider detailsBottomSheetRef={detailsBottomSheetRef}>
-                <Stack>
-                  <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                </Stack>
+                <SafeAreaProvider>
+                  <Stack>
+                    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                  </Stack>
+                </SafeAreaProvider>
                 <CocktailDetail ref={detailsBottomSheetRef} />
               </DetailsBottomSheetProvider>
             </BottomSheetModalProvider>

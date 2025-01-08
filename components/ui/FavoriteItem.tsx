@@ -1,5 +1,5 @@
 import { Text, StyleSheet, Pressable, Alert } from 'react-native'
-import React from 'react'
+import React, { RefObject, useEffect } from 'react'
 import { Image } from 'expo-image'
 import { useAppDispatch } from '@/hooks/store/useAppDisptach'
 import { addToFavorite, removeFromFavorite } from '@/store/slices/favoritesSlice'
@@ -8,11 +8,13 @@ import { TEXT_COLOR } from '@/constants/colors'
 import FavoriteButton from '@/components/ui/FavoriteButton'
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated'
 import { useDetailsBottomSheet } from '@/hooks/useDetailsBottomSheet'
+import { FlashList } from '@shopify/flash-list'
 
 interface FavItemProps {
   item: CocktailDetail
   isFavorite: boolean
   shouldAnimateRemove?: boolean
+  listRef?: RefObject<FlashList<CocktailDetail>>
 }
 
 const blurhash =
@@ -24,6 +26,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: 16,
+    overflow: 'hidden',
   },
   image: {
     width: 100,
@@ -37,7 +40,7 @@ const styles = StyleSheet.create({
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 
-function FavoriteItem({ item, isFavorite, shouldAnimateRemove = false }: FavItemProps) {
+function FavoriteItem({ item, isFavorite, listRef, shouldAnimateRemove = false }: FavItemProps) {
   const dispatch = useAppDispatch()
   const { open } = useDetailsBottomSheet()
   const height = useSharedValue(100)
@@ -53,6 +56,7 @@ function FavoriteItem({ item, isFavorite, shouldAnimateRemove = false }: FavItem
 
   const onPressRemove = () => {
     if (shouldAnimateRemove) {
+      listRef?.current?.prepareForLayoutAnimationRender()
       height.value = withTiming(0, { duration: 200 }, () => {
         runOnJS(handleRemove)()
       })
@@ -62,6 +66,11 @@ function FavoriteItem({ item, isFavorite, shouldAnimateRemove = false }: FavItem
   }
 
   const onPress = () => open(item)
+
+  useEffect(() => {
+    // Reset value when id changes (view was recycled for another item)
+    height.value = 100
+  }, [item.id, height])
 
   return (
     <AnimatedPressable style={[styles.container, animatedStyle]} onPress={onPress}>

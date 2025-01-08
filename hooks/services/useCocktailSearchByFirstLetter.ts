@@ -20,9 +20,11 @@ const fetchByFirstLetter = async ({ pageParam = firstLetterAsciiCode }) => {
   }
 }
 
+const queryKey = ['search']
+
 const useCocktailSearchByFirstLetter = () => {
-  const query = useInfiniteQuery({
-    queryKey: ['search'],
+  return useInfiniteQuery({
+    queryKey,
     queryFn: fetchByFirstLetter,
     initialPageParam: firstLetterAsciiCode,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
@@ -33,8 +35,6 @@ const useCocktailSearchByFirstLetter = () => {
     staleTime: 7 * 24 * 60 * 60 * 1000, // 7 days valid cache
     gcTime: 1000 * 60 * 20, // 20 minutes garbage collected
   })
-
-  return query
 }
 
 export default useCocktailSearchByFirstLetter

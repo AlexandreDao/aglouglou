@@ -6,6 +6,7 @@ import { useAppSelector } from '@/hooks/store/useAppSelector'
 import { BACKGROUND_COLOR, INACTIVE_COLOR, SEPARATOR_COLOR, TEXT_COLOR } from '@/constants/colors'
 import { CocktailDetail } from '@/types/Cocktail'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useEffect, useState } from 'react'
 
 const styles = StyleSheet.create({
   container: {
@@ -22,31 +23,43 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: TEXT_COLOR,
   },
+  fallbackText: {
+    color: TEXT_COLOR,
+  },
+  contentContainer: {
+    paddingBottom: 50,
+  },
 })
 
 export default function Index() {
-  const { data, isLoading, fetchNextPage, isFetchingNextPage, isFetching } = useCocktailSearchByFirstLetter()
+  const { data, isLoading, fetchNextPage, isFetchingNextPage, isFetching, hasNextPage, failureReason } =
+    useCocktailSearchByFirstLetter()
   const cocktailList = data?.pages.flatMap(({ drinks }) => drinks) || []
   const favorites = useAppSelector((state) => state.favorites)
-
+  const [isFetchingNext, setIsFetchingNext] = useState(false)
   const renderItem: ListRenderItem<CocktailDetail> = ({ item }) => {
     const isFavorite = favorites.findIndex((favorite) => favorite.id === item.id) !== -1
 
     return <FavoriteItem item={item} isFavorite={isFavorite} />
   }
+
+  useEffect(() => {
+    setIsFetchingNext(false)
+  }, [isFetchingNextPage])
+
+  if (isLoading) {
+    return (
+      <View style={styles.activityContainer}>
+        <ActivityIndicator color={INACTIVE_COLOR} />
+      </View>
+    )
+  }
+
   return (
     <SafeAreaView style={styles.container}>
-      {isLoading ? (
-        <View style={styles.activityContainer}>
-          <ActivityIndicator color={INACTIVE_COLOR} />
-        </View>
-      ) : (
+      {cocktailList.length ? (
         <FlashList
-          ListEmptyComponent={
-            <View style={styles.activityContainer}>
-              <Text>Failed to fetch</Text>
-            </View>
-          }
+          contentContainerStyle={styles.contentContainer}
           estimatedItemSize={20}
           keyExtractor={(item) => item.id}
           data={cocktailList}
@@ -54,12 +67,17 @@ export default function Index() {
           renderItem={renderItem}
           onEndReachedThreshold={0.5}
           onEndReached={() => {
-            if (!isFetching) {
+            if (!isFetching && hasNextPage) {
+              setIsFetchingNext(true)
               fetchNextPage()
             }
           }}
-          ListFooterComponent={isFetchingNextPage ? <Text style={styles.loading}>Loading more...</Text> : null}
+          ListFooterComponent={isFetchingNext ? <Text style={styles.loading}>Loading more...</Text> : null}
         />
+      ) : (
+        <View style={styles.activityContainer}>
+          <Text style={styles.fallbackText}>Failed to fetch</Text>
+        </View>
       )}
     </SafeAreaView>
   )
