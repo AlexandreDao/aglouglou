@@ -1,0 +1,19 @@
+appId: com.anonymous.cocktail
+---
+- launchApp
+
+- assertVisible: 
+    text: "Home, tab, 1 of 2"
+    selected: true
+- assertVisible: 
+    text: "Favorites, tab, 2 of 2"
+    selected: false
+
+- tapOn: "Favorites, tab, 2 of 2"
+
+- assertVisible: 
+    text: "Home, tab, 1 of 2"
+    selected: false
+- assertVisible: 
+    text: "Favorites, tab, 2 of 2"
+    selected: true

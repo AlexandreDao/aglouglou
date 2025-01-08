@@ -13,7 +13,8 @@
     "update-snapshots": "jest --updateSnapshot --coverage=false",
     "lint": "expo lint",
     "lint-fix": "prettier . --write",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "e2e": "maestro test e2e"
   },
   "jest": {
     "preset": "jest-expo",

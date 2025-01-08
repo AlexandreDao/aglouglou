@@ -37,11 +37,31 @@ In the output, you'll find options to open the app in a
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-## Running test
+## Running unit test
 
 ```bash
  pnpm run test
 ```
+
+## Running e2e test
+
+- First install [maestro](https://maestro.mobile.dev/getting-started/build-and-install-your-app) (tested with version 1.39.7)
+
+- Have an instance of an iPhone simulator or android emulator running with the app installed else run :
+```bash
+maestro start-device --platform android
+```
+or
+```bash
+maestro start-device --platform ios
+```
+
+- then run:
+
+```bash
+ pnpm run e2e
+```
+
 
 ## CocktailDB
 
