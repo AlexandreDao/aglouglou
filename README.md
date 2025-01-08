@@ -48,10 +48,13 @@ You can start developing by editing the files inside the **app** directory. This
 - First install [maestro](https://maestro.mobile.dev/getting-started/build-and-install-your-app) (tested with version 1.39.7)
 
 - Have an instance of an iPhone simulator or android emulator running with the app installed else run :
+
 ```bash
 maestro start-device --platform android
 ```
+
 or
+
 ```bash
 maestro start-device --platform ios
 ```
@@ -62,7 +65,6 @@ maestro start-device --platform ios
  pnpm run e2e
 ```
 
-
 ## CocktailDB
 
-Link to the [cocktailDB](https://www.thecocktaildb.com/api.php) api documentation 
+Link to the [cocktailDB](https://www.thecocktaildb.com/api.php) api documentation

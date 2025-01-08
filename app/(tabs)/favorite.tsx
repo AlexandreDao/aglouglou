@@ -3,7 +3,7 @@ import { BACKGROUND_COLOR, SEPARATOR_COLOR } from '@/constants/colors'
 import useSortedFavorites from '@/hooks/useSortedFavorites'
 import { CocktailDetail } from '@/types/Cocktail'
 import { FlashList, ListRenderItem } from '@shopify/flash-list'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const styles = StyleSheet.create({
@@ -14,6 +14,11 @@ const styles = StyleSheet.create({
   separator: {
     height: 1,
     backgroundColor: SEPARATOR_COLOR,
+  },
+  activityContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 })
 
@@ -29,6 +34,11 @@ export default function Index() {
   return (
     <SafeAreaView style={styles.container}>
       <FlashList
+        ListEmptyComponent={
+          <View style={styles.activityContainer}>
+            <Text>Empty favorite</Text>
+          </View>
+        }
         estimatedItemSize={20}
         keyExtractor={(item) => item.id}
         data={favorites}

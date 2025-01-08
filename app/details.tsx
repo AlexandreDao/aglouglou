@@ -38,11 +38,19 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 24,
   },
+  fallback: {
+    color: TEXT_COLOR,
+    fontSize: 14,
+    lineHeight: 24,
+    fontStyle: 'italic'
+  }
 })
 
 const Details = forwardRef((props, ref) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null)
   const [cocktailDetail, setCocktailDetail] = useState<CocktailDetail | null>(null)
+  const ingredients = cocktailDetail?.ingredients.filter((instruction) => instruction.trim()) || []
+  const instructions = cocktailDetail?.instructions.split(/[,.]/).filter((instruction) => instruction.trim()) || []
 
   React.useImperativeHandle(ref, () => ({
     open: (detail: CocktailDetail) => {
@@ -67,22 +75,27 @@ const Details = forwardRef((props, ref) => {
             <View style={styles.textContainer}>
               <Text style={styles.h1}>{cocktailDetail.name}</Text>
               <Text style={styles.h2}>Ingredients</Text>
-              <Text style={styles.regular}>
-                {cocktailDetail.ingredients.map((ingredient, index) => {
-                  return <Text key={`ingredient-${index}`}>{`• ${ingredient}\n`}</Text>
-                })}
-              </Text>
+              {ingredients.length ? (
+                <Text style={styles.regular}>
+                  {ingredients.map((ingredient, index) => {
+                    return <Text key={`ingredient-${index}`}>{`• ${ingredient.trim()}\n`}</Text>
+                  })}
+                </Text>
+              ) : (
+                <Text style={styles.fallback}>No ingredients</Text>
+              )}
               <Text style={styles.h2}>Instructions</Text>
-              <Text style={styles.regular}>
-                {cocktailDetail.instructions
-                  .split(/[,.]/)
-                  .filter((instruction) => instruction.trim())
-                  .map((instruction, index) => {
+              {instructions.length ? (
+                <Text style={styles.regular}>
+                  {instructions.map((instruction, index) => {
                     return (
                       <Text key={`instruction-${index}`}>{`• ${capitalizeFirstLetter(instruction.trim())}\n`}</Text>
                     )
                   })}
-              </Text>
+                </Text>
+              ) : (
+                <Text style={styles.fallback}>No instructions</Text>
+              )}
             </View>
           </>
         )}

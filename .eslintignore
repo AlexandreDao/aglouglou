@@ -17,3 +17,5 @@ android/**
 tsconfig.json
 
 /dist/*
+
+e2e/**
