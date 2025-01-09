@@ -9,13 +9,16 @@ interface DetailBottomSheetProviderProps {
 }
 
 function DetailsBottomSheetProvider({ children, detailsBottomSheetRef }: DetailBottomSheetProviderProps) {
-  const open = useCallback((detail: CocktailDetail) => {
-    detailsBottomSheetRef.current?.open(detail)
-  }, [])
+  const open = useCallback(
+    (detail: CocktailDetail) => {
+      detailsBottomSheetRef.current?.open(detail)
+    },
+    [detailsBottomSheetRef]
+  )
 
   const close = useCallback(() => {
     detailsBottomSheetRef.current?.close()
-  }, [])
+  }, [detailsBottomSheetRef])
 
   return <DetailsBottomSheetContext.Provider value={{ open, close }}>{children}</DetailsBottomSheetContext.Provider>
 }

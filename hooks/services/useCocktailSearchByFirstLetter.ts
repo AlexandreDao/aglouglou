@@ -6,7 +6,7 @@ const firstLetterAsciiCode = 'a'.charCodeAt(0)
 
 const lastLetterAsciiCode = 'z'.charCodeAt(0)
 
-const fetchByFirstLetter = async ({ pageParam = firstLetterAsciiCode }) => {
+const useFetchByFirstLetter = async ({ pageParam = firstLetterAsciiCode }) => {
   const { get } = useCocktailApi()
 
   try {
@@ -25,7 +25,7 @@ const queryKey = ['search']
 const useCocktailSearchByFirstLetter = () => {
   return useInfiniteQuery({
     queryKey,
-    queryFn: fetchByFirstLetter,
+    queryFn: useFetchByFirstLetter,
     initialPageParam: firstLetterAsciiCode,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
       const nextLetterAsciiCode = lastPageParam + 1

@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import favoritesReducer from '@/store/slices/favoritesSlice'
 import { mmkvStorage } from '@/storage/storageAdapter'
-import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist'
+import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist'
 
 const persistConfig = {
   key: 'root', // Key for the persisted state

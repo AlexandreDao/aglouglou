@@ -1,11 +1,9 @@
 // https://docs.expo.dev/guides/using-eslint/
-import pluginQuery from '@tanstack/eslint-plugin-query'
 
 module.exports = {
-  extends: ['expo', 'prettier'],
+  extends: ['expo', 'plugin:@tanstack/query/recommended', 'prettier'],
   plugins: ['prettier'],
   rules: {
-    ...pluginQuery.configs['flat/recommended'],
     'prettier/prettier': 'error'
   }
 }

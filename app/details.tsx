@@ -134,4 +134,6 @@ const Details = forwardRef((props, ref) => {
   )
 })
 
+Details.displayName = 'Details'
+
 export default Details
