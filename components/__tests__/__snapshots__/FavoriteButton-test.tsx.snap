@@ -72,7 +72,7 @@ exports[`<FavoriteButton /> FavoriteButton snapshot 1`] = `
           ],
         ]
       }
-      tintColor="#a78d9b"
+      tintColor="#A7989D"
       type="monochrome"
       weight="regular"
     />
