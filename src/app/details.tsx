@@ -1,7 +1,7 @@
 import React, { useRef, forwardRef, useState, useEffect, useCallback, FC, useMemo } from 'react'
 import { View, Text, StyleSheet, useWindowDimensions, BackHandler } from 'react-native'
 import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetScrollView } from '@gorhom/bottom-sheet'
-import { CocktailDetail } from '@/types/Cocktail'
+import { CocktailDetail } from '@/types/cocktail'
 import { Image } from 'expo-image'
 import { capitalizeFirstLetter } from '@/utils/stringUtils'
 import { BACKGROUND_COLOR, INACTIVE_COLOR, TEXT_COLOR } from '@/constants/colors'

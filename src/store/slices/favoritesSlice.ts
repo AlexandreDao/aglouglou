@@ -1,4 +1,4 @@
-import { CocktailDetail } from '@/types/Cocktail'
+import { CocktailDetail } from '@/types/cocktail'
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState: CocktailDetail[] = []

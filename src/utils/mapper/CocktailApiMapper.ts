@@ -4,7 +4,7 @@ import {
   CocktailItem,
   CocktailSearchResult,
   CocktailLookupResult,
-} from '@/types/Cocktail'
+} from '@/types/cocktail'
 import { parseDate } from '@/utils/dateUtils'
 
 const INGREDIENT_PREFIX = 'strIngredient'

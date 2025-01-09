@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import DetailsBottomSheetContext from '@/contexts/detailsBottomSheet/DetailsBottomSheetContext'
-import { CocktailDetail } from '@/types/Cocktail'
+import { CocktailDetail } from '@/types/cocktail'
 import { DetailsRef } from '@/app/details'
 
 interface DetailBottomSheetProviderProps {

@@ -1,5 +1,5 @@
 import useCocktailApi from '@/hooks/services/useCocktailApi'
-import { mapCocktailSearchResultToCocktailItems } from '@/utils/mapper/CocktailApiMapper'
+import { mapCocktailSearchResultToCocktailItems } from '@/utils/mapper/cocktailApiMapper'
 import { useInfiniteQuery } from '@tanstack/react-query'
 
 const firstLetterAsciiCode = 'a'.charCodeAt(0)

@@ -1,13 +1,14 @@
 import FavoriteItem from '@/components/ui/FavoriteItem'
 import { BACKGROUND_COLOR, TEXT_COLOR } from '@/constants/colors'
 import useSortedFavorites from '@/hooks/useSortedFavorites'
-import { CocktailDetail } from '@/types/Cocktail'
+import { CocktailDetail } from '@/types/cocktail'
 import { BottomTabNavigationProp, useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { FlashList, ListRenderItem } from '@shopify/flash-list'
 import { useEffect, useRef } from 'react'
 import { Platform, StyleSheet, Text, useWindowDimensions, View } from 'react-native'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useNavigation, useIsFocused } from '@react-navigation/native'
+import { TabParamList } from '@/types/navigation'
 
 const styles = StyleSheet.create({
   container: {
@@ -36,7 +37,7 @@ export default function Index() {
   const insets = useSafeAreaInsets()
   const tabBarHeight = useBottomTabBarHeight()
   const windowSize = useWindowDimensions()
-  const navigation = useNavigation<BottomTabNavigationProp<any>>()
+  const navigation = useNavigation<BottomTabNavigationProp<TabParamList>>()
   const isFocused = useIsFocused()
 
   const renderItem: ListRenderItem<CocktailDetail> = ({ item }) => {

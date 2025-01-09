@@ -4,11 +4,12 @@ import { View, ActivityIndicator, StyleSheet, Text, Platform, useWindowDimension
 import { FlashList, ListRenderItem } from '@shopify/flash-list'
 import { useAppSelector } from '@/hooks/store/useAppSelector'
 import { BACKGROUND_COLOR, INACTIVE_COLOR, TEXT_COLOR } from '@/constants/colors'
-import { CocktailDetail } from '@/types/Cocktail'
+import { CocktailDetail } from '@/types/cocktail'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useEffect, useRef, useState } from 'react'
 import { BottomTabNavigationProp, useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { useNavigation, useIsFocused } from '@react-navigation/native'
+import { TabParamList } from '@/types/navigation'
 
 const styles = StyleSheet.create({
   container: {
@@ -46,7 +47,7 @@ export default function Index() {
   const insets = useSafeAreaInsets()
   const tabBarHeight = useBottomTabBarHeight()
   const windowSize = useWindowDimensions()
-  const navigation = useNavigation<BottomTabNavigationProp<any>>()
+  const navigation = useNavigation<BottomTabNavigationProp<TabParamList>>()
   const isFocused = useIsFocused()
   const listRef = useRef<FlashList<CocktailDetail>>(null)
 
