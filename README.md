@@ -2,17 +2,13 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 
 ## Screenshots and screen recording
 
-Home screen
-![Home screen with list of cocktail](./docs/Home_screen.png)
+| Home screen                                                  | Recipe detail                              |
+| ------------------------------------------------------------ | ------------------------------------------ |
+| ![Home screen with list of cocktail](./docs/Home_screen.png) | ![Recipe detail](./docs/Detail_screen.png) |
 
-Detail screen
-![Recipe detail](./docs/Detail_screen.png)
-
-Add to favorites
-![Add to favorites gif](./docs/Add_to_favorites.gif)
-
-Remove from favorites
-![Remove from favorites](./docs/Remove_from_favorites.gif)
+| Add to favorites                                     | Remove from favorites                                      |
+| ---------------------------------------------------- | ---------------------------------------------------------- |
+| ![Add to favorites gif](./docs/Add_to_favorites.gif) | ![Remove from favorites](./docs/Remove_from_favorites.gif) |
 
 ## Setup expo
 
