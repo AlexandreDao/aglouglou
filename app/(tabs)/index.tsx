@@ -3,7 +3,7 @@ import useCocktailSearchByFirstLetter from '@/hooks/services/useCocktailSearchBy
 import { View, ActivityIndicator, StyleSheet, Text, Platform, useWindowDimensions } from 'react-native'
 import { FlashList, ListRenderItem } from '@shopify/flash-list'
 import { useAppSelector } from '@/hooks/store/useAppSelector'
-import { BACKGROUND_COLOR, INACTIVE_COLOR, SEPARATOR_COLOR, TEXT_COLOR } from '@/constants/colors'
+import { BACKGROUND_COLOR, INACTIVE_COLOR, TEXT_COLOR } from '@/constants/colors'
 import { CocktailDetail } from '@/types/Cocktail'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useEffect, useState } from 'react'
@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: BACKGROUND_COLOR,
   },
   loading: {
     padding: 16,
@@ -58,7 +59,7 @@ export default function Index() {
   if (isLoading) {
     return (
       <View style={styles.activityContainer}>
-        <ActivityIndicator color={INACTIVE_COLOR} />
+        <ActivityIndicator size="large" color={INACTIVE_COLOR} />
       </View>
     )
   }
