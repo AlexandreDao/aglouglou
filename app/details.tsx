@@ -1,10 +1,11 @@
-import React, { useRef, forwardRef, useState } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet'
+import React, { useRef, forwardRef, useState, useEffect } from 'react'
+import { View, Text, StyleSheet, useWindowDimensions, BackHandler } from 'react-native'
+import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import { CocktailDetail } from '@/types/Cocktail'
 import { Image } from 'expo-image'
 import { capitalizeFirstLetter } from '@/utils/stringUtils'
 import { BACKGROUND_COLOR, INACTIVE_COLOR, TEXT_COLOR } from '@/constants/colors'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export interface DetailsRef {
   open: (detail: CocktailDetail) => void
@@ -47,26 +48,44 @@ const styles = StyleSheet.create({
 })
 
 const Details = forwardRef((props, ref) => {
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null)
+  const bottomSheetModalRef = useRef<BottomSheet>(null)
   const [cocktailDetail, setCocktailDetail] = useState<CocktailDetail | null>(null)
   const ingredients = cocktailDetail?.ingredients.filter((instruction) => instruction.trim()) || []
   const instructions = cocktailDetail?.instructions.split(/[,.]/).filter((instruction) => instruction.trim()) || []
+  const insets = useSafeAreaInsets()
+  const { height: windowHeight } = useWindowDimensions()
 
   React.useImperativeHandle(ref, () => ({
     open: (detail: CocktailDetail) => {
       setCocktailDetail(detail)
-      bottomSheetModalRef.current?.present(detail)
+      bottomSheetModalRef.current?.expand()
     },
     close: () => bottomSheetModalRef.current?.close(),
   }))
 
+  useEffect(() => {
+    const backAction = () => {
+      bottomSheetModalRef.current?.close()
+      return true
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove()
+  }, [])
+
   return (
-    <BottomSheetModal
+    <BottomSheet
       ref={bottomSheetModalRef}
-      snapPoints={['95%']}
+      snapPoints={[windowHeight - insets.top]}
       enableDynamicSizing={false}
       backgroundStyle={{ backgroundColor: BACKGROUND_COLOR }}
       handleIndicatorStyle={{ backgroundColor: INACTIVE_COLOR }}
+      enablePanDownToClose
+      index={-1}
     >
       <BottomSheetScrollView style={styles.contentContainer}>
         {cocktailDetail && (
@@ -100,7 +119,7 @@ const Details = forwardRef((props, ref) => {
           </>
         )}
       </BottomSheetScrollView>
-    </BottomSheetModal>
+    </BottomSheet>
   )
 })
 

@@ -6,7 +6,7 @@ import { addToFavorite, removeFromFavorite } from '@/store/slices/favoritesSlice
 import { CocktailDetail } from '@/types/Cocktail'
 import { TEXT_COLOR } from '@/constants/colors'
 import FavoriteButton from '@/components/ui/FavoriteButton'
-import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated'
+import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { useDetailsBottomSheet } from '@/hooks/useDetailsBottomSheet'
 import { FlashList } from '@shopify/flash-list'
 
