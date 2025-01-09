@@ -1,4 +1,4 @@
-import React, { useRef, forwardRef, useCallback, useState } from 'react'
+import React, { useRef, forwardRef, useState } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import { CocktailDetail } from '@/types/Cocktail'

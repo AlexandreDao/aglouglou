@@ -78,6 +78,7 @@
     "redux-persist": "~6.0.0"
   },
   "devDependencies": {
+    "@react-native-community/cli": "latest",
     "@tanstack/eslint-plugin-query": "~5.62.9",
     "@testing-library/jest-native": "~5.4.3",
     "@types/jest": "~29.5.12",

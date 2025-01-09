@@ -11,6 +11,8 @@ import DetailsBottomSheetProvider from '@/contexts/detailsBottomSheet/DetailsBot
 import { useRef } from 'react'
 import { persistStore } from 'redux-persist'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { StatusBar } from 'expo-status-bar'
+import { BACKGROUND_COLOR } from '@/constants/colors'
 
 const queryClient = new QueryClient()
 const store = setupStore()
@@ -29,9 +31,12 @@ export default function RootLayout() {
             <BottomSheetModalProvider>
               <DetailsBottomSheetProvider detailsBottomSheetRef={detailsBottomSheetRef}>
                 <SafeAreaProvider>
-                  <Stack>
-                    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                  </Stack>
+                  <>
+                    <Stack>
+                      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                    </Stack>
+                    <StatusBar translucent={false} backgroundColor={BACKGROUND_COLOR} style="light" />
+                  </>
                 </SafeAreaProvider>
                 <CocktailDetail ref={detailsBottomSheetRef} />
               </DetailsBottomSheetProvider>

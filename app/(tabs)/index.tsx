@@ -1,12 +1,13 @@
 import FavoriteItem from '@/components/ui/FavoriteItem'
 import useCocktailSearchByFirstLetter from '@/hooks/services/useCocktailSearchByFirstLetter'
-import { View, ActivityIndicator, StyleSheet, Text } from 'react-native'
+import { View, ActivityIndicator, StyleSheet, Text, Platform, useWindowDimensions } from 'react-native'
 import { FlashList, ListRenderItem } from '@shopify/flash-list'
 import { useAppSelector } from '@/hooks/store/useAppSelector'
 import { BACKGROUND_COLOR, INACTIVE_COLOR, SEPARATOR_COLOR, TEXT_COLOR } from '@/constants/colors'
 import { CocktailDetail } from '@/types/Cocktail'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useEffect, useState } from 'react'
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 
 const styles = StyleSheet.create({
   container: {
@@ -27,16 +28,20 @@ const styles = StyleSheet.create({
     color: TEXT_COLOR,
   },
   contentContainer: {
-    paddingBottom: 50,
+    paddingBottom: Platform.select({ ios: 50, android: 0 }),
   },
 })
 
 export default function Index() {
-  const { data, isLoading, fetchNextPage, isFetchingNextPage, isFetching, hasNextPage, failureReason } =
+  const { data, isLoading, fetchNextPage, isFetchingNextPage, isFetching, hasNextPage } =
     useCocktailSearchByFirstLetter()
   const cocktailList = data?.pages.flatMap(({ drinks }) => drinks) || []
   const favorites = useAppSelector((state) => state.favorites)
   const [isFetchingNext, setIsFetchingNext] = useState(false)
+  const insets = useSafeAreaInsets()
+  const tabBarHeight = useBottomTabBarHeight()
+  const windowSize = useWindowDimensions()
+
   const renderItem: ListRenderItem<CocktailDetail> = ({ item }) => {
     const isFavorite = favorites.findIndex((favorite) => favorite.id === item.id) !== -1
 
@@ -60,7 +65,11 @@ export default function Index() {
       {cocktailList.length ? (
         <FlashList
           contentContainerStyle={styles.contentContainer}
-          estimatedItemSize={20}
+          estimatedItemSize={100}
+          estimatedListSize={{
+            height: windowSize.height - tabBarHeight - insets.top - insets.bottom,
+            width: windowSize.width - insets.left - insets.right,
+          }}
           keyExtractor={(item) => item.id}
           data={cocktailList}
           ItemSeparatorComponent={() => <View style={{ height: 1, backgroundColor: SEPARATOR_COLOR }} />}
