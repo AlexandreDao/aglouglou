@@ -1,5 +1,5 @@
 import FavoriteItem from '@/components/ui/FavoriteItem'
-import { BACKGROUND_COLOR, SEPARATOR_COLOR, TEXT_COLOR } from '@/constants/colors'
+import { BACKGROUND_COLOR, TEXT_COLOR } from '@/constants/colors'
 import useSortedFavorites from '@/hooks/useSortedFavorites'
 import { CocktailDetail } from '@/types/Cocktail'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
@@ -14,8 +14,7 @@ const styles = StyleSheet.create({
     backgroundColor: BACKGROUND_COLOR,
   },
   separator: {
-    height: 1,
-    backgroundColor: SEPARATOR_COLOR,
+    height: 10,
   },
   activityContainer: {
     flex: 1,

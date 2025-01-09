@@ -5,23 +5,24 @@ import { Platform } from 'react-native'
 import { HapticTab } from '@/components/HapticTab'
 import { IconSymbol } from '@/components/ui/IconSymbol'
 import { ACTIVE_COLOR, INACTIVE_COLOR, TAB_BAR_BACKGROUND_COLOR } from '@/constants/colors'
+import BlurTabBarBackground from '@/components/ui/TabBarBackground'
 
 export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: ACTIVE_COLOR,
-        tabBarInactiveBackgroundColor: TAB_BAR_BACKGROUND_COLOR,
-        tabBarActiveBackgroundColor: TAB_BAR_BACKGROUND_COLOR,
         tabBarInactiveTintColor: INACTIVE_COLOR,
         headerShown: false,
         tabBarButton: HapticTab,
+        tabBarBackground: BlurTabBarBackground,
         tabBarStyle: Platform.select({
           ios: {
-            backgroundColor: TAB_BAR_BACKGROUND_COLOR,
             position: 'absolute',
           },
-          default: {},
+          default: {
+            backgroundColor: TAB_BAR_BACKGROUND_COLOR,
+          },
         }),
       }}
     >

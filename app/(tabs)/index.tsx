@@ -30,6 +30,9 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingBottom: Platform.select({ ios: 50, android: 0 }),
   },
+  separator: {
+    height: 10,
+  },
 })
 
 export default function Index() {
@@ -72,7 +75,7 @@ export default function Index() {
           }}
           keyExtractor={(item) => item.id}
           data={cocktailList}
-          ItemSeparatorComponent={() => <View style={{ height: 1, backgroundColor: SEPARATOR_COLOR }} />}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
           renderItem={renderItem}
           onEndReachedThreshold={0.5}
           onEndReached={() => {

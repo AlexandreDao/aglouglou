@@ -26,11 +26,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: 16,
+    paddingLeft: 16,
     overflow: 'hidden',
   },
   image: {
     width: 100,
     height: 100,
+    borderRadius: 14,
   },
   text: {
     color: TEXT_COLOR,
