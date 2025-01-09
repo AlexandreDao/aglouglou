@@ -36,7 +36,7 @@ export default function Index() {
   const insets = useSafeAreaInsets()
   const tabBarHeight = useBottomTabBarHeight()
   const windowSize = useWindowDimensions()
-  
+
   const renderItem: ListRenderItem<CocktailDetail> = ({ item }) => {
     const isFavorite = favorites.findIndex((favorite) => favorite.id === item.id) !== -1
 
