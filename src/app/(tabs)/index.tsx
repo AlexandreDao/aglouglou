@@ -6,8 +6,9 @@ import { useAppSelector } from '@/hooks/store/useAppSelector'
 import { BACKGROUND_COLOR, INACTIVE_COLOR, TEXT_COLOR } from '@/constants/colors'
 import { CocktailDetail } from '@/types/Cocktail'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useEffect, useState } from 'react'
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
+import { useEffect, useRef, useState } from 'react'
+import { BottomTabNavigationProp, useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
+import { useNavigation, useIsFocused } from '@react-navigation/native'
 
 const styles = StyleSheet.create({
   container: {
@@ -45,6 +46,9 @@ export default function Index() {
   const insets = useSafeAreaInsets()
   const tabBarHeight = useBottomTabBarHeight()
   const windowSize = useWindowDimensions()
+  const navigation = useNavigation<BottomTabNavigationProp<any>>()
+  const isFocused = useIsFocused()
+  const listRef = useRef<FlashList<CocktailDetail>>(null)
 
   const renderItem: ListRenderItem<CocktailDetail> = ({ item }) => {
     const isFavorite = favorites.findIndex((favorite) => favorite.id === item.id) !== -1
@@ -55,6 +59,16 @@ export default function Index() {
   useEffect(() => {
     setIsFetchingNext(false)
   }, [isFetchingNextPage])
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('tabPress', (e) => {
+      if (isFocused) {
+        listRef.current?.scrollToOffset({ animated: false, offset: 0 })
+      }
+    })
+
+    return unsubscribe
+  }, [navigation, isFocused])
 
   if (isLoading) {
     return (
@@ -68,6 +82,7 @@ export default function Index() {
     <SafeAreaView style={styles.container}>
       {cocktailList.length ? (
         <FlashList
+          ref={listRef}
           contentContainerStyle={styles.contentContainer}
           estimatedItemSize={100}
           estimatedListSize={{

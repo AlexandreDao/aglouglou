@@ -2,11 +2,12 @@ import FavoriteItem from '@/components/ui/FavoriteItem'
 import { BACKGROUND_COLOR, TEXT_COLOR } from '@/constants/colors'
 import useSortedFavorites from '@/hooks/useSortedFavorites'
 import { CocktailDetail } from '@/types/Cocktail'
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
+import { BottomTabNavigationProp, useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { FlashList, ListRenderItem } from '@shopify/flash-list'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { Platform, StyleSheet, Text, useWindowDimensions, View } from 'react-native'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useNavigation, useIsFocused } from '@react-navigation/native'
 
 const styles = StyleSheet.create({
   container: {
@@ -35,12 +36,24 @@ export default function Index() {
   const insets = useSafeAreaInsets()
   const tabBarHeight = useBottomTabBarHeight()
   const windowSize = useWindowDimensions()
+  const navigation = useNavigation<BottomTabNavigationProp<any>>()
+  const isFocused = useIsFocused()
 
   const renderItem: ListRenderItem<CocktailDetail> = ({ item }) => {
     const isFavorite = favorites.findIndex((favorite) => favorite.id === item.id) !== -1
 
     return <FavoriteItem shouldAnimateRemove item={item} isFavorite={isFavorite} listRef={listRef} />
   }
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('tabPress', (e) => {
+      if (isFocused) {
+        listRef.current?.scrollToOffset({ animated: false, offset: 0 })
+      }
+    })
+
+    return unsubscribe
+  }, [navigation, isFocused])
 
   return (
     <SafeAreaView style={styles.container}>
