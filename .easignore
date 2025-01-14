@@ -30,3 +30,7 @@ __tests__/
 
 # Ignore documentation files
 docs/
+
+# Ignore native folders
+ios/
+android/

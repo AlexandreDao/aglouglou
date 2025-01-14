@@ -15,5 +15,6 @@ android/**
 
 .eslintrc.js
 tsconfig.json
+app.json
 
 e2e/**
