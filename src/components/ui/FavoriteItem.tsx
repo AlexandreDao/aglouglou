@@ -1,8 +1,7 @@
 import { Text, StyleSheet, Pressable, Alert } from 'react-native'
 import React, { RefObject, useEffect } from 'react'
 import { Image } from 'expo-image'
-import { useAppDispatch } from '@/hooks/store/useAppDisptach'
-import { addToFavorite, removeFromFavorite } from '@/store/slices/favoritesSlice'
+import useFavoriteStore from '@/store/favoritesStore'
 import { CocktailDetail } from '@/types/cocktail'
 import { TEXT_COLOR } from '@/constants/colors'
 import FavoriteButton from '@/components/ui/FavoriteButton'
@@ -42,7 +41,8 @@ const styles = StyleSheet.create({
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 
 function FavoriteItem({ item, isFavorite, listRef, shouldAnimateRemove = false }: FavItemProps) {
-  const dispatch = useAppDispatch()
+  const addToFavorite = useFavoriteStore((state) => state.addToFavorite)
+  const removeFromFavorite = useFavoriteStore((state) => state.removeFromFavorite)
   const { open } = useDetailsBottomSheet()
   const height = useSharedValue(100)
   const animatedStyle = useAnimatedStyle(() => {
@@ -52,7 +52,7 @@ function FavoriteItem({ item, isFavorite, listRef, shouldAnimateRemove = false }
   })
 
   const handleRemove = () => {
-    dispatch(removeFromFavorite(item.id))
+    removeFromFavorite(item.id)
   }
 
   const onPressRemove = () => {
@@ -87,7 +87,7 @@ function FavoriteItem({ item, isFavorite, listRef, shouldAnimateRemove = false }
       <FavoriteButton
         isFavorite={isFavorite}
         favorite={() => {
-          dispatch(addToFavorite(item))
+          addToFavorite(item)
         }}
         unfavorite={() => {
           Alert.alert(`Are you sure you want to remove ${item.name} from your favorites ?`, '', [

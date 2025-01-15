@@ -42,7 +42,7 @@
       "!**/.expo/**"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(axios|react-native|react-native-reanimated|@react-native|react-native-safe-area-context|react-redux|expo|@expo|expo-modules-core|expo-image|expo-asset|expo-constants|expo-blur|expo-font|expo-linking|expo-router|expo-splash-screen|expo-status-bar|expo-symbols|expo-system-ui|expo-web-browser|expo-haptics)/)"
+      "node_modules/(?!(axios|react-native|react-native-reanimated|@react-native|react-native-safe-area-context|expo|@expo|expo-modules-core|expo-image|expo-asset|expo-constants|expo-blur|expo-font|expo-linking|expo-router|expo-splash-screen|expo-status-bar|expo-symbols|expo-system-ui|expo-web-browser|expo-haptics)/)"
     ],
     "testPathIgnorePatterns": [
       "/node_modules/",
@@ -56,7 +56,6 @@
     "@gorhom/bottom-sheet": "~5.0.6",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
-    "@reduxjs/toolkit": "~2.5.0",
     "@shopify/flash-list": "~1.7.1",
     "@tanstack/react-query": "~5.62.9",
     "@testing-library/react-native": "^12.9.0",
@@ -76,6 +75,7 @@
     "expo-symbols": "~0.2.1",
     "expo-system-ui": "~4.0.7",
     "expo-web-browser": "~14.0.2",
+    "immer": "^10.1.1",
     "react": "~18.3.1",
     "react-native": "~0.76.6",
     "react-native-gesture-handler": "~2.20.2",
@@ -84,9 +84,7 @@
     "react-native-safe-area-context": "~4.12.0",
     "react-native-screens": "~4.4.0",
     "react-native-webview": "~13.12.5",
-    "react-redux": "~9.2.0",
-    "redux": "~5.0.1",
-    "redux-persist": "~6.0.0"
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@react-native-community/cli": "latest",
@@ -104,6 +102,13 @@
     "lint-staged": "^15.3.0",
     "prettier": "~3.4.2",
     "typescript": "~5.3.3"
+  },
+  "expo": {
+    "doctor": {
+      "reactNativeDirectoryCheck": {
+        "listUnknownPackages": false
+      }
+    }
   },
   "private": true,
   "packageManager": "pnpm@9.15.1+sha512.1acb565e6193efbebda772702950469150cf12bcc764262e7587e71d19dc98a423dff9536e57ea44c49bdf790ff694e83c27be5faa23d67e0c033b583be4bfcf"

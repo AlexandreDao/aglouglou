@@ -1,13 +1,12 @@
-import { RootState } from '@/store'
-import { createSelector } from 'reselect'
-import { useAppSelector } from '@/hooks/store/useAppSelector'
+import useFavoriteStore, { FavoritesState } from '@/store/favoritesStore'
+import { useMemo } from 'react'
 
-const selectFavorites = (state: RootState) => state.favorites
-
-const selectSortedFavorites = createSelector([selectFavorites], (favorites) =>
-  [...favorites].sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
-)
-
-const useSortedFavorites = () => useAppSelector(selectSortedFavorites)
+const useSortedFavorites = () => {
+  const favorites = useFavoriteStore((state: FavoritesState) => state.favorites)
+  return useMemo(
+    () => [...favorites].sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase())),
+    [favorites]
+  )
+}
 
 export default useSortedFavorites

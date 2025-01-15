@@ -2,7 +2,6 @@ import FavoriteItem from '@/components/ui/FavoriteItem'
 import useCocktailSearchByFirstLetter from '@/hooks/services/useCocktailSearchByFirstLetter'
 import { View, ActivityIndicator, StyleSheet, Text, Platform, useWindowDimensions } from 'react-native'
 import { FlashList, ListRenderItem } from '@shopify/flash-list'
-import { useAppSelector } from '@/hooks/store/useAppSelector'
 import { BACKGROUND_COLOR, INACTIVE_COLOR, TEXT_COLOR } from '@/constants/colors'
 import { CocktailDetail } from '@/types/cocktail'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -10,6 +9,7 @@ import { useEffect, useRef, useState } from 'react'
 import { BottomTabNavigationProp, useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { useNavigation, useIsFocused } from '@react-navigation/native'
 import { TabParamList } from '@/types/navigation'
+import useFavoritesStore from '@/store/favoritesStore'
 
 const styles = StyleSheet.create({
   container: {
@@ -42,7 +42,7 @@ export default function Index() {
   const { data, isLoading, fetchNextPage, isFetchingNextPage, isFetching, hasNextPage } =
     useCocktailSearchByFirstLetter()
   const cocktailList = data?.pages.flatMap(({ drinks }) => drinks) || []
-  const favorites = useAppSelector((state) => state.favorites)
+  const favorites = useFavoritesStore((state) => state.favorites)
   const [isFetchingNext, setIsFetchingNext] = useState(false)
   const insets = useSafeAreaInsets()
   const tabBarHeight = useBottomTabBarHeight()
