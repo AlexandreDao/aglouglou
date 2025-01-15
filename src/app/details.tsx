@@ -1,6 +1,6 @@
-import React, { useRef, forwardRef, useState, useEffect, useCallback, FC, useMemo } from 'react'
+import React, { useRef, forwardRef, useState, useEffect, useMemo, memo } from 'react'
 import { View, Text, StyleSheet, useWindowDimensions, BackHandler } from 'react-native'
-import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetScrollView } from '@gorhom/bottom-sheet'
+import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import { CocktailDetail } from '@/types/cocktail'
 import { Image } from 'expo-image'
 import { capitalizeFirstLetter } from '@/utils/stringUtils'
@@ -63,11 +63,6 @@ const Details = forwardRef((props, ref) => {
 
   const snapPoints = useMemo(() => [windowHeight - insets.top], [windowHeight, insets.top])
 
-  const renderBackdrop: FC<BottomSheetBackdropProps> = useCallback(
-    (props) => <BottomSheetBackdrop {...props} appearsOnIndex={1} disappearsOnIndex={-1} />,
-    []
-  )
-
   React.useImperativeHandle(ref, () => ({
     open: (detail: CocktailDetail) => {
       setCocktailDetail(detail)
@@ -96,7 +91,6 @@ const Details = forwardRef((props, ref) => {
       handleIndicatorStyle={styles.bottomSheetHandleIndicator}
       enablePanDownToClose
       index={-1}
-      backdropComponent={renderBackdrop}
     >
       <BottomSheetScrollView style={styles.contentContainer}>
         {cocktailDetail && (
@@ -136,4 +130,4 @@ const Details = forwardRef((props, ref) => {
 
 Details.displayName = 'Details'
 
-export default Details
+export default memo(Details)

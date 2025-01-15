@@ -5,11 +5,12 @@ import { FlashList, ListRenderItem } from '@shopify/flash-list'
 import { BACKGROUND_COLOR, INACTIVE_COLOR, TEXT_COLOR } from '@/constants/colors'
 import { CocktailDetail } from '@/types/cocktail'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { BottomTabNavigationProp, useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { useNavigation, useIsFocused } from '@react-navigation/native'
 import { TabParamList } from '@/types/navigation'
 import useFavoritesStore from '@/store/favoritesStore'
+import Separator from '@/components/ui/Separator'
 
 const styles = StyleSheet.create({
   container: {
@@ -33,9 +34,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingBottom: Platform.select({ ios: 50, android: 0 }),
   },
-  separator: {
-    height: 10,
-  },
 })
 
 export default function Index() {
@@ -51,11 +49,14 @@ export default function Index() {
   const isFocused = useIsFocused()
   const listRef = useRef<FlashList<CocktailDetail>>(null)
 
-  const renderItem: ListRenderItem<CocktailDetail> = ({ item }) => {
-    const isFavorite = favorites.findIndex((favorite) => favorite.id === item.id) !== -1
+  const renderItem: ListRenderItem<CocktailDetail> = useCallback(
+    ({ item }) => {
+      const isFavorite = favorites.findIndex((favorite) => favorite.id === item.id) !== -1
 
-    return <FavoriteItem item={item} isFavorite={isFavorite} />
-  }
+      return <FavoriteItem item={item} isFavorite={isFavorite} />
+    },
+    [favorites]
+  )
 
   useEffect(() => {
     setIsFetchingNext(false)
@@ -92,7 +93,7 @@ export default function Index() {
           }}
           keyExtractor={(item) => item.id}
           data={cocktailList}
-          ItemSeparatorComponent={() => <View style={styles.separator} />}
+          ItemSeparatorComponent={Separator}
           renderItem={renderItem}
           onEndReachedThreshold={0.5}
           onEndReached={() => {

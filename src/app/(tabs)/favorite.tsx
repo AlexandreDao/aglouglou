@@ -9,14 +9,12 @@ import { Platform, StyleSheet, Text, useWindowDimensions, View } from 'react-nat
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useNavigation, useIsFocused } from '@react-navigation/native'
 import { TabParamList } from '@/types/navigation'
+import Separator from '@/components/ui/Separator'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: BACKGROUND_COLOR,
-  },
-  separator: {
-    height: 10,
   },
   activityContainer: {
     flex: 1,
@@ -69,7 +67,7 @@ export default function Index() {
           }}
           keyExtractor={(item) => item.id}
           data={favorites}
-          ItemSeparatorComponent={() => <View style={styles.separator} />}
+          ItemSeparatorComponent={Separator}
           renderItem={renderItem}
         />
       ) : (

@@ -90,10 +90,10 @@ function FavoriteItem({ item, isFavorite, listRef, shouldAnimateRemove = false }
           addToFavorite(item)
         }}
         unfavorite={() => {
-          Alert.alert(`Are you sure you want to remove ${item.name} from your favorites ?`, '', [
-            { text: 'cancel' },
+          Alert.alert('Unfavorite', `Are you sure you want to remove ${item.name} from your favorites ?`, [
+            { text: 'CANCEL' },
             {
-              text: 'Remove',
+              text: 'REMOVE',
               onPress: onPressRemove,
             },
           ])
