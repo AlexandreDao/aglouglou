@@ -16,6 +16,7 @@ android/**
 .eslintrc.js
 tsconfig.json
 app.json
+eas.json
 
 /dist/*
 

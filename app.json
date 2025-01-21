@@ -17,12 +17,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.cocktail"
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "package": "com.anonymous.cocktail",
+      "softwareKeyboardLayoutMode": "pan"
     },
     "plugins": [
       "expo-router",

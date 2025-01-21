@@ -20,7 +20,7 @@ const useFetchByFirstLetter = async ({ pageParam = firstLetterAsciiCode }) => {
   }
 }
 
-const queryKey = ['search']
+const queryKey = ['searchByFirstLetter']
 
 const useCocktailSearchByFirstLetter = () => {
   return useInfiniteQuery({
