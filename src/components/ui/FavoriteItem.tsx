@@ -1,9 +1,9 @@
-import { Text, StyleSheet, Pressable, Alert } from 'react-native'
+import { Text, StyleSheet, Alert, Pressable } from 'react-native'
 import React, { RefObject, useEffect } from 'react'
 import { Image } from 'expo-image'
 import useFavoriteStore from '@/store/favoritesStore'
 import { CocktailDetail } from '@/types/cocktail'
-import { TEXT_COLOR } from '@/constants/colors'
+import { BACKGROUND_COLOR, TEXT_COLOR } from '@/constants/colors'
 import FavoriteButton from '@/components/ui/FavoriteButton'
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { useDetailsBottomSheet } from '@/hooks/useDetailsBottomSheet'
@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     gap: 16,
     paddingLeft: 16,
     overflow: 'hidden',
+    backgroundColor: BACKGROUND_COLOR,
   },
   image: {
     width: 100,
@@ -36,9 +37,11 @@ const styles = StyleSheet.create({
     color: TEXT_COLOR,
     flex: 1,
   },
+  empty: {},
+  pressed: {
+    opacity: 0.8,
+  },
 })
-
-const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 
 function FavoriteItem({ item, isFavorite, listRef, shouldAnimateRemove = false }: FavItemProps) {
   const addToFavorite = useFavoriteStore((state) => state.addToFavorite)
@@ -74,32 +77,43 @@ function FavoriteItem({ item, isFavorite, listRef, shouldAnimateRemove = false }
   }, [item.id, height])
 
   return (
-    <AnimatedPressable style={[styles.container, animatedStyle]} onPress={onPress}>
-      <Image
-        style={styles.image}
-        source={item.thumbnail}
-        placeholder={{ blurhash }}
-        contentFit="cover"
-        transition={1000}
-        allowDownscaling
-      />
-      <Text style={styles.text}>{item.name}</Text>
-      <FavoriteButton
-        isFavorite={isFavorite}
-        favorite={() => {
-          addToFavorite(item)
-        }}
-        unfavorite={() => {
-          Alert.alert('Unfavorite', `Are you sure you want to remove ${item.name} from your favorites ?`, [
-            { text: 'CANCEL' },
-            {
-              text: 'REMOVE',
-              onPress: onPressRemove,
-            },
-          ])
-        }}
-      />
-    </AnimatedPressable>
+    <Pressable
+      style={({ pressed }) => {
+        if (pressed) {
+          return styles.pressed
+        }
+        return styles.empty
+      }}
+      android_ripple={{ color: 'rgba(255, 255, 255, 0.6)' }}
+      onPress={onPress}
+    >
+      <Animated.View style={[styles.container, animatedStyle]}>
+        <Image
+          style={styles.image}
+          source={item.thumbnail}
+          placeholder={{ blurhash }}
+          contentFit="cover"
+          transition={1000}
+          allowDownscaling
+        />
+        <Text style={styles.text}>{item.name}</Text>
+        <FavoriteButton
+          isFavorite={isFavorite}
+          favorite={() => {
+            addToFavorite(item)
+          }}
+          unfavorite={() => {
+            Alert.alert('Unfavorite', `Are you sure you want to remove ${item.name} from your favorites ?`, [
+              { text: 'CANCEL' },
+              {
+                text: 'REMOVE',
+                onPress: onPressRemove,
+              },
+            ])
+          }}
+        />
+      </Animated.View>
+    </Pressable>
   )
 }
 

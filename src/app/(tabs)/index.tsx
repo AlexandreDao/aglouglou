@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     color: TEXT_COLOR,
   },
   contentContainer: {
-    paddingBottom: Platform.select({ ios: 50, android: 0 }),
+    paddingBottom: Platform.select({ ios: 60, android: 10 }),
   },
 })
 
@@ -91,7 +91,7 @@ export default function Index() {
             height: windowSize.height - tabBarHeight - insets.top - insets.bottom,
             width: windowSize.width - insets.left - insets.right,
           }}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => `home-${item.id}`}
           data={cocktailList}
           ItemSeparatorComponent={Separator}
           renderItem={renderItem}

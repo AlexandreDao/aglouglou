@@ -1,5 +1,5 @@
-import React, { useRef, forwardRef, useState, useEffect, useMemo, memo } from 'react'
-import { View, Text, StyleSheet, useWindowDimensions, BackHandler } from 'react-native'
+import React, { useRef, forwardRef, useState, useEffect, useMemo, memo, useImperativeHandle, useCallback } from 'react'
+import { View, Text, StyleSheet, useWindowDimensions, BackHandler, NativeEventSubscription } from 'react-native'
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import { CocktailDetail } from '@/types/cocktail'
 import { Image } from 'expo-image'
@@ -57,13 +57,18 @@ const Details = forwardRef((props, ref) => {
   const bottomSheetModalRef = useRef<BottomSheet>(null)
   const [cocktailDetail, setCocktailDetail] = useState<CocktailDetail | null>(null)
   const ingredients = cocktailDetail?.ingredients.filter((instruction) => instruction.trim()) || []
-  const instructions = cocktailDetail?.instructions.split(/[,.]/).filter((instruction) => instruction.trim()) || []
+  const instructions = cocktailDetail?.instructions.split(/[.]/).filter((instruction) => instruction.trim()) || []
   const insets = useSafeAreaInsets()
   const { height: windowHeight } = useWindowDimensions()
-
+  const backHandler = useRef<NativeEventSubscription>()
   const snapPoints = useMemo(() => [windowHeight - insets.top], [windowHeight, insets.top])
 
-  React.useImperativeHandle(ref, () => ({
+  const backAction = () => {
+    bottomSheetModalRef.current?.close()
+    return true
+  }
+
+  useImperativeHandle(ref, () => ({
     open: (detail: CocktailDetail) => {
       setCocktailDetail(detail)
       bottomSheetModalRef.current?.expand()
@@ -72,14 +77,7 @@ const Details = forwardRef((props, ref) => {
   }))
 
   useEffect(() => {
-    const backAction = () => {
-      bottomSheetModalRef.current?.close()
-      return true
-    }
-
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction)
-
-    return () => backHandler.remove()
+    return () => backHandler.current?.remove()
   }, [])
 
   return (
@@ -91,6 +89,13 @@ const Details = forwardRef((props, ref) => {
       handleIndicatorStyle={styles.bottomSheetHandleIndicator}
       enablePanDownToClose
       index={-1}
+      onChange={(index) => {
+        if (index === 0) {
+          backHandler.current = BackHandler.addEventListener('hardwareBackPress', backAction)
+        } else {
+          backHandler.current?.remove()
+        }
+      }}
     >
       <BottomSheetScrollView style={styles.contentContainer}>
         {cocktailDetail && (

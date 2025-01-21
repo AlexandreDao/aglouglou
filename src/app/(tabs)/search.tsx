@@ -1,7 +1,17 @@
 import { BACKGROUND_COLOR, TEXT_COLOR } from '@/constants/colors'
 import { FlashList, ListRenderItem } from '@shopify/flash-list'
-import { useEffect, useRef, useState } from 'react'
-import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, useWindowDimensions, View } from 'react-native'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import SearchInput from '@/components/ui/SearchInput'
 import useRecentSearchStore from '@/store/recentSearchStore'
@@ -14,7 +24,7 @@ import { TabParamList } from '@/types/navigation'
 import { useIsFocused } from '@react-navigation/native'
 import FavoriteItem from '@/components/ui/FavoriteItem'
 import Separator from '@/components/ui/Separator'
-import { Pressable, ScrollView } from 'react-native-gesture-handler'
+import useFavoritesStore from '@/store/favoritesStore'
 
 const styles = StyleSheet.create({
   container: {
@@ -38,11 +48,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
+    backgroundColor: BACKGROUND_COLOR,
   },
   recentSearchText: {
     color: TEXT_COLOR,
     fontSize: 16,
     flex: 1,
+  },
+  notFoundText: {
+    color: TEXT_COLOR,
+    paddingHorizontal: 16,
+  },
+  empty: {},
+  pressed: {
+    opacity: 0.8,
   },
 })
 
@@ -52,8 +71,9 @@ export default function Index() {
   const [isInputFocused, setIsInputFocused] = useState(false)
   const recentSearches = useRecentSearchStore((state) => state.recentSearches)
   const addToRecentSearches = useRecentSearchStore((state) => state.addToRecentSearches)
-  const { data, isFetching } = useCocktailSearchByName(submittedQuery)
-  const results = data?.drinks || []
+  const { data, isFetching, isPlaceholderData } = useCocktailSearchByName(submittedQuery)
+  const results = data?.drinks ? [...data.drinks] : []
+  const favorites = useFavoritesStore((state) => state.favorites)
   const listRef = useRef<FlashList<CocktailDetail>>(null)
   const insets = useSafeAreaInsets()
   const tabBarHeight = useBottomTabBarHeight()
@@ -61,11 +81,14 @@ export default function Index() {
   const navigation = useNavigation<BottomTabNavigationProp<TabParamList>>()
   const isFocused = useIsFocused()
 
-  const renderItem: ListRenderItem<CocktailDetail> = ({ item }) => {
-    const isFavorite = results.findIndex((favorite) => favorite.id === item.id) !== -1
+  const renderItem: ListRenderItem<CocktailDetail> = useCallback(
+    ({ item }) => {
+      const isFavorite = favorites.findIndex((favorite) => favorite.id === item.id) !== -1
 
-    return <FavoriteItem shouldAnimateRemove item={item} isFavorite={isFavorite} listRef={listRef} />
-  }
+      return <FavoriteItem item={item} isFavorite={isFavorite} />
+    },
+    [favorites]
+  )
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabPress', (e) => {
@@ -77,12 +100,22 @@ export default function Index() {
     return unsubscribe
   }, [navigation, isFocused])
 
+  useEffect(() => {
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+      Keyboard.dismiss()
+    })
+
+    return () => {
+      hideSubscription.remove()
+    }
+  }, [])
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.resultContainer}>
-        {isInputFocused && searchQuery.trim().length > 0 ? (
-          <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
-            <ScrollView>
+        {isInputFocused ? (
+          <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.container}>
+            <ScrollView keyboardShouldPersistTaps="always">
               <Text style={styles.title}>Recent search</Text>
               {recentSearches.map((recentSearch, index) => (
                 <Pressable
@@ -92,30 +125,39 @@ export default function Index() {
                     setSubmittedQuery(recentSearch)
                     Keyboard.dismiss()
                   }}
-                  style={styles.recentSearchContainer}
+                  style={({ pressed }) => {
+                    if (pressed) {
+                      return styles.pressed
+                    }
+                    return styles.empty
+                  }}
+                  android_ripple={{ color: 'rgba(255, 255, 255, 0.6)' }}
                 >
-                  <IconSymbol name="timer" color={TEXT_COLOR} />
-                  <Text ellipsizeMode="tail" style={styles.recentSearchText} numberOfLines={1}>
-                    {recentSearch}
-                  </Text>
+                  <View style={styles.recentSearchContainer}>
+                    <IconSymbol name="timer" color={TEXT_COLOR} />
+                    <Text ellipsizeMode="tail" style={styles.recentSearchText} numberOfLines={1}>
+                      {recentSearch}
+                    </Text>
+                  </View>
                 </Pressable>
               ))}
             </ScrollView>
           </KeyboardAvoidingView>
-        ) : (
+        ) : isPlaceholderData ? null : (
           <FlashList
-            ListHeaderComponent={<Text style={styles.title}>Results</Text>}
             ref={listRef}
             contentContainerStyle={styles.contentContainer}
             estimatedItemSize={100}
             estimatedListSize={{
-              height: windowSize.height - tabBarHeight - insets.top - insets.bottom,
+              height: windowSize.height - tabBarHeight - insets.top - insets.bottom - 48 - 16,
               width: windowSize.width - insets.left - insets.right,
             }}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => `search-${submittedQuery}}-${item.id}`}
             data={results}
-            ItemSeparatorComponent={Separator}
             renderItem={renderItem}
+            ItemSeparatorComponent={Separator}
+            ListHeaderComponent={<Text style={styles.title}>Results</Text>}
+            ListEmptyComponent={() => <Text style={styles.notFoundText}>No result found for "{submittedQuery}"</Text>}
           />
         )}
       </View>

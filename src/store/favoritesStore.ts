@@ -18,7 +18,9 @@ const useFavoritesStore = create<FavoritesState>()(
         addToFavorite: (favorite) =>
           set(
             produce((state: FavoritesState) => {
-              state.favorites.push(favorite)
+              if (state.favorites.findIndex((fav) => fav.id === favorite.id) === -1) {
+                state.favorites.push(favorite)
+              }
             })
           ),
         removeFromFavorite: (favoriteId) =>

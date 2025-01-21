@@ -4,7 +4,7 @@ import useSortedFavorites from '@/hooks/useSortedFavorites'
 import { CocktailDetail } from '@/types/cocktail'
 import { BottomTabNavigationProp, useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { FlashList, ListRenderItem } from '@shopify/flash-list'
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { Platform, StyleSheet, Text, useWindowDimensions, View } from 'react-native'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useNavigation, useIsFocused } from '@react-navigation/native'
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     color: TEXT_COLOR,
   },
   contentContainer: {
-    paddingBottom: Platform.select({ ios: 50, android: 0 }),
+    paddingBottom: Platform.select({ ios: 60, android: 10 }),
   },
 })
 
@@ -38,11 +38,9 @@ export default function Index() {
   const navigation = useNavigation<BottomTabNavigationProp<TabParamList>>()
   const isFocused = useIsFocused()
 
-  const renderItem: ListRenderItem<CocktailDetail> = ({ item }) => {
-    const isFavorite = favorites.findIndex((favorite) => favorite.id === item.id) !== -1
-
-    return <FavoriteItem shouldAnimateRemove item={item} isFavorite={isFavorite} listRef={listRef} />
-  }
+  const renderItem: ListRenderItem<CocktailDetail> = useCallback(({ item }) => {
+    return <FavoriteItem shouldAnimateRemove item={item} isFavorite listRef={listRef} />
+  }, [])
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabPress', (e) => {
@@ -65,7 +63,7 @@ export default function Index() {
             height: windowSize.height - tabBarHeight - insets.top - insets.bottom,
             width: windowSize.width - insets.left - insets.right,
           }}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => `favorite-${item.id}`}
           data={favorites}
           ItemSeparatorComponent={Separator}
           renderItem={renderItem}
