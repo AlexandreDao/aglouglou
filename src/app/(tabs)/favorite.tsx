@@ -12,20 +12,20 @@ import { TabParamList } from '@/types/navigation'
 import Separator from '@/components/ui/Separator'
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: BACKGROUND_COLOR,
-  },
   activityContainer: {
+    alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
   },
-  fallbackText: {
-    color: TEXT_COLOR,
+  container: {
+    backgroundColor: BACKGROUND_COLOR,
+    flex: 1,
   },
   contentContainer: {
     paddingBottom: Platform.select({ ios: 60, android: 10 }),
+  },
+  fallbackText: {
+    color: TEXT_COLOR,
   },
 })
 

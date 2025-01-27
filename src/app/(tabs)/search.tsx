@@ -28,8 +28,31 @@ import useFavoritesStore from '@/store/favoritesStore'
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: BACKGROUND_COLOR,
+    flex: 1,
+  },
+  contentContainer: {
+    paddingBottom: Platform.select({ ios: 50, android: 0 }),
+  },
+  empty: {},
+  notFoundText: {
+    color: TEXT_COLOR,
+    paddingHorizontal: 16,
+  },
+  pressed: {
+    opacity: 0.8,
+  },
+  recentSearchContainer: {
+    alignItems: 'center',
+    backgroundColor: BACKGROUND_COLOR,
+    flexDirection: 'row',
+    gap: 12,
+    padding: 16,
+  },
+  recentSearchText: {
+    color: TEXT_COLOR,
+    flex: 1,
+    fontSize: 16,
   },
   resultContainer: {
     flex: 1,
@@ -37,31 +60,8 @@ const styles = StyleSheet.create({
   title: {
     color: TEXT_COLOR,
     fontSize: 20,
+    paddingHorizontal: 16,
     paddingVertical: 8,
-    paddingHorizontal: 16,
-  },
-  contentContainer: {
-    paddingBottom: Platform.select({ ios: 50, android: 0 }),
-  },
-  recentSearchContainer: {
-    padding: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    backgroundColor: BACKGROUND_COLOR,
-  },
-  recentSearchText: {
-    color: TEXT_COLOR,
-    fontSize: 16,
-    flex: 1,
-  },
-  notFoundText: {
-    color: TEXT_COLOR,
-    paddingHorizontal: 16,
-  },
-  empty: {},
-  pressed: {
-    opacity: 0.8,
   },
 })
 

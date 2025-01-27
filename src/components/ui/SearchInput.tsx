@@ -13,29 +13,29 @@ interface SearchInputProps {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
     gap: 8,
   },
-  input: {
-    flex: 1,
-    borderWidth: 2,
-    borderColor: ACTIVE_COLOR,
-    color: TEXT_COLOR,
-    backgroundColor: TAB_BAR_BACKGROUND_COLOR,
-    marginVertical: 8,
-    height: 48,
-    paddingHorizontal: 8,
-    borderRadius: 14,
-  },
   iconContainer: {
-    width: 48,
-    height: 48,
+    alignItems: 'center',
+    borderColor: ACTIVE_COLOR,
     borderRadius: 24,
     borderWidth: 2,
-    borderColor: ACTIVE_COLOR,
-    alignItems: 'center',
+    height: 48,
     justifyContent: 'center',
+    width: 48,
+  },
+  input: {
+    backgroundColor: TAB_BAR_BACKGROUND_COLOR,
+    borderColor: ACTIVE_COLOR,
+    borderRadius: 14,
+    borderWidth: 2,
+    color: TEXT_COLOR,
+    flex: 1,
+    height: 48,
+    marginVertical: 8,
+    paddingHorizontal: 8,
   },
 })
 

@@ -1,4 +1,4 @@
-import React, { useRef, forwardRef, useState, useEffect, useMemo, memo, useImperativeHandle, useCallback } from 'react'
+import React, { useRef, forwardRef, useState, useEffect, useMemo, memo, useImperativeHandle } from 'react'
 import { View, Text, StyleSheet, useWindowDimensions, BackHandler, NativeEventSubscription } from 'react-native'
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import { CocktailDetail } from '@/types/cocktail'
@@ -13,18 +13,20 @@ export interface DetailsRef {
 }
 
 const styles = StyleSheet.create({
+  bottomSheetBackground: {
+    backgroundColor: BACKGROUND_COLOR,
+  },
+  bottomSheetHandleIndicator: {
+    backgroundColor: INACTIVE_COLOR,
+  },
   contentContainer: {
     backgroundColor: BACKGROUND_COLOR,
   },
-  image: {
-    height: 300,
-    width: '100%',
-  },
-  textContainer: {
-    paddingTop: 12,
-    paddingHorizontal: 16,
-    paddingBottom: 28,
-    gap: 12,
+  fallback: {
+    color: TEXT_COLOR,
+    fontSize: 14,
+    fontStyle: 'italic',
+    lineHeight: 24,
   },
   h1: {
     color: TEXT_COLOR,
@@ -34,22 +36,20 @@ const styles = StyleSheet.create({
     color: TEXT_COLOR,
     fontSize: 20,
   },
+  image: {
+    height: 300,
+    width: '100%',
+  },
   regular: {
     color: TEXT_COLOR,
     fontSize: 14,
     lineHeight: 24,
   },
-  fallback: {
-    color: TEXT_COLOR,
-    fontSize: 14,
-    lineHeight: 24,
-    fontStyle: 'italic',
-  },
-  bottomSheetBackground: {
-    backgroundColor: BACKGROUND_COLOR,
-  },
-  bottomSheetHandleIndicator: {
-    backgroundColor: INACTIVE_COLOR,
+  textContainer: {
+    gap: 12,
+    paddingBottom: 28,
+    paddingHorizontal: 16,
+    paddingTop: 12,
   },
 })
 

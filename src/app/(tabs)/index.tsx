@@ -13,26 +13,26 @@ import useFavoritesStore from '@/store/favoritesStore'
 import Separator from '@/components/ui/Separator'
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: BACKGROUND_COLOR,
-  },
   activityContainer: {
-    flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: BACKGROUND_COLOR,
+    flex: 1,
+    justifyContent: 'center',
   },
-  loading: {
-    padding: 16,
-    textAlign: 'center',
-    color: TEXT_COLOR,
+  container: {
+    backgroundColor: BACKGROUND_COLOR,
+    flex: 1,
+  },
+  contentContainer: {
+    paddingBottom: Platform.select({ ios: 60, android: 10 }),
   },
   fallbackText: {
     color: TEXT_COLOR,
   },
-  contentContainer: {
-    paddingBottom: Platform.select({ ios: 60, android: 10 }),
+  loading: {
+    color: TEXT_COLOR,
+    padding: 16,
+    textAlign: 'center',
   },
 })
 
@@ -99,7 +99,7 @@ export default function Index() {
           onEndReached={() => {
             if (!isFetching && hasNextPage) {
               setIsFetchingNext(true)
-              fetchNextPage()
+              void fetchNextPage()
             }
           }}
           ListFooterComponent={isFetchingNext ? <Text style={styles.loading}>Loading more...</Text> : null}

@@ -15,7 +15,7 @@ const useRecentSearchStore = create<RecentSearchesState>()(
     persist(
       (set) => ({
         recentSearches: [],
-        addToRecentSearches: (searchQuery) =>
+        addToRecentSearches: (searchQuery) => {
           set(
             produce((state: RecentSearchesState) => {
               if (state.recentSearches.includes(searchQuery)) {
@@ -24,7 +24,8 @@ const useRecentSearchStore = create<RecentSearchesState>()(
               state.recentSearches.unshift(searchQuery)
               state.recentSearches.splice(MAX_RECENT_SEARCHES)
             })
-          ),
+          )
+        },
       }),
       {
         name: 'recentSearchStore',

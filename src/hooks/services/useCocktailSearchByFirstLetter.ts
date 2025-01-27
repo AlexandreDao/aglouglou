@@ -1,4 +1,5 @@
 import useCocktailApi from '@/hooks/services/useCocktailApi'
+import { CocktailSearchResult } from '@/types/cocktail'
 import { mapCocktailSearchResultToCocktailItems } from '@/utils/mapper/cocktailApiMapper'
 import { useInfiniteQuery } from '@tanstack/react-query'
 
@@ -7,11 +8,11 @@ const firstLetterAsciiCode = 'a'.charCodeAt(0)
 const lastLetterAsciiCode = 'z'.charCodeAt(0)
 
 const useFetchByFirstLetter = async ({ pageParam = firstLetterAsciiCode }) => {
-  const { get } = useCocktailApi()
+  const axios = useCocktailApi()
 
   try {
     const letter = String.fromCharCode(pageParam)
-    const { data } = await get(`search.php?f=${letter}`)
+    const { data } = await axios.get<CocktailSearchResult>(`search.php?f=${letter}`)
 
     return { drinks: mapCocktailSearchResultToCocktailItems(data), letter }
   } catch (error) {
@@ -27,7 +28,7 @@ const useCocktailSearchByFirstLetter = () => {
     queryKey,
     queryFn: useFetchByFirstLetter,
     initialPageParam: firstLetterAsciiCode,
-    getNextPageParam: (lastPage, allPages, lastPageParam) => {
+    getNextPageParam: (_lastPage, _allPages, lastPageParam) => {
       const nextLetterAsciiCode = lastPageParam + 1
 
       return nextLetterAsciiCode <= lastLetterAsciiCode ? nextLetterAsciiCode : undefined

@@ -1,11 +1,14 @@
 {
   "extends": "expo/tsconfig.base",
+  "strict": true,
   "compilerOptions": {
     "strict": true,
+    "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "moduleSuffixes": [".android", ".ios", ""]
   },
   "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"],
-  "exclude": ["node_modules", "app-example", ".eslintrc.js"]
+  "exclude": ["node_modules", "app-example", ".eslintrc.js", "jestSetup.js"]
 }

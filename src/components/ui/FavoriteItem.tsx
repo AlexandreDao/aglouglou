@@ -20,26 +20,26 @@ const blurhash = 'LKN]Rv%2Tw=w]~RBVZRi};RPxuwH'
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: 16,
-    paddingLeft: 16,
-    overflow: 'hidden',
     backgroundColor: BACKGROUND_COLOR,
+    flexDirection: 'row',
+    gap: 16,
+    justifyContent: 'space-between',
+    overflow: 'hidden',
+    paddingLeft: 16,
   },
+  empty: {},
   image: {
-    width: 100,
-    height: 100,
     borderRadius: 14,
+    height: 100,
+    width: 100,
+  },
+  pressed: {
+    opacity: 0.8,
   },
   text: {
     color: TEXT_COLOR,
     flex: 1,
-  },
-  empty: {},
-  pressed: {
-    opacity: 0.8,
   },
 })
 
