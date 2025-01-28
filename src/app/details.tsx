@@ -1,13 +1,22 @@
 import React, { useRef, forwardRef, useState, useEffect, useMemo, memo, useImperativeHandle } from 'react'
-import { View, Text, StyleSheet, useWindowDimensions, BackHandler, NativeEventSubscription } from 'react-native'
+import { View, Text, StyleSheet, useWindowDimensions, BackHandler, NativeEventSubscription, Alert } from 'react-native'
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import { CocktailDetail } from '@/types/cocktail'
 import { Image } from 'expo-image'
 import { capitalizeFirstLetter } from '@/utils/stringUtils'
-import { BACKGROUND_COLOR, INACTIVE_COLOR, TEXT_COLOR } from '@/constants/colors'
+import {
+  ALCOHOLIC_CATEGORY_COLOR,
+  BACKGROUND_COLOR,
+  DRINK_CATEGORY_COLOR,
+  INACTIVE_COLOR,
+  TEXT_COLOR,
+} from '@/constants/colors'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import useHistoryStore from '@/store/historyStore'
 import { useNavigation } from 'expo-router'
+import FavoriteButton from '@/components/ui/FavoriteButton'
+import Category from '@/components/ui/Category'
+import useFavoritesStore from '@/store/favoritesStore'
 
 export interface DetailsRef {
   open: (detail: CocktailDetail) => void
@@ -21,6 +30,12 @@ const styles = StyleSheet.create({
   bottomSheetHandleIndicator: {
     backgroundColor: INACTIVE_COLOR,
   },
+  categoryContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 6,
+    paddingBottom: 10,
+  },
   contentContainer: {
     backgroundColor: BACKGROUND_COLOR,
   },
@@ -32,6 +47,7 @@ const styles = StyleSheet.create({
   },
   h1: {
     color: TEXT_COLOR,
+    flex: 1,
     fontSize: 28,
   },
   h2: {
@@ -47,11 +63,17 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 24,
   },
+
   textContainer: {
     gap: 12,
     paddingBottom: 28,
     paddingHorizontal: 16,
-    paddingTop: 12,
+  },
+  titleContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 8,
+    justifyContent: 'space-between',
   },
 })
 
@@ -66,6 +88,10 @@ const Details = forwardRef((props, ref) => {
   const snapPoints = useMemo(() => [windowHeight - insets.top], [windowHeight, insets.top])
   const addToHistory = useHistoryStore((state) => state.addToHistory)
   const navigationState = useNavigation().getState()
+  const favorites = useFavoritesStore((state) => state.favorites)
+  const isFavorite = favorites.findIndex((favorite) => favorite.id === cocktailDetail?.id) !== -1
+  const addToFavorite = useFavoritesStore((state) => state.addToFavorite)
+  const removeFromFavorite = useFavoritesStore((state) => state.removeFromFavorite)
 
   const backAction = () => {
     bottomSheetModalRef.current?.close()
@@ -104,12 +130,35 @@ const Details = forwardRef((props, ref) => {
         }
       }}
     >
-      <BottomSheetScrollView style={styles.contentContainer}>
+      <BottomSheetScrollView style={styles.contentContainer} keyboardShouldPersistTaps>
         {cocktailDetail && (
           <>
             <Image style={styles.image} source={cocktailDetail.thumbnail} contentFit="cover" allowDownscaling />
             <View style={styles.textContainer}>
-              <Text style={styles.h1}>{cocktailDetail.name}</Text>
+              <View>
+                <View style={styles.titleContainer}>
+                  <Text style={styles.h1}>{cocktailDetail.name}</Text>
+                  <FavoriteButton
+                    isFavorite={isFavorite}
+                    favorite={() => addToFavorite(cocktailDetail)}
+                    unfavorite={() => {
+                      removeFromFavorite(cocktailDetail.id)
+                    }}
+                  />
+                </View>
+                <View style={styles.categoryContainer}>
+                  <Category
+                    title={cocktailDetail.alcoholic}
+                    backgroundColor={ALCOHOLIC_CATEGORY_COLOR}
+                    textStyle={styles.regular}
+                  />
+                  <Category
+                    title={cocktailDetail.category}
+                    backgroundColor={DRINK_CATEGORY_COLOR}
+                    textStyle={styles.regular}
+                  />
+                </View>
+              </View>
               <Text style={styles.h2}>Ingredients</Text>
               {ingredients.length ? (
                 <Text style={styles.regular}>

@@ -6,8 +6,8 @@ import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } fr
 
 interface FavoriteButtonProps {
   isFavorite: boolean
-  favorite: () => void
-  unfavorite: () => void
+  favorite?: () => void
+  unfavorite?: () => void
 }
 
 const styles = StyleSheet.create({
@@ -31,15 +31,17 @@ function FavoriteButton({ isFavorite, favorite, unfavorite }: FavoriteButtonProp
       style={styles.pressable}
       onPress={() => {
         if (isFavorite) {
-          unfavorite()
+          unfavorite?.()
         } else {
-          rotation.value = withTiming(360, { duration: 600 }, () => {
-            rotation.value = 0
-          })
-          yPosition.value = withSpring(-20, { duration: 600 }, () => {
-            yPosition.value = 0
-          })
-          favorite()
+          if (favorite) {
+            rotation.value = withTiming(360, { duration: 600 }, () => {
+              rotation.value = 0
+            })
+            yPosition.value = withSpring(-20, { duration: 600 }, () => {
+              yPosition.value = 0
+            })
+            favorite()
+          }
         }
       }}
     >
