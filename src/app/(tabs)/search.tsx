@@ -1,7 +1,17 @@
 import { BACKGROUND_COLOR, TEXT_COLOR } from '@/constants/colors'
 import { FlashList, ListRenderItem } from '@shopify/flash-list'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Keyboard, Platform, Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native'
+import {
+  InteractionManager,
+  Keyboard,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import SearchInput from '@/components/ui/SearchInput'
 import useRecentSearchStore from '@/store/recentSearchStore'
@@ -116,10 +126,10 @@ export default function Index() {
                 <Pressable
                   key={`recent-search-${index}`}
                   onPress={() => {
+                    Keyboard.dismiss()
                     setSearchQuery(recentSearch)
                     setSubmittedQuery(recentSearch)
                     addToRecentSearches(recentSearch)
-                    Keyboard.dismiss()
                   }}
                   style={({ pressed }) => {
                     if (pressed) {

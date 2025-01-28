@@ -1,13 +1,15 @@
-import { Text, StyleSheet, Alert, Pressable } from 'react-native'
+import { Text, StyleSheet, Alert, Pressable, View } from 'react-native'
 import React, { RefObject, useEffect } from 'react'
 import { Image } from 'expo-image'
 import useFavoriteStore from '@/store/favoritesStore'
 import { CocktailDetail } from '@/types/cocktail'
-import { BACKGROUND_COLOR, TEXT_COLOR } from '@/constants/colors'
+import { ALCOHOLIC_CATEGORY_COLOR, BACKGROUND_COLOR, DRINK_CATEGORY_COLOR, TEXT_COLOR } from '@/constants/colors'
 import FavoriteButton from '@/components/ui/FavoriteButton'
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { useDetailsBottomSheet } from '@/hooks/useDetailsBottomSheet'
 import { FlashList } from '@shopify/flash-list'
+import { capitalizeFirstLetter } from '@/utils/stringUtils'
+import Category from './Category'
 
 interface FavItemProps {
   item: CocktailDetail
@@ -19,6 +21,14 @@ interface FavItemProps {
 const blurhash = 'LKN]Rv%2Tw=w]~RBVZRi};RPxuwH'
 
 const styles = StyleSheet.create({
+  categoryContainer: {
+    alignContent: 'flex-end',
+    alignItems: 'flex-end',
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 4,
+  },
   container: {
     alignItems: 'center',
     backgroundColor: BACKGROUND_COLOR,
@@ -29,10 +39,22 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
   },
   empty: {},
+  flexContainer: {
+    flex: 1,
+  },
   image: {
     borderRadius: 14,
     height: 100,
     width: 100,
+  },
+  infoContainer: {
+    flex: 1,
+    paddingVertical: 8,
+  },
+  ingredient: {
+    color: TEXT_COLOR,
+    flex: 1,
+    fontSize: 12,
   },
   pressed: {
     opacity: 0.8,
@@ -40,6 +62,7 @@ const styles = StyleSheet.create({
   text: {
     color: TEXT_COLOR,
     flex: 1,
+    fontSize: 16,
   },
 })
 
@@ -96,7 +119,18 @@ function FavoriteItem({ item, isFavorite, listRef, shouldAnimateRemove = false }
           transition={1000}
           allowDownscaling
         />
-        <Text style={styles.text}>{item.name}</Text>
+        <View style={styles.infoContainer}>
+          <View style={styles.flexContainer}>
+            <Text style={styles.text}>{item.name}</Text>
+            <Text style={styles.ingredient} ellipsizeMode="tail" numberOfLines={1}>
+              {item.ingredients.map((i) => capitalizeFirstLetter(i.split(' ').at(-1) || '')).join(', ')}
+            </Text>
+          </View>
+          <View style={styles.categoryContainer}>
+            <Category title={item.alcoholic} backgroundColor={ALCOHOLIC_CATEGORY_COLOR} />
+            <Category title={item.category} backgroundColor={DRINK_CATEGORY_COLOR} />
+          </View>
+        </View>
         <FavoriteButton
           isFavorite={isFavorite}
           favorite={() => {

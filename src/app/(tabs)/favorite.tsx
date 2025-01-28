@@ -1,11 +1,11 @@
 import FavoriteItem from '@/components/ui/FavoriteItem'
-import { BACKGROUND_COLOR, TEXT_COLOR } from '@/constants/colors'
+import { ACTIVE_COLOR, BACKGROUND_COLOR, TEXT_COLOR } from '@/constants/colors'
 import useSortedFavorites from '@/hooks/useSortedFavorites'
 import { CocktailDetail } from '@/types/cocktail'
 import { BottomTabNavigationProp, useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { FlashList, ListRenderItem } from '@shopify/flash-list'
 import { useCallback, useEffect, useRef } from 'react'
-import { Platform, StyleSheet, Text, useWindowDimensions, View } from 'react-native'
+import { Button, Platform, StyleSheet, Text, useWindowDimensions, View } from 'react-native'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { TabParamList } from '@/types/navigation'
 import Separator from '@/components/ui/Separator'
@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
   activityContainer: {
     alignItems: 'center',
     flex: 1,
+    gap: 12,
     justifyContent: 'center',
   },
   container: {
@@ -27,6 +28,10 @@ const styles = StyleSheet.create({
   },
   fallbackText: {
     color: TEXT_COLOR,
+  },
+  row: {
+    alignItems: 'center',
+    flexDirection: 'row',
   },
 })
 
@@ -72,6 +77,10 @@ export default function Index() {
       ) : (
         <View style={styles.activityContainer}>
           <Text style={styles.fallbackText}>Empty favorite</Text>
+          <View style={styles.row}>
+            <Text style={styles.fallbackText}>Go to </Text>
+            <Button title="Home" color={ACTIVE_COLOR} onPress={() => navigation.navigate('index')} />
+          </View>
         </View>
       )}
     </SafeAreaView>

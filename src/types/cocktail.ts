@@ -7,9 +7,10 @@ export interface CocktailItem {
 type NullableString = string | null
 
 export interface CocktailDetail extends CocktailItem {
-  alcoholic: boolean
+  alcoholic: string
   instructions: string
   ingredients: string[]
+  category: string
   dateModified: NullableString
 }
 

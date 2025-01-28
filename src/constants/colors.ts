@@ -9,3 +9,7 @@ export const INACTIVE_COLOR = '#A7989D'
 export const TEXT_COLOR = 'white'
 
 export const SEPARATOR_COLOR = 'white'
+
+export const ALCOHOLIC_CATEGORY_COLOR = '#13432F'
+
+export const DRINK_CATEGORY_COLOR = '#acab00'

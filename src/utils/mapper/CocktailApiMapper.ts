@@ -22,7 +22,7 @@ export const mapCocktailDrinkToCocktailItem = (drink: CocktailSearchDrink): Cock
 export const mapCocktailDrinkToCocktailDetail = (drink: CocktailSearchDrink): CocktailDetail => {
   const cocktailDetail = mapCocktailDrinkToCocktailItem(drink) as CocktailDetail
 
-  cocktailDetail.alcoholic = drink.strAlcoholic === 'Alcoholic'
+  cocktailDetail.alcoholic = drink.strAlcoholic
   cocktailDetail.instructions = drink.strInstructions
   // Concatenate measure and ingredient props and map them to a single array
   cocktailDetail.ingredients = Array.from({ length: 15 }, (x, i) => i + 1)
@@ -33,6 +33,7 @@ export const mapCocktailDrinkToCocktailDetail = (drink: CocktailSearchDrink): Co
       return (measure ? `${measure} ` : '') + (ingredient ? ingredient : '')
     })
     .filter((ingredient) => ingredient !== '')
+  cocktailDetail.category = drink.strCategory
   cocktailDetail.dateModified = drink.dateModified ? parseDate(drink.dateModified).toISOString() : null
   return cocktailDetail
 }

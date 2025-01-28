@@ -1,4 +1,4 @@
-import { View, TextInput, Pressable, StyleSheet, InteractionManager, Keyboard } from 'react-native'
+import { View, TextInput, Pressable, StyleSheet } from 'react-native'
 import React, { useCallback, useRef } from 'react'
 import { ACTIVE_COLOR, TAB_BAR_BACKGROUND_COLOR, TEXT_COLOR } from '@/constants/colors'
 import { IconSymbol } from '@/components/ui/IconSymbol'

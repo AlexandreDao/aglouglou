@@ -9,7 +9,7 @@
     "test-debug": "jest --watchAll",
     "test": "jest --coverage=false",
     "test-coverage": "jest",
-    "update-snapshots": "jest --updateSnapshot --coverage=false",
+    "test-update": "jest --updateSnapshot --coverage=false",
     "lint": "expo lint",
     "lint-fix": "prettier . --write",
     "e2e": "maestro test e2e",
