@@ -156,8 +156,8 @@ export default function Index() {
             data={results}
             renderItem={renderItem}
             ItemSeparatorComponent={Separator}
-            ListHeaderComponent={<Text style={styles.title}>Results</Text>}
-            ListEmptyComponent={() => <Text style={styles.notFoundText}>No result found for "{submittedQuery}"</Text>}
+            ListHeaderComponent={<Text style={styles.title}>Results for "{submittedQuery}"</Text>}
+            ListEmptyComponent={() => <Text style={styles.notFoundText}>No result found</Text>}
           />
         )}
       </View>

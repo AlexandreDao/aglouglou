@@ -21,7 +21,7 @@ export interface CocktailSearchDrink {
   strVideo: NullableString
   strCategory: string
   strIBA: NullableString
-  strAlcoholic: 'Alcoholic' | 'Non alcoholic'
+  strAlcoholic: 'Alcoholic' | 'Non alcoholic' | 'Optional alcohol'
   strGlass: string
   strInstructions: string
   strInstructionsES: NullableString

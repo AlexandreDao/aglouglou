@@ -90,7 +90,7 @@ function FavoriteItem({ item, isFavorite, listRef, shouldAnimateRemove = false }
       <Animated.View style={[styles.container, animatedStyle]}>
         <Image
           style={styles.image}
-          source={item.thumbnail}
+          source={`${item.thumbnail}/preview`}
           placeholder={{ blurhash }}
           contentFit="cover"
           transition={1000}
