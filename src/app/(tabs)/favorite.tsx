@@ -7,9 +7,10 @@ import { FlashList, ListRenderItem } from '@shopify/flash-list'
 import { useCallback, useEffect, useRef } from 'react'
 import { Platform, StyleSheet, Text, useWindowDimensions, View } from 'react-native'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useNavigation, useIsFocused } from '@react-navigation/native'
 import { TabParamList } from '@/types/navigation'
 import Separator from '@/components/ui/Separator'
+import { useNavigation } from 'expo-router'
+import { useIsFocused } from '@react-navigation/native'
 
 const styles = StyleSheet.create({
   activityContainer: {

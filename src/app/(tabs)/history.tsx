@@ -1,16 +1,16 @@
 import FavoriteItem from '@/components/ui/FavoriteItem'
-import useCocktailSearchByFirstLetter from '@/hooks/services/useCocktailSearchByFirstLetter'
-import { View, ActivityIndicator, StyleSheet, Text, Platform, useWindowDimensions } from 'react-native'
+import { View, StyleSheet, Text, Platform, useWindowDimensions } from 'react-native'
 import { FlashList, ListRenderItem } from '@shopify/flash-list'
-import { BACKGROUND_COLOR, INACTIVE_COLOR, TEXT_COLOR } from '@/constants/colors'
+import { BACKGROUND_COLOR, TEXT_COLOR } from '@/constants/colors'
 import { CocktailDetail } from '@/types/cocktail'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { BottomTabNavigationProp, useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { useIsFocused } from '@react-navigation/native'
 import { TabParamList } from '@/types/navigation'
 import useFavoritesStore from '@/store/favoritesStore'
 import Separator from '@/components/ui/Separator'
+import useHistoryStore from '@/store/historyStore'
 import { useNavigation } from 'expo-router'
 
 const styles = StyleSheet.create({
@@ -30,19 +30,11 @@ const styles = StyleSheet.create({
   fallbackText: {
     color: TEXT_COLOR,
   },
-  loading: {
-    color: TEXT_COLOR,
-    padding: 16,
-    textAlign: 'center',
-  },
 })
 
 export default function Index() {
-  const { data, isLoading, fetchNextPage, isFetchingNextPage, isFetching, hasNextPage } =
-    useCocktailSearchByFirstLetter()
-  const cocktailList = data?.pages.flatMap(({ drinks }) => drinks) || []
+  const history = useHistoryStore((state) => state.history)
   const favorites = useFavoritesStore((state) => state.favorites)
-  const [isFetchingNext, setIsFetchingNext] = useState(false)
   const insets = useSafeAreaInsets()
   const tabBarHeight = useBottomTabBarHeight()
   const windowSize = useWindowDimensions()
@@ -60,10 +52,6 @@ export default function Index() {
   )
 
   useEffect(() => {
-    setIsFetchingNext(false)
-  }, [isFetchingNextPage])
-
-  useEffect(() => {
     const unsubscribe = navigation.addListener('tabPress', (e) => {
       if (isFocused) {
         listRef.current?.scrollToOffset({ animated: false, offset: 0 })
@@ -73,17 +61,9 @@ export default function Index() {
     return unsubscribe
   }, [navigation, isFocused])
 
-  if (isLoading) {
-    return (
-      <View style={styles.activityContainer}>
-        <ActivityIndicator size="large" color={INACTIVE_COLOR} />
-      </View>
-    )
-  }
-
   return (
     <SafeAreaView style={styles.container}>
-      {cocktailList.length ? (
+      {history.length ? (
         <FlashList
           ref={listRef}
           contentContainerStyle={styles.contentContainer}
@@ -92,22 +72,14 @@ export default function Index() {
             height: windowSize.height - tabBarHeight - insets.top - insets.bottom,
             width: windowSize.width - insets.left - insets.right,
           }}
-          keyExtractor={(item) => `home-${item.id}`}
-          data={cocktailList}
+          keyExtractor={(item, index) => `history-${item.id}-${index}`}
+          data={history}
           ItemSeparatorComponent={Separator}
           renderItem={renderItem}
-          onEndReachedThreshold={0.5}
-          onEndReached={() => {
-            if (!isFetching && hasNextPage) {
-              setIsFetchingNext(true)
-              void fetchNextPage()
-            }
-          }}
-          ListFooterComponent={isFetchingNext ? <Text style={styles.loading}>Loading more...</Text> : null}
         />
       ) : (
         <View style={styles.activityContainer}>
-          <Text style={styles.fallbackText}>Failed to fetch</Text>
+          <Text style={styles.fallbackText}>Empty history</Text>
         </View>
       )}
     </SafeAreaView>

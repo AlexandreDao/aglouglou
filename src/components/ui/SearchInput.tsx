@@ -1,7 +1,8 @@
-import { View, TextInput, Pressable, StyleSheet } from 'react-native'
-import React, { useRef } from 'react'
+import { View, TextInput, Pressable, StyleSheet, InteractionManager, Keyboard } from 'react-native'
+import React, { useCallback, useRef } from 'react'
 import { ACTIVE_COLOR, TAB_BAR_BACKGROUND_COLOR, TEXT_COLOR } from '@/constants/colors'
 import { IconSymbol } from '@/components/ui/IconSymbol'
+import { useFocusEffect } from 'expo-router'
 
 interface SearchInputProps {
   onSubmitEditing?: (value: string) => void
@@ -50,7 +51,16 @@ const styles = StyleSheet.create({
 
 function SearchInput({ onSubmitEditing, onFocus, onBlur, searchQuery, setSearchQuery }: SearchInputProps) {
   const inputRef = useRef<TextInput>(null)
-  console.log(searchQuery)
+
+  useFocusEffect(
+    useCallback(() => {
+      const timer = setTimeout(() => {
+        inputRef.current?.focus()
+      }, 100)
+      return () => clearTimeout(timer)
+    }, [])
+  )
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -61,6 +71,7 @@ function SearchInput({ onSubmitEditing, onFocus, onBlur, searchQuery, setSearchQ
         onSubmitEditing={(e) => {
           onSubmitEditing?.(e.nativeEvent.text)
         }}
+        submitBehavior="blurAndSubmit"
         onChangeText={setSearchQuery}
         placeholder="Search"
         placeholderTextColor={ACTIVE_COLOR}
@@ -68,11 +79,9 @@ function SearchInput({ onSubmitEditing, onFocus, onBlur, searchQuery, setSearchQ
         style={styles.input}
         enterKeyHint="search"
         inputMode="search"
-        maxLength={124}
+        maxLength={256}
         returnKeyType="search"
         selectTextOnFocus
-        autoFocus
-        clearButtonMode="unless-editing"
       />
       {!searchQuery?.trim() ? (
         <Pressable style={styles.iconContainer}>

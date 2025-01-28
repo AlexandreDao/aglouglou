@@ -6,6 +6,8 @@ import { Image } from 'expo-image'
 import { capitalizeFirstLetter } from '@/utils/stringUtils'
 import { BACKGROUND_COLOR, INACTIVE_COLOR, TEXT_COLOR } from '@/constants/colors'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import useHistoryStore from '@/store/historyStore'
+import { useNavigation } from 'expo-router'
 
 export interface DetailsRef {
   open: (detail: CocktailDetail) => void
@@ -62,6 +64,8 @@ const Details = forwardRef((props, ref) => {
   const { height: windowHeight } = useWindowDimensions()
   const backHandler = useRef<NativeEventSubscription>()
   const snapPoints = useMemo(() => [windowHeight - insets.top], [windowHeight, insets.top])
+  const addToHistory = useHistoryStore((state) => state.addToHistory)
+  const navigationState = useNavigation().getState()
 
   const backAction = () => {
     bottomSheetModalRef.current?.close()
@@ -71,6 +75,9 @@ const Details = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     open: (detail: CocktailDetail) => {
       setCocktailDetail(detail)
+      if (navigationState?.routes[0].state?.routes[navigationState?.routes[0].state?.index ?? 0].name !== 'history') {
+        addToHistory(detail)
+      }
       bottomSheetModalRef.current?.expand()
     },
     close: () => bottomSheetModalRef.current?.close(),

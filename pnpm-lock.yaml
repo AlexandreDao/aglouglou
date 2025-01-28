@@ -92,6 +92,9 @@ importers:
       react-native-gesture-handler:
         specifier: ~2.20.2
         version: 2.20.2(react-native@0.76.6(@babel/core@7.25.9)(@babel/preset-env@7.26.0(@babel/core@7.25.9))(@react-native-community/cli-server-api@15.1.3)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)
+      react-native-keyboard-controller:
+        specifier: ^1.16.0
+        version: 1.16.0(react-native-reanimated@3.16.6(@babel/core@7.25.9)(react-native@0.76.6(@babel/core@7.25.9)(@babel/preset-env@7.26.0(@babel/core@7.25.9))(@react-native-community/cli-server-api@15.1.3)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1))(react-native@0.76.6(@babel/core@7.25.9)(@babel/preset-env@7.26.0(@babel/core@7.25.9))(@react-native-community/cli-server-api@15.1.3)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)
       react-native-mmkv:
         specifier: ~3.2.0
         version: 3.2.0(react-native@0.76.6(@babel/core@7.25.9)(@babel/preset-env@7.26.0(@babel/core@7.25.9))(@react-native-community/cli-server-api@15.1.3)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)
@@ -4837,6 +4840,13 @@ packages:
     peerDependencies:
       react: '>=18.2.0'
       react-native: '>=0.73.0'
+
+  react-native-keyboard-controller@1.16.0:
+    resolution: {integrity: sha512-UDRimboBsPsl5fGSM7YvHFvsKj6IxLX6EGHRJDSxD8UrbEJoxh6Me7/3p1BKFv3BG2+DrJadNuUkwVda8FK3LQ==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+      react-native-reanimated: '>=3.0.0'
 
   react-native-mmkv@3.2.0:
     resolution: {integrity: sha512-9y7K//1MaU46TFrXkyU0wT5VGk9Y2FDLFV6NPl+z3jTbm2G7SC1UIxneF6CfhSmBX5CfKze9SO7kwDuRx7flpQ==}
@@ -12086,6 +12096,13 @@ snapshots:
     dependencies:
       react: 18.3.1
       react-native: 0.76.6(@babel/core@7.25.9)(@babel/preset-env@7.26.0(@babel/core@7.25.9))(@react-native-community/cli-server-api@15.1.3)(@types/react@18.3.18)(react@18.3.1)
+
+  react-native-keyboard-controller@1.16.0(react-native-reanimated@3.16.6(@babel/core@7.25.9)(react-native@0.76.6(@babel/core@7.25.9)(@babel/preset-env@7.26.0(@babel/core@7.25.9))(@react-native-community/cli-server-api@15.1.3)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1))(react-native@0.76.6(@babel/core@7.25.9)(@babel/preset-env@7.26.0(@babel/core@7.25.9))(@react-native-community/cli-server-api@15.1.3)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1):
+    dependencies:
+      react: 18.3.1
+      react-native: 0.76.6(@babel/core@7.25.9)(@babel/preset-env@7.26.0(@babel/core@7.25.9))(@react-native-community/cli-server-api@15.1.3)(@types/react@18.3.18)(react@18.3.1)
+      react-native-is-edge-to-edge: 1.1.6(react-native@0.76.6(@babel/core@7.25.9)(@babel/preset-env@7.26.0(@babel/core@7.25.9))(@react-native-community/cli-server-api@15.1.3)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)
+      react-native-reanimated: 3.16.6(@babel/core@7.25.9)(react-native@0.76.6(@babel/core@7.25.9)(@babel/preset-env@7.26.0(@babel/core@7.25.9))(@react-native-community/cli-server-api@15.1.3)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)
 
   react-native-mmkv@3.2.0(react-native@0.76.6(@babel/core@7.25.9)(@babel/preset-env@7.26.0(@babel/core@7.25.9))(@react-native-community/cli-server-api@15.1.3)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1):
     dependencies:

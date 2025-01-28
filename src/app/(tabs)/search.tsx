@@ -1,17 +1,7 @@
 import { BACKGROUND_COLOR, TEXT_COLOR } from '@/constants/colors'
 import { FlashList, ListRenderItem } from '@shopify/flash-list'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import {
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  useWindowDimensions,
-  View,
-} from 'react-native'
+import { Keyboard, Platform, Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import SearchInput from '@/components/ui/SearchInput'
 import useRecentSearchStore from '@/store/recentSearchStore'
@@ -25,6 +15,7 @@ import { useIsFocused } from '@react-navigation/native'
 import FavoriteItem from '@/components/ui/FavoriteItem'
 import Separator from '@/components/ui/Separator'
 import useFavoritesStore from '@/store/favoritesStore'
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller'
 
 const styles = StyleSheet.create({
   container: {
@@ -112,9 +103,13 @@ export default function Index() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.resultContainer}>
-        {isInputFocused ? (
-          <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={30}
+        style={styles.resultContainer}
+      >
+        <View style={styles.resultContainer}>
+          {isInputFocused ? (
             <ScrollView keyboardShouldPersistTaps="always">
               <Text style={styles.title}>Recent search</Text>
               {recentSearches.map((recentSearch, index) => (
@@ -123,6 +118,7 @@ export default function Index() {
                   onPress={() => {
                     setSearchQuery(recentSearch)
                     setSubmittedQuery(recentSearch)
+                    addToRecentSearches(recentSearch)
                     Keyboard.dismiss()
                   }}
                   style={({ pressed }) => {
@@ -142,35 +138,35 @@ export default function Index() {
                 </Pressable>
               ))}
             </ScrollView>
-          </KeyboardAvoidingView>
-        ) : isPlaceholderData ? null : (
-          <FlashList
-            ref={listRef}
-            contentContainerStyle={styles.contentContainer}
-            estimatedItemSize={100}
-            estimatedListSize={{
-              height: windowSize.height - tabBarHeight - insets.top - insets.bottom - 48 - 16,
-              width: windowSize.width - insets.left - insets.right,
-            }}
-            keyExtractor={(item) => `search-${submittedQuery}}-${item.id}`}
-            data={results}
-            renderItem={renderItem}
-            ItemSeparatorComponent={Separator}
-            ListHeaderComponent={<Text style={styles.title}>Results for "{submittedQuery}"</Text>}
-            ListEmptyComponent={() => <Text style={styles.notFoundText}>No result found</Text>}
-          />
-        )}
-      </View>
-      <SearchInput
-        onFocus={() => setIsInputFocused(true)}
-        onBlur={() => setIsInputFocused(false)}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        onSubmitEditing={(value) => {
-          setSubmittedQuery(value)
-          addToRecentSearches(value)
-        }}
-      />
+          ) : isPlaceholderData ? null : (
+            <FlashList
+              ref={listRef}
+              contentContainerStyle={styles.contentContainer}
+              estimatedItemSize={100}
+              estimatedListSize={{
+                height: windowSize.height - tabBarHeight - insets.top - insets.bottom - 48 - 16,
+                width: windowSize.width - insets.left - insets.right,
+              }}
+              keyExtractor={(item) => `search-${submittedQuery}}-${item.id}`}
+              data={results}
+              renderItem={renderItem}
+              ItemSeparatorComponent={Separator}
+              ListHeaderComponent={<Text style={styles.title}>Results for "{submittedQuery}"</Text>}
+              ListEmptyComponent={() => <Text style={styles.notFoundText}>No result found</Text>}
+            />
+          )}
+        </View>
+        <SearchInput
+          onFocus={() => setIsInputFocused(true)}
+          onBlur={() => setIsInputFocused(false)}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          onSubmitEditing={(value) => {
+            setSubmittedQuery(value)
+            addToRecentSearches(value)
+          }}
+        />
+      </KeyboardAvoidingView>
     </SafeAreaView>
   )
 }
