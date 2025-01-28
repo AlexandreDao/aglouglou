@@ -130,7 +130,7 @@ const Details = forwardRef((props, ref) => {
         }
       }}
     >
-      <BottomSheetScrollView style={styles.contentContainer} keyboardShouldPersistTaps>
+      <BottomSheetScrollView style={styles.contentContainer} keyboardShouldPersistTaps="always">
         {cocktailDetail && (
           <>
             <Image style={styles.image} source={cocktailDetail.thumbnail} contentFit="cover" allowDownscaling />

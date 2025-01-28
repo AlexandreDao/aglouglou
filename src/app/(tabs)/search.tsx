@@ -1,8 +1,8 @@
-import { BACKGROUND_COLOR, TEXT_COLOR } from '@/constants/colors'
+import { BACKGROUND_COLOR, INACTIVE_COLOR, TEXT_COLOR } from '@/constants/colors'
 import { FlashList, ListRenderItem } from '@shopify/flash-list'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import {
-  InteractionManager,
+  ActivityIndicator,
   Keyboard,
   Platform,
   Pressable,
@@ -28,6 +28,12 @@ import useFavoritesStore from '@/store/favoritesStore'
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller'
 
 const styles = StyleSheet.create({
+  activityContainer: {
+    alignItems: 'center',
+    backgroundColor: BACKGROUND_COLOR,
+    flex: 1,
+    justifyContent: 'center',
+  },
   container: {
     backgroundColor: BACKGROUND_COLOR,
     flex: 1,
@@ -148,7 +154,11 @@ export default function Index() {
                 </Pressable>
               ))}
             </ScrollView>
-          ) : isPlaceholderData ? null : (
+          ) : isPlaceholderData ? null : isFetching ? (
+            <View style={styles.activityContainer}>
+              <ActivityIndicator size="large" color={INACTIVE_COLOR} />
+            </View>
+          ) : (
             <FlashList
               ref={listRef}
               contentContainerStyle={styles.contentContainer}
