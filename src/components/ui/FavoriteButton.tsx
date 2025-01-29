@@ -8,15 +8,19 @@ interface FavoriteButtonProps {
   isFavorite: boolean
   favorite?: () => void
   unfavorite?: () => void
+  size?: number
 }
 
 const styles = StyleSheet.create({
   pressable: {
-    padding: 16,
+    alignItems: 'center',
+    height: 48,
+    justifyContent: 'center',
+    width: 48,
   },
 })
 
-function FavoriteButton({ isFavorite, favorite, unfavorite }: FavoriteButtonProps) {
+function FavoriteButton({ isFavorite, favorite, unfavorite, size = 32 }: FavoriteButtonProps) {
   const rotation = useSharedValue(0)
   const yPosition = useSharedValue(0)
   const animatedStyle = useAnimatedStyle(() => {
@@ -46,7 +50,7 @@ function FavoriteButton({ isFavorite, favorite, unfavorite }: FavoriteButtonProp
       }}
     >
       <Animated.View style={animatedStyle}>
-        <IconSymbol name="star.fill" size={32} color={isFavorite ? ACTIVE_COLOR : INACTIVE_COLOR} />
+        <IconSymbol name="star.fill" size={size} color={isFavorite ? ACTIVE_COLOR : INACTIVE_COLOR} />
       </Animated.View>
     </Pressable>
   )

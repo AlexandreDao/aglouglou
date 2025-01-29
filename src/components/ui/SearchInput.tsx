@@ -18,14 +18,17 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     height: 48,
     justifyContent: 'center',
-    position: 'absolute',
-    right: 0,
     width: 48,
   },
   container: {
     alignItems: 'center',
+    backgroundColor: TAB_BAR_BACKGROUND_COLOR,
+    borderColor: ACTIVE_COLOR,
+    borderRadius: 14,
+    borderWidth: 2,
+    flex: 1,
     flexDirection: 'row',
-    gap: 8,
+    marginVertical: 8,
   },
   iconContainer: {
     alignItems: 'center',
@@ -37,20 +40,27 @@ const styles = StyleSheet.create({
     width: 48,
   },
   input: {
-    backgroundColor: TAB_BAR_BACKGROUND_COLOR,
-    borderColor: ACTIVE_COLOR,
-    borderRadius: 14,
-    borderWidth: 2,
     color: TEXT_COLOR,
     flex: 1,
     height: 48,
-    marginVertical: 8,
+  },
+  inputCleared: {
     paddingHorizontal: 8,
+  },
+  inputDirty: {
+    paddingLeft: 8,
+  },
+  row: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 8,
+    justifyContent: 'center',
   },
 })
 
 function SearchInput({ onSubmitEditing, onFocus, onBlur, searchQuery, setSearchQuery }: SearchInputProps) {
   const inputRef = useRef<TextInput>(null)
+  const isSearchQueryCleared = !searchQuery?.trim()
 
   useFocusEffect(
     useCallback(() => {
@@ -62,42 +72,47 @@ function SearchInput({ onSubmitEditing, onFocus, onBlur, searchQuery, setSearchQ
   )
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        ref={inputRef}
-        value={searchQuery}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        onSubmitEditing={(e) => {
-          onSubmitEditing?.(e.nativeEvent.text)
-        }}
-        submitBehavior="blurAndSubmit"
-        onChangeText={setSearchQuery}
-        placeholder="Search"
-        placeholderTextColor={ACTIVE_COLOR}
-        cursorColor={TEXT_COLOR}
-        style={styles.input}
-        enterKeyHint="search"
-        inputMode="search"
-        maxLength={256}
-        returnKeyType="search"
-        selectTextOnFocus
-      />
-      {!searchQuery?.trim() ? (
+    <View style={styles.row}>
+      <View style={styles.container}>
+        <TextInput
+          ref={inputRef}
+          value={searchQuery}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          onSubmitEditing={(e) => {
+            onSubmitEditing?.(e.nativeEvent.text)
+          }}
+          submitBehavior="blurAndSubmit"
+          onChangeText={setSearchQuery}
+          placeholder="Search"
+          placeholderTextColor={ACTIVE_COLOR}
+          cursorColor={TEXT_COLOR}
+          style={[styles.input, isSearchQueryCleared ? styles.inputCleared : styles.inputDirty]}
+          enterKeyHint="search"
+          inputMode="search"
+          returnKeyType="search"
+          maxLength={256}
+          autoCapitalize="none"
+          autoFocus
+          enablesReturnKeyAutomatically
+        />
+        {!isSearchQueryCleared && (
+          <Pressable
+            style={styles.clearBtnContainer}
+            onPress={() => {
+              if (inputRef.current) {
+                setSearchQuery?.('')
+                inputRef.current.clear()
+              }
+            }}
+          >
+            <IconSymbol name="xmark.circle.fill" color={TEXT_COLOR} />
+          </Pressable>
+        )}
+      </View>
+      {isSearchQueryCleared && (
         <Pressable style={styles.iconContainer}>
           <IconSymbol name="mic" color={TEXT_COLOR} />
-        </Pressable>
-      ) : (
-        <Pressable
-          style={styles.clearBtnContainer}
-          onPress={() => {
-            if (inputRef.current) {
-              setSearchQuery?.('')
-              inputRef.current.clear()
-            }
-          }}
-        >
-          <IconSymbol name="xmark.circle.fill" color={TEXT_COLOR} />
         </Pressable>
       )}
     </View>

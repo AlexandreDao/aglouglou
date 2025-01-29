@@ -33,7 +33,10 @@ exports[`<FavoriteButton /> FavoriteButton snapshot 1`] = `
   onStartShouldSetResponder={[Function]}
   style={
     {
-      "padding": 16,
+      "alignItems": "center",
+      "height": 48,
+      "justifyContent": "center",
+      "width": 48,
     }
   }
   testID="favorite-button"

@@ -26,7 +26,7 @@ This project use pnpm as a package manager you can follow their doc to install [
    pnpm install
    ```
 
-2. Generate native modules
+2. Generate native modules (android/ios folders)
 
    ```bash
    pnpm expo prebuild
@@ -41,8 +41,8 @@ This project use pnpm as a package manager you can follow their doc to install [
 In the output, you'll find options to open the app in a
 
 - [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+- [Android emulator](https://docs.expo.dev/get-started/set-up-your-environment/?platform=android&device=simulated)
+- [iOS simulator](https://docs.expo.dev/get-started/set-up-your-environment/?platform=ios&device=simulated)
 - [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
@@ -55,7 +55,7 @@ You can start developing by editing the files inside the **app** directory. This
 
 ## Running e2e test
 
-- First install [maestro](https://maestro.mobile.dev/getting-started/build-and-install-your-app) (tested with version 1.39.7)
+- First install [maestro](https://maestro.mobile.dev/getting-started/installing-maestro) (tested with version 1.39.7)
 
 - Have an instance of an iPhone simulator or android emulator running with the app installed else run :
 

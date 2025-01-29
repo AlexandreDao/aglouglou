@@ -1,5 +1,5 @@
 import React, { useRef, forwardRef, useState, useEffect, useMemo, memo, useImperativeHandle } from 'react'
-import { View, Text, StyleSheet, useWindowDimensions, BackHandler, NativeEventSubscription, Alert } from 'react-native'
+import { View, Text, StyleSheet, useWindowDimensions, BackHandler, NativeEventSubscription } from 'react-native'
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import { CocktailDetail } from '@/types/cocktail'
 import { Image } from 'expo-image'
@@ -139,6 +139,7 @@ const Details = forwardRef((props, ref) => {
                 <View style={styles.titleContainer}>
                   <Text style={styles.h1}>{cocktailDetail.name}</Text>
                   <FavoriteButton
+                    size={40}
                     isFavorite={isFavorite}
                     favorite={() => addToFavorite(cocktailDetail)}
                     unfavorite={() => {
@@ -147,16 +148,20 @@ const Details = forwardRef((props, ref) => {
                   />
                 </View>
                 <View style={styles.categoryContainer}>
-                  <Category
-                    title={cocktailDetail.alcoholic}
-                    backgroundColor={ALCOHOLIC_CATEGORY_COLOR}
-                    textStyle={styles.regular}
-                  />
-                  <Category
-                    title={cocktailDetail.category}
-                    backgroundColor={DRINK_CATEGORY_COLOR}
-                    textStyle={styles.regular}
-                  />
+                  {cocktailDetail.alcoholic && (
+                    <Category
+                      title={cocktailDetail.alcoholic}
+                      backgroundColor={ALCOHOLIC_CATEGORY_COLOR}
+                      textStyle={styles.regular}
+                    />
+                  )}
+                  {cocktailDetail.category && (
+                    <Category
+                      title={cocktailDetail.category}
+                      backgroundColor={DRINK_CATEGORY_COLOR}
+                      textStyle={styles.regular}
+                    />
+                  )}
                 </View>
               </View>
               <Text style={styles.h2}>Ingredients</Text>

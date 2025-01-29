@@ -123,12 +123,18 @@ function FavoriteItem({ item, isFavorite, listRef, shouldAnimateRemove = false }
           <View style={styles.flexContainer}>
             <Text style={styles.text}>{item.name}</Text>
             <Text style={styles.ingredient} ellipsizeMode="tail" numberOfLines={1}>
-              {item.ingredients.map((i) => capitalizeFirstLetter(i.split(' ').at(-1) || '')).join(', ')}
+              {item.ingredients
+                .map((i) => {
+                  const ingredients = i.split(' ')
+
+                  return capitalizeFirstLetter(ingredients[ingredients.length - 1] || '')
+                })
+                .join(', ')}
             </Text>
           </View>
           <View style={styles.categoryContainer}>
-            <Category title={item.alcoholic} backgroundColor={ALCOHOLIC_CATEGORY_COLOR} />
-            <Category title={item.category} backgroundColor={DRINK_CATEGORY_COLOR} />
+            {item.alcoholic && <Category title={item.alcoholic} backgroundColor={ALCOHOLIC_CATEGORY_COLOR} />}
+            {item.category && <Category title={item.category} backgroundColor={DRINK_CATEGORY_COLOR} />}
           </View>
         </View>
         <FavoriteButton

@@ -13,7 +13,7 @@ import useFavoritesStore from '@/store/favoritesStore'
 import Separator from '@/components/ui/Separator'
 import { useNavigation } from 'expo-router'
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   activityContainer: {
     alignItems: 'center',
     backgroundColor: BACKGROUND_COLOR,
@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
   },
   fallbackText: {
     color: TEXT_COLOR,
+    fontSize: 18,
   },
   loading: {
     color: TEXT_COLOR,

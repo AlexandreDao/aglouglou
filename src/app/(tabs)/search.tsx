@@ -26,6 +26,7 @@ import FavoriteItem from '@/components/ui/FavoriteItem'
 import Separator from '@/components/ui/Separator'
 import useFavoritesStore from '@/store/favoritesStore'
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller'
+import { useBottomTabOverflow } from '@/components/ui/TabBarBackground.android'
 
 const styles = StyleSheet.create({
   activityContainer: {
@@ -39,11 +40,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentContainer: {
-    paddingBottom: Platform.select({ ios: 50, android: 0 }),
+    paddingBottom: Platform.select({ ios: 0, android: 0 }),
   },
   empty: {},
   notFoundText: {
     color: TEXT_COLOR,
+    fontSize: 18,
     paddingHorizontal: 16,
   },
   pressed: {
@@ -118,10 +120,13 @@ export default function Index() {
   }, [])
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      edges={Platform.select({ ios: ['top', 'right', 'left'], android: undefined })}
+      style={[styles.container, { paddingBottom: Platform.select({ ios: tabBarHeight, android: 0 }) }]}
+    >
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={30}
+        keyboardVerticalOffset={Platform.select({ android: 30, ios: 0 })}
         style={styles.resultContainer}
       >
         <View style={styles.resultContainer}>
@@ -164,7 +169,7 @@ export default function Index() {
               contentContainerStyle={styles.contentContainer}
               estimatedItemSize={100}
               estimatedListSize={{
-                height: windowSize.height - tabBarHeight - insets.top - insets.bottom - 48 - 16,
+                height: windowSize.height - tabBarHeight - insets.top - insets.bottom - 48 - 16, // minus input height and padding
                 width: windowSize.width - insets.left - insets.right,
               }}
               keyExtractor={(item) => `search-${submittedQuery}}-${item.id}`}
@@ -182,8 +187,9 @@ export default function Index() {
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           onSubmitEditing={(value) => {
-            setSubmittedQuery(value)
-            addToRecentSearches(value)
+            const sanitizedValue = value.trim()
+            setSubmittedQuery(sanitizedValue)
+            addToRecentSearches(sanitizedValue)
           }}
         />
       </KeyboardAvoidingView>

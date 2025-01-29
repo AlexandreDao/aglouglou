@@ -11,7 +11,7 @@ interface CategoryProps {
 const styles = StyleSheet.create({
   container: {
     borderRadius: 14,
-    paddingHorizontal: 4,
+    paddingHorizontal: 6,
     paddingVertical: 2,
   },
   text: {
