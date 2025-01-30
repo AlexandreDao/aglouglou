@@ -15,6 +15,7 @@ const MAPPING = {
   mic: 'mic-none',
   timer: 'history',
   'xmark.circle.fill': 'cancel',
+  'mic.fill': 'mic',
 } as Partial<Record<import('expo-symbols').SymbolViewProps['name'], React.ComponentProps<typeof MaterialIcons>['name']>>
 
 export type IconSymbolName = keyof typeof MAPPING

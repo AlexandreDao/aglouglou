@@ -1,8 +1,9 @@
 import { View, TextInput, Pressable, StyleSheet } from 'react-native'
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { ACTIVE_COLOR, TAB_BAR_BACKGROUND_COLOR, TEXT_COLOR } from '@/constants/colors'
 import { IconSymbol } from '@/components/ui/IconSymbol'
 import { useFocusEffect } from 'expo-router'
+import SpeechRecognitionModal from '@/components/ui/SpeechRecognitionModal'
 
 interface SearchInputProps {
   onSubmitEditing?: (value: string) => void
@@ -61,6 +62,7 @@ const styles = StyleSheet.create({
 function SearchInput({ onSubmitEditing, onFocus, onBlur, searchQuery, setSearchQuery }: SearchInputProps) {
   const inputRef = useRef<TextInput>(null)
   const isSearchQueryCleared = !searchQuery?.trim()
+  const [isOpen, setIsOpen] = useState(false)
 
   useFocusEffect(
     useCallback(() => {
@@ -111,9 +113,19 @@ function SearchInput({ onSubmitEditing, onFocus, onBlur, searchQuery, setSearchQ
         )}
       </View>
       {isSearchQueryCleared && (
-        <Pressable style={styles.iconContainer}>
+        <Pressable style={styles.iconContainer} onPress={() => setIsOpen(true)}>
           <IconSymbol name="mic" color={TEXT_COLOR} />
         </Pressable>
+      )}
+      {isOpen && (
+        <SpeechRecognitionModal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          onResult={(value) => {
+            setSearchQuery?.(value)
+            onSubmitEditing?.(value)
+          }}
+        />
       )}
     </View>
   )

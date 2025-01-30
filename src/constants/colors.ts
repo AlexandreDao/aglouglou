@@ -13,3 +13,7 @@ export const SEPARATOR_COLOR = 'white'
 export const ALCOHOLIC_CATEGORY_COLOR = '#13432F'
 
 export const DRINK_CATEGORY_COLOR = '#acab00'
+
+export const BACKDROP_COLOR = 'rgba(0, 0, 0, 0.4)'
+
+export const ANDROID_RIPPLE_COLOR = 'rgba(255, 255, 255, 0.6)'

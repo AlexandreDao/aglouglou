@@ -3,7 +3,13 @@ import React, { RefObject, useEffect } from 'react'
 import { Image } from 'expo-image'
 import useFavoriteStore from '@/store/favoritesStore'
 import { CocktailDetail } from '@/types/cocktail'
-import { ALCOHOLIC_CATEGORY_COLOR, BACKGROUND_COLOR, DRINK_CATEGORY_COLOR, TEXT_COLOR } from '@/constants/colors'
+import {
+  ALCOHOLIC_CATEGORY_COLOR,
+  ANDROID_RIPPLE_COLOR,
+  BACKGROUND_COLOR,
+  DRINK_CATEGORY_COLOR,
+  TEXT_COLOR,
+} from '@/constants/colors'
 import FavoriteButton from '@/components/ui/FavoriteButton'
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { useDetailsBottomSheet } from '@/hooks/useDetailsBottomSheet'
@@ -107,7 +113,7 @@ function FavoriteItem({ item, isFavorite, listRef, shouldAnimateRemove = false }
         }
         return styles.empty
       }}
-      android_ripple={{ color: 'rgba(255, 255, 255, 0.6)' }}
+      android_ripple={{ color: ANDROID_RIPPLE_COLOR }}
       onPress={onPress}
     >
       <Animated.View style={[styles.container, animatedStyle]}>

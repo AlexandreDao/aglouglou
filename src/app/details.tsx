@@ -1,4 +1,4 @@
-import React, { useRef, forwardRef, useState, useEffect, useMemo, memo, useImperativeHandle } from 'react'
+import React, { useRef, forwardRef, useState, useEffect, useMemo, useImperativeHandle } from 'react'
 import { View, Text, StyleSheet, useWindowDimensions, BackHandler, NativeEventSubscription } from 'react-native'
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import { CocktailDetail } from '@/types/cocktail'
@@ -53,6 +53,9 @@ const styles = StyleSheet.create({
   h2: {
     color: TEXT_COLOR,
     fontSize: 20,
+  },
+  headerContainer: {
+    gap: 4,
   },
   image: {
     height: 300,
@@ -135,7 +138,7 @@ const Details = forwardRef((props, ref) => {
           <>
             <Image style={styles.image} source={cocktailDetail.thumbnail} contentFit="cover" allowDownscaling />
             <View style={styles.textContainer}>
-              <View>
+              <View style={styles.headerContainer}>
                 <View style={styles.titleContainer}>
                   <Text style={styles.h1}>{cocktailDetail.name}</Text>
                   <FavoriteButton
@@ -149,18 +152,10 @@ const Details = forwardRef((props, ref) => {
                 </View>
                 <View style={styles.categoryContainer}>
                   {cocktailDetail.alcoholic && (
-                    <Category
-                      title={cocktailDetail.alcoholic}
-                      backgroundColor={ALCOHOLIC_CATEGORY_COLOR}
-                      textStyle={styles.regular}
-                    />
+                    <Category title={cocktailDetail.alcoholic} backgroundColor={ALCOHOLIC_CATEGORY_COLOR} />
                   )}
                   {cocktailDetail.category && (
-                    <Category
-                      title={cocktailDetail.category}
-                      backgroundColor={DRINK_CATEGORY_COLOR}
-                      textStyle={styles.regular}
-                    />
+                    <Category title={cocktailDetail.category} backgroundColor={DRINK_CATEGORY_COLOR} />
                   )}
                 </View>
               </View>
@@ -196,4 +191,4 @@ const Details = forwardRef((props, ref) => {
 
 Details.displayName = 'Details'
 
-export default memo(Details)
+export default Details

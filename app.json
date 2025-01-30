@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "cocktail",
-    "slug": "cocktail",
+    "name": "Aglouglou",
+    "slug": "Aglouglou",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -10,14 +10,14 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.cocktail"
+      "bundleIdentifier": "com.anonymous.Aglouglou"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.cocktail",
+      "package": "com.anonymous.Aglouglou",
       "softwareKeyboardLayoutMode": "pan"
     },
     "plugins": [
@@ -31,7 +31,15 @@
           "backgroundColor": "#ffffff"
         }
       ],
-      "expo-font"
+      "expo-font",
+      [
+        "expo-speech-recognition",
+        {
+          "microphonePermission": "Allow $(PRODUCT_NAME) to use the microphone.",
+          "speechRecognitionPermission": "Allow $(PRODUCT_NAME) to use speech recognition.",
+          "androidSpeechServicePackages": ["com.google.android.googlequicksearchbox"]
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

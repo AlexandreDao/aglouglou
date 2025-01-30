@@ -1,4 +1,4 @@
-import { BACKGROUND_COLOR, INACTIVE_COLOR, TEXT_COLOR } from '@/constants/colors'
+import { ANDROID_RIPPLE_COLOR, BACKGROUND_COLOR, INACTIVE_COLOR, TEXT_COLOR } from '@/constants/colors'
 import { FlashList, ListRenderItem } from '@shopify/flash-list'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import {
@@ -148,7 +148,7 @@ export default function Index() {
                     }
                     return styles.empty
                   }}
-                  android_ripple={{ color: 'rgba(255, 255, 255, 0.6)' }}
+                  android_ripple={{ color: ANDROID_RIPPLE_COLOR }}
                 >
                   <View style={styles.recentSearchContainer}>
                     <IconSymbol name="timer" color={TEXT_COLOR} />
