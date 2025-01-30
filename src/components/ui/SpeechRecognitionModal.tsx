@@ -20,9 +20,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: BACKGROUND_COLOR,
     borderRadius: 8,
-    gap: 12,
-    height: 250,
+    gap: 20,
     justifyContent: 'center',
+    paddingVertical: 48,
     width: '95%',
   },
   text: {
@@ -96,29 +96,37 @@ const SpeechRecognitionModal = ({ isOpen, setIsOpen, onResult }: SpeechRecogniti
   }, [])
 
   return (
-    <Modal transparent statusBarTranslucent visible={isOpen} animationType="slide">
+    <Modal
+      transparent
+      statusBarTranslucent
+      visible={isOpen}
+      animationType="slide"
+      onRequestClose={() => setIsOpen?.(false)}
+    >
       <TouchableWithoutFeedback onPress={() => setIsOpen?.(false)}>
         <View style={styles.backdrop}>
-          <View style={styles.modalContainer}>
-            <Pressable
-              style={styles.iconContainer}
-              onPress={() => {
-                if (isRecognizing) {
-                  ExpoSpeechRecognitionModule.stop()
-                } else {
-                  startSpeechRecognition()
-                }
-              }}
-            >
-              <IconSymbol name="mic.fill" color={BACKGROUND_COLOR} size={42} />
-            </Pressable>
-            <Text style={styles.text} numberOfLines={2}>
-              {transcript ? `"${transcript}"` : !isRecognizing ? "Didn't catch that" : 'Speak now'}
-            </Text>
-            {!isRecognizing && !transcript && (
-              <Button title="Try again" color={ACTIVE_COLOR} onPress={startSpeechRecognition} />
-            )}
-          </View>
+          <TouchableWithoutFeedback>
+            <View style={styles.modalContainer}>
+              <Pressable
+                style={styles.iconContainer}
+                onPress={() => {
+                  if (isRecognizing) {
+                    ExpoSpeechRecognitionModule.stop()
+                  } else {
+                    startSpeechRecognition()
+                  }
+                }}
+              >
+                <IconSymbol name="mic.fill" color={BACKGROUND_COLOR} size={42} />
+              </Pressable>
+              <Text style={styles.text} numberOfLines={2}>
+                {transcript ? `"${transcript}"` : !isRecognizing ? "Didn't catch that" : 'Speak now'}
+              </Text>
+              {!isRecognizing && !transcript && (
+                <Button title="Try again" color={ACTIVE_COLOR} onPress={startSpeechRecognition} />
+              )}
+            </View>
+          </TouchableWithoutFeedback>
         </View>
       </TouchableWithoutFeedback>
     </Modal>

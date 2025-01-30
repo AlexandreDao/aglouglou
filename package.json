@@ -58,6 +58,7 @@
     "@react-navigation/native": "^7.0.14",
     "@shopify/flash-list": "~1.7.1",
     "@tanstack/react-query": "~5.62.9",
+    "@tanstack/react-query-persist-client": "^5.65.1",
     "@testing-library/react-native": "^12.9.0",
     "axios": "~1.7.9",
     "date-fns": "~4.1.0",

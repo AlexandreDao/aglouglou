@@ -11,8 +11,16 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar'
 import { BACKGROUND_COLOR } from '@/constants/colors'
 import { KeyboardProvider } from 'react-native-keyboard-controller'
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
+import { reactQueryPersistor } from '@/storage/storageAdapter'
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      gcTime: 1000 * 60 * 60 * 24 * 7, // 7 days
+    },
+  },
+})
 
 export default function RootLayout() {
   useReactQueryDevTools(queryClient)
@@ -20,7 +28,7 @@ export default function RootLayout() {
   const detailsBottomSheetRef = useRef<DetailsRef>(null)
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <PersistQueryClientProvider client={queryClient} persistOptions={{ persister: reactQueryPersistor }}>
       <GestureHandlerRootView>
         <BottomSheetModalProvider>
           <DetailsBottomSheetProvider detailsBottomSheetRef={detailsBottomSheetRef}>
@@ -38,6 +46,6 @@ export default function RootLayout() {
           </DetailsBottomSheetProvider>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
-    </QueryClientProvider>
+    </PersistQueryClientProvider>
   )
 }

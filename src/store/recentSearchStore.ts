@@ -1,4 +1,4 @@
-import { mmkvStorage } from '@/storage/storageAdapter'
+import { zustandStorage } from '@/storage/storageAdapter'
 import { produce } from 'immer'
 import { create } from 'zustand'
 import { createJSONStorage, devtools, persist } from 'zustand/middleware'
@@ -29,7 +29,7 @@ const useRecentSearchStore = create<RecentSearchesState>()(
       }),
       {
         name: 'recentSearchStore',
-        storage: createJSONStorage(() => mmkvStorage),
+        storage: createJSONStorage(() => zustandStorage),
       }
     )
   )

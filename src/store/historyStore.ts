@@ -1,4 +1,4 @@
-import { mmkvStorage } from '@/storage/storageAdapter'
+import { zustandStorage } from '@/storage/storageAdapter'
 import { CocktailDetail } from '@/types/cocktail'
 import { produce } from 'immer'
 import { create } from 'zustand'
@@ -30,7 +30,7 @@ const useHistoryStore = create<HistoryState>()(
       }),
       {
         name: 'recentSearchStore',
-        storage: createJSONStorage(() => mmkvStorage),
+        storage: createJSONStorage(() => zustandStorage),
       }
     )
   )
