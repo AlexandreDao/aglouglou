@@ -1,10 +1,11 @@
 import React, { useRef, forwardRef, useState, useEffect, useMemo, useImperativeHandle } from 'react'
 import { View, Text, StyleSheet, useWindowDimensions, BackHandler, NativeEventSubscription } from 'react-native'
-import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet'
+import BottomSheet, { BottomSheetScrollView, TouchableWithoutFeedback } from '@gorhom/bottom-sheet'
 import { CocktailDetail } from '@/types/cocktail'
 import { Image } from 'expo-image'
 import { capitalizeFirstLetter } from '@/utils/stringUtils'
 import {
+  ACTIVE_COLOR,
   ALCOHOLIC_CATEGORY_COLOR,
   BACKGROUND_COLOR,
   DRINK_CATEGORY_COLOR,
@@ -17,6 +18,7 @@ import { useNavigation } from 'expo-router'
 import FavoriteButton from '@/components/ui/FavoriteButton'
 import Category from '@/components/ui/Category'
 import useFavoritesStore from '@/store/favoritesStore'
+import { Checkbox } from 'expo-checkbox'
 
 export interface DetailsRef {
   open: (detail: CocktailDetail) => void
@@ -62,10 +64,17 @@ const styles = StyleSheet.create({
     height: 300,
     width: '100%',
   },
+  instructionContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 16,
+  },
   regular: {
     color: TEXT_COLOR,
+    flex: 1,
     fontSize: 14,
-    lineHeight: 24,
+    lineHeight: 18,
+    paddingVertical: 4,
   },
 
   textContainer: {
@@ -96,6 +105,7 @@ const Details = forwardRef((props, ref) => {
   const isFavorite = favorites.findIndex((favorite) => favorite.id === cocktailDetail?.id) !== -1
   const addToFavorite = useFavoritesStore((state) => state.addToFavorite)
   const removeFromFavorite = useFavoritesStore((state) => state.removeFromFavorite)
+  const [isCheckedArray, setIsCheckedArray] = useState<boolean[]>([])
 
   const backAction = () => {
     bottomSheetModalRef.current?.close()
@@ -105,6 +115,11 @@ const Details = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     open: (detail: CocktailDetail) => {
       setCocktailDetail(detail)
+      const instructionLength = (
+        cocktailDetail?.instructions.split(/[.]/).filter((instruction) => instruction.trim()) || []
+      ).length
+      setIsCheckedArray(new Array(instructionLength).fill(false))
+
       if (navigationState?.routes[0].state?.routes[navigationState?.routes[0].state?.index ?? 0].name !== 'history') {
         addToHistory(detail)
       }
@@ -162,23 +177,49 @@ const Details = forwardRef((props, ref) => {
               </View>
               <Text style={styles.h2}>Ingredients</Text>
               {ingredients.length ? (
-                <Text style={styles.regular}>
+                <View>
                   {ingredients.map((ingredient, index) => {
-                    return <Text key={`ingredient-${index}`}>{`• ${ingredient.trim()}\n`}</Text>
+                    return (
+                      <Text
+                        key={`ingredient-${index}`}
+                        style={styles.regular}
+                      >{`• ${ingredient.toLowerCase().trim()}\n`}</Text>
+                    )
                   })}
-                </Text>
+                </View>
               ) : (
                 <Text style={styles.fallback}>No ingredients</Text>
               )}
               <Text style={styles.h2}>Instructions</Text>
               {instructions.length ? (
-                <Text style={styles.regular}>
+                <View>
                   {instructions.map((instruction, index) => {
                     return (
-                      <Text key={`instruction-${index}`}>{`• ${capitalizeFirstLetter(instruction.trim())}\n`}</Text>
+                      <TouchableWithoutFeedback
+                        key={`instruction-${index}`}
+                        style={styles.instructionContainer}
+                        onPress={() => {
+                          setIsCheckedArray((prev) => {
+                            const tmp = [...prev]
+                            tmp[index] = !tmp[index]
+                            return tmp
+                          })
+                        }}
+                      >
+                        <Text
+                          style={[
+                            styles.regular,
+                            { textDecorationLine: isCheckedArray[index] ? 'line-through' : 'none' },
+                          ]}
+                        >{`• ${capitalizeFirstLetter(instruction.trim())}\n`}</Text>
+                        <Checkbox
+                          value={isCheckedArray[index]}
+                          color={isCheckedArray[index] ? ACTIVE_COLOR : INACTIVE_COLOR}
+                        />
+                      </TouchableWithoutFeedback>
                     )
                   })}
-                </Text>
+                </View>
               ) : (
                 <Text style={styles.fallback}>No instructions</Text>
               )}

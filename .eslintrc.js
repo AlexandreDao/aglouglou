@@ -26,6 +26,7 @@ module.exports = {
     'prettier/prettier': 'error',
     '@typescript-eslint/no-unused-vars': 'warn',
     '@typescript-eslint/no-var-requires': 'off',
+    'react-native/no-inline-styles': 'off',
   },
   settings: {
     'import/resolver': {
