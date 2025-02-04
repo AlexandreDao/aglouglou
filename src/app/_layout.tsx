@@ -22,7 +22,7 @@ const queryClient = new QueryClient({
   },
 })
 
-export default function RootLayout() {
+const RootLayout = () => {
   useReactQueryDevTools(queryClient)
 
   const detailsBottomSheetRef = useRef<DetailsRef>(null)
@@ -49,3 +49,5 @@ export default function RootLayout() {
     </PersistQueryClientProvider>
   )
 }
+
+export default RootLayout

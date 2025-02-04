@@ -11,12 +11,14 @@ const styles = StyleSheet.create({
   },
 })
 
-export default function BlurTabBarBackground() {
+const BlurTabBarBackground = () => {
   return <BlurView intensity={80} style={[StyleSheet.absoluteFill, styles.blurView]} />
 }
 
-export function useBottomTabOverflow() {
+export const useBottomTabOverflow = () => {
   const tabHeight = useBottomTabBarHeight()
   const { bottom } = useSafeAreaInsets()
   return tabHeight - bottom
 }
+
+export default BlurTabBarBackground

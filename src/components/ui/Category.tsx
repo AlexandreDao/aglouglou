@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   },
 })
 
-function Category({ title, textStyle, backgroundColor = 'grey' }: CategoryProps) {
+const Category = ({ title, textStyle, backgroundColor = 'grey' }: CategoryProps) => {
   return (
     <View style={[styles.container, { backgroundColor }]}>
       <Text style={[styles.text, textStyle]} numberOfLines={1} ellipsizeMode="tail">

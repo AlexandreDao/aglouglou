@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
   },
 })
 
-export default function Index() {
+const Index = () => {
   const { data, isLoading, fetchNextPage, isFetchingNextPage, isFetching, hasNextPage } =
     useCocktailSearchByFirstLetter()
   const cocktailList = data?.pages.flatMap(({ drinks }) => drinks) || []
@@ -114,3 +114,5 @@ export default function Index() {
     </SafeAreaView>
   )
 }
+
+export default Index

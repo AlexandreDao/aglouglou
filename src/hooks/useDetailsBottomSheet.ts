@@ -1,7 +1,7 @@
 import DetailsBottomSheetContext from '@/contexts/detailsBottomSheet/DetailsBottomSheetContext'
 import { useContext } from 'react'
 
-export function useDetailsBottomSheet() {
+export const useDetailsBottomSheet = () => {
   const context = useContext(DetailsBottomSheetContext)
 
   if (!context) {

@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export default function Index() {
+const Search = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [submittedQuery, setSubmittedQuery] = useState('')
   const [isInputFocused, setIsInputFocused] = useState(false)
@@ -93,9 +93,9 @@ export default function Index() {
     ({ item }) => {
       const isFavorite = favorites.findIndex((favorite) => favorite.id === item.id) !== -1
 
-      return <FavoriteItem item={item} isFavorite={isFavorite} />
+      return <FavoriteItem item={item} isFavorite={isFavorite} textToHighlight={submittedQuery} />
     },
-    [favorites]
+    [favorites, submittedQuery]
   )
 
   useEffect(() => {
@@ -195,3 +195,5 @@ export default function Index() {
     </SafeAreaView>
   )
 }
+
+export default Search

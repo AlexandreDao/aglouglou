@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export default function Index() {
+const Favorite = () => {
   const favorites = useSortedFavorites()
   const listRef = useRef<FlashList<CocktailDetail>>(null)
   const insets = useSafeAreaInsets()
@@ -87,3 +87,5 @@ export default function Index() {
     </SafeAreaView>
   )
 }
+
+export default Favorite

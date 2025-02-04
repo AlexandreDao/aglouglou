@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
     color: TEXT_COLOR,
     flex: 1,
     fontSize: 28,
+    fontWeight: 'bold',
   },
   h2: {
     color: TEXT_COLOR,

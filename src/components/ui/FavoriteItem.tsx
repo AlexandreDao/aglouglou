@@ -15,13 +15,15 @@ import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 
 import { useDetailsBottomSheet } from '@/hooks/useDetailsBottomSheet'
 import { FlashList } from '@shopify/flash-list'
 import { capitalizeFirstLetter } from '@/utils/stringUtils'
-import Category from './Category'
+import Category from '@/components/ui/Category'
+import HighlightText from '@/components/ui/HightlightText'
 
 interface FavItemProps {
   item: CocktailDetail
   isFavorite: boolean
   shouldAnimateRemove?: boolean
   listRef?: RefObject<FlashList<CocktailDetail>>
+  textToHighlight?: string
 }
 
 const blurhash = 'LKN]Rv%2Tw=w]~RBVZRi};RPxuwH'
@@ -69,10 +71,11 @@ const styles = StyleSheet.create({
     color: TEXT_COLOR,
     flex: 1,
     fontSize: 16,
+    fontWeight: 'bold',
   },
 })
 
-function FavoriteItem({ item, isFavorite, listRef, shouldAnimateRemove = false }: FavItemProps) {
+const FavoriteItem = ({ item, isFavorite, listRef, textToHighlight, shouldAnimateRemove = false }: FavItemProps) => {
   const addToFavorite = useFavoriteStore((state) => state.addToFavorite)
   const removeFromFavorite = useFavoriteStore((state) => state.removeFromFavorite)
   const { open } = useDetailsBottomSheet()
@@ -127,7 +130,9 @@ function FavoriteItem({ item, isFavorite, listRef, shouldAnimateRemove = false }
         />
         <View style={styles.infoContainer}>
           <View style={styles.flexContainer}>
-            <Text style={styles.text}>{item.name}</Text>
+            <HighlightText style={styles.text} textToHighlight={textToHighlight} numberOfLines={1}>
+              {item.name}
+            </HighlightText>
             <Text style={styles.ingredient} ellipsizeMode="tail" numberOfLines={1}>
               {item.ingredients
                 .map((i) => {

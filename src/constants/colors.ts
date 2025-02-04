@@ -6,7 +6,7 @@ export const ACTIVE_COLOR = '#FF8EB6'
 
 export const INACTIVE_COLOR = '#A7989D'
 
-export const TEXT_COLOR = 'white'
+export const TEXT_COLOR = '#EDEEF0'
 
 export const SEPARATOR_COLOR = 'white'
 

@@ -3,6 +3,6 @@ const BlurTabBarBackground = undefined
 
 export default BlurTabBarBackground
 
-export function useBottomTabOverflow() {
+export const useBottomTabOverflow = () => {
   return 0
 }

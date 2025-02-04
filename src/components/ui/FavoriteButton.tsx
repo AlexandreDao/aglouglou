@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   },
 })
 
-function FavoriteButton({ isFavorite, favorite, unfavorite, size = 32 }: FavoriteButtonProps) {
+const FavoriteButton = ({ isFavorite, favorite, unfavorite, size = 32 }: FavoriteButtonProps) => {
   const rotation = useSharedValue(0)
   const yPosition = useSharedValue(0)
   const animatedStyle = useAnimatedStyle(() => {

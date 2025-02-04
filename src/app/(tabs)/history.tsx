@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export default function Index() {
+const History = () => {
   const history = useHistoryStore((state) => state.history)
   const favorites = useFavoritesStore((state) => state.favorites)
   const insets = useSafeAreaInsets()
@@ -86,3 +86,5 @@ export default function Index() {
     </SafeAreaView>
   )
 }
+
+export default History

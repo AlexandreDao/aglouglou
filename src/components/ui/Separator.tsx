@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
   },
 })
 
-function Separator() {
+const Separator = () => {
   return <View style={styles.separator} />
 }
 

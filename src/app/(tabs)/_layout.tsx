@@ -7,7 +7,7 @@ import { IconSymbol } from '@/components/ui/IconSymbol'
 import { ACTIVE_COLOR, INACTIVE_COLOR, TAB_BAR_BACKGROUND_COLOR } from '@/constants/colors'
 import BlurTabBarBackground from '@/components/ui/TabBarBackground'
 
-export default function TabLayout() {
+const TabLayout = () => {
   return (
     <Tabs
       screenOptions={{
@@ -58,3 +58,5 @@ export default function TabLayout() {
     </Tabs>
   )
 }
+
+export default TabLayout

@@ -8,7 +8,7 @@ interface DetailBottomSheetProviderProps {
   detailsBottomSheetRef: React.RefObject<DetailsRef>
 }
 
-function DetailsBottomSheetProvider({ children, detailsBottomSheetRef }: DetailBottomSheetProviderProps) {
+const DetailsBottomSheetProvider = ({ children, detailsBottomSheetRef }: DetailBottomSheetProviderProps) => {
   const open = useCallback(
     (detail: CocktailDetail) => {
       detailsBottomSheetRef.current?.open(detail)

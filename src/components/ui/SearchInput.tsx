@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   },
 })
 
-function SearchInput({ onSubmitEditing, onFocus, onBlur, searchQuery, setSearchQuery }: SearchInputProps) {
+const SearchInput = ({ onSubmitEditing, onFocus, onBlur, searchQuery, setSearchQuery }: SearchInputProps) => {
   const inputRef = useRef<TextInput>(null)
   const isSearchQueryCleared = !searchQuery?.trim()
   const [isOpen, setIsOpen] = useState(false)
@@ -86,7 +86,7 @@ function SearchInput({ onSubmitEditing, onFocus, onBlur, searchQuery, setSearchQ
           }}
           submitBehavior="blurAndSubmit"
           onChangeText={setSearchQuery}
-          placeholder="Search"
+          placeholder={'Try typing "Irish coffee"'}
           placeholderTextColor={ACTIVE_COLOR}
           cursorColor={TEXT_COLOR}
           style={[styles.input, isSearchQueryCleared ? styles.inputCleared : styles.inputDirty]}
