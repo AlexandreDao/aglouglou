@@ -10,7 +10,11 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.Aglouglou"
+      "bundleIdentifier": "com.anonymous.Aglouglou",
+      "infoPlist": {
+        "NSSpeechRecognitionUsageDescription": "Allow $(PRODUCT_NAME) to use speech recognition.",
+        "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to use the microphone."
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -18,7 +22,8 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.anonymous.Aglouglou",
-      "softwareKeyboardLayoutMode": "pan"
+      "softwareKeyboardLayoutMode": "pan",
+      "permissions": ["android.permission.RECORD_AUDIO"]
     },
     "plugins": [
       "expo-router",
@@ -49,7 +54,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "efa9194d-b037-45da-9357-5237d649938e"
+        "projectId": "68ee0648-8183-4fc7-911c-2ec9239fe5fb"
       }
     }
   }

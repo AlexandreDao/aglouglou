@@ -26,7 +26,6 @@ import FavoriteItem from '@/components/ui/FavoriteItem'
 import Separator from '@/components/ui/Separator'
 import useFavoritesStore from '@/store/favoritesStore'
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller'
-import { useBottomTabOverflow } from '@/components/ui/TabBarBackground.android'
 
 const styles = StyleSheet.create({
   activityContainer: {

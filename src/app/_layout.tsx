@@ -1,6 +1,6 @@
 import 'expo-dev-client'
 import { Stack } from 'expo-router'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { QueryClient } from '@tanstack/react-query'
 import { useReactQueryDevTools } from '@dev-plugins/react-query'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import CocktailDetail, { DetailsRef } from '@/app/details'
