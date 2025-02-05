@@ -1,8 +1,20 @@
-import { View, Text, Modal, StyleSheet, TouchableWithoutFeedback, Pressable, Button } from 'react-native'
+import {
+  View,
+  Text,
+  Modal,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Pressable,
+  Button,
+  Alert,
+  Linking,
+  Platform,
+} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { IconSymbol } from './IconSymbol.android'
 import { ACTIVE_COLOR, BACKDROP_COLOR, BACKGROUND_COLOR, TEXT_COLOR } from '@/constants/colors'
 import { ExpoSpeechRecognitionModule, useSpeechRecognitionEvent } from 'expo-speech-recognition'
+import { PermissionStatus } from 'expo-modules-core'
 
 const styles = StyleSheet.create({
   backdrop: {
@@ -61,10 +73,22 @@ const SpeechRecognitionModal = ({ isOpen, setIsOpen, onResult }: SpeechRecogniti
   useSpeechRecognitionEvent('error', (event) => {
     console.error('speechRecognitionEvent:', event.error, event.message)
   })
-
+  // TODO: history fav not working and add throttle to fav/unfav
   const startSpeechRecognition = () => {
     ExpoSpeechRecognitionModule.requestPermissionsAsync()
       .then((result) => {
+        if (result.status === PermissionStatus.DENIED && Platform.OS === 'android') {
+          setIsRecognizing(false)
+          Alert.alert('', 'Microphone access need. Go to Android settings, tap permissions, and tap allow', [
+            { text: 'DiSMISS' },
+            {
+              text: 'GO TO SETTINGS',
+              onPress: () => {
+                Linking.openSettings().catch((e) => console.error('openSettings', e))
+              },
+            },
+          ])
+        }
         if (result.granted) {
           ExpoSpeechRecognitionModule.start({
             lang: 'en-US',

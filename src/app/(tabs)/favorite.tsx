@@ -46,7 +46,7 @@ const Favorite = () => {
   const isFocused = useIsFocused()
 
   const renderItem: ListRenderItem<CocktailDetail> = useCallback(({ item }) => {
-    return <FavoriteItem shouldAnimateRemove item={item} isFavorite listRef={listRef} />
+    return <FavoriteItem shouldAnimateRemove item={item} listRef={listRef} />
   }, [])
 
   useEffect(() => {

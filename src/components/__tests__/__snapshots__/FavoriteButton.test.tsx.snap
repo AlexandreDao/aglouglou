@@ -1,43 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<FavoriteButton /> FavoriteButton snapshot 1`] = `
-<View
-  accessibilityState={
-    {
-      "busy": undefined,
-      "checked": undefined,
-      "disabled": undefined,
-      "expanded": undefined,
-      "selected": undefined,
-    }
-  }
-  accessibilityValue={
-    {
-      "max": undefined,
-      "min": undefined,
-      "now": undefined,
-      "text": undefined,
-    }
-  }
-  accessible={true}
+<RNGestureHandlerButton
   collapsable={false}
-  focusable={true}
-  onBlur={[Function]}
-  onClick={[Function]}
-  onFocus={[Function]}
-  onResponderGrant={[Function]}
-  onResponderMove={[Function]}
-  onResponderRelease={[Function]}
-  onResponderTerminate={[Function]}
-  onResponderTerminationRequest={[Function]}
-  onStartShouldSetResponder={[Function]}
-  style={
+  enabled={true}
+  hitSlop={
     {
-      "alignItems": "center",
-      "height": 48,
-      "justifyContent": "center",
-      "width": 48,
+      "bottom": 0,
+      "left": 0,
+      "right": 0,
+      "top": 0,
     }
+  }
+  onStartShouldSetResponder={[Function]}
+  rippleColor={0}
+  style={
+    [
+      {},
+      {
+        "alignItems": "center",
+        "height": 48,
+        "justifyContent": "center",
+        "width": 48,
+      },
+    ]
   }
   testID="favorite-button"
 >
@@ -80,5 +66,5 @@ exports[`<FavoriteButton /> FavoriteButton snapshot 1`] = `
       weight="regular"
     />
   </View>
-</View>
+</RNGestureHandlerButton>
 `;

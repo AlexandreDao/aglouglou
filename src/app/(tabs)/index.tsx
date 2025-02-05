@@ -9,7 +9,6 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { BottomTabNavigationProp, useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { useIsFocused } from '@react-navigation/native'
 import { TabParamList } from '@/types/navigation'
-import useFavoritesStore from '@/store/favoritesStore'
 import Separator from '@/components/ui/Separator'
 import { useNavigation } from 'expo-router'
 
@@ -42,7 +41,6 @@ const Index = () => {
   const { data, isLoading, fetchNextPage, isFetchingNextPage, isFetching, hasNextPage } =
     useCocktailSearchByFirstLetter()
   const cocktailList = data?.pages.flatMap(({ drinks }) => drinks) || []
-  const favorites = useFavoritesStore((state) => state.favorites)
   const [isFetchingNext, setIsFetchingNext] = useState(false)
   const insets = useSafeAreaInsets()
   const tabBarHeight = useBottomTabBarHeight()
@@ -51,14 +49,9 @@ const Index = () => {
   const isFocused = useIsFocused()
   const listRef = useRef<FlashList<CocktailDetail>>(null)
 
-  const renderItem: ListRenderItem<CocktailDetail> = useCallback(
-    ({ item }) => {
-      const isFavorite = favorites.findIndex((favorite) => favorite.id === item.id) !== -1
-
-      return <FavoriteItem item={item} isFavorite={isFavorite} />
-    },
-    [favorites]
-  )
+  const renderItem: ListRenderItem<CocktailDetail> = useCallback(({ item }) => {
+    return <FavoriteItem item={item} />
+  }, [])
 
   useEffect(() => {
     setIsFetchingNext(false)

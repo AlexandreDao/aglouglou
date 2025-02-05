@@ -86,7 +86,7 @@ const SearchInput = ({ onSubmitEditing, onFocus, onBlur, searchQuery, setSearchQ
           }}
           submitBehavior="blurAndSubmit"
           onChangeText={setSearchQuery}
-          placeholder={'Try typing "Irish coffee"'}
+          placeholder={'Try typing "Irish"'}
           placeholderTextColor={ACTIVE_COLOR}
           cursorColor={TEXT_COLOR}
           style={[styles.input, isSearchQueryCleared ? styles.inputCleared : styles.inputDirty]}

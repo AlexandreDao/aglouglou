@@ -1,7 +1,7 @@
 import { Text, StyleSheet, Alert, Pressable, View } from 'react-native'
 import React, { RefObject, useEffect } from 'react'
 import { Image } from 'expo-image'
-import useFavoriteStore from '@/store/favoritesStore'
+import useFavoritesStore from '@/store/favoritesStore'
 import { CocktailDetail } from '@/types/cocktail'
 import {
   ALCOHOLIC_CATEGORY_COLOR,
@@ -20,7 +20,6 @@ import HighlightText from '@/components/ui/HightlightText'
 
 interface FavItemProps {
   item: CocktailDetail
-  isFavorite: boolean
   shouldAnimateRemove?: boolean
   listRef?: RefObject<FlashList<CocktailDetail>>
   textToHighlight?: string
@@ -75,9 +74,11 @@ const styles = StyleSheet.create({
   },
 })
 
-const FavoriteItem = ({ item, isFavorite, listRef, textToHighlight, shouldAnimateRemove = false }: FavItemProps) => {
-  const addToFavorite = useFavoriteStore((state) => state.addToFavorite)
-  const removeFromFavorite = useFavoriteStore((state) => state.removeFromFavorite)
+const FavoriteItem = ({ item, listRef, textToHighlight, shouldAnimateRemove = false }: FavItemProps) => {
+  const favorites = useFavoritesStore((state) => state.favorites)
+  const isFavorite = favorites.some((favorite) => favorite.id === item.id)
+  const addToFavorite = useFavoritesStore((state) => state.addToFavorite)
+  const removeFromFavorite = useFavoritesStore((state) => state.removeFromFavorite)
   const { open } = useDetailsBottomSheet()
   const height = useSharedValue(100)
   const animatedStyle = useAnimatedStyle(() => {

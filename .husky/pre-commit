@@ -4,3 +4,4 @@
 pnpm tsc
 pnpm run test
 pnpm lint-staged
+pnpm dlx expo-doctor

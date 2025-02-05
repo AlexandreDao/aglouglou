@@ -88,6 +88,20 @@ Update test snapshot with:
 pnpm test-update
 ```
 
+## Build app
+
+with eas:
+
+```bash
+pnpm build-android|ios
+```
+
+without eas (android only):
+
+```bash
+cd android && ./gradlew assembleRelease
+```
+
 ## CocktailDB
 
 Link to the [cocktailDB](https://www.thecocktaildb.com/api.php) API documentation

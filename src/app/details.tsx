@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
     gap: 12,
     paddingBottom: 28,
     paddingHorizontal: 16,
+    paddingTop: 14,
   },
   titleContainer: {
     alignItems: 'center',

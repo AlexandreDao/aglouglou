@@ -24,7 +24,6 @@ import { TabParamList } from '@/types/navigation'
 import { useIsFocused } from '@react-navigation/native'
 import FavoriteItem from '@/components/ui/FavoriteItem'
 import Separator from '@/components/ui/Separator'
-import useFavoritesStore from '@/store/favoritesStore'
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller'
 
 const styles = StyleSheet.create({
@@ -81,7 +80,6 @@ const Search = () => {
   const addToRecentSearches = useRecentSearchStore((state) => state.addToRecentSearches)
   const { data, isFetching, isPlaceholderData } = useCocktailSearchByName(submittedQuery)
   const results = data?.drinks ? [...data.drinks] : []
-  const favorites = useFavoritesStore((state) => state.favorites)
   const listRef = useRef<FlashList<CocktailDetail>>(null)
   const insets = useSafeAreaInsets()
   const tabBarHeight = useBottomTabBarHeight()
@@ -91,11 +89,9 @@ const Search = () => {
 
   const renderItem: ListRenderItem<CocktailDetail> = useCallback(
     ({ item }) => {
-      const isFavorite = favorites.findIndex((favorite) => favorite.id === item.id) !== -1
-
-      return <FavoriteItem item={item} isFavorite={isFavorite} textToHighlight={submittedQuery} />
+      return <FavoriteItem item={item} textToHighlight={submittedQuery} />
     },
-    [favorites, submittedQuery]
+    [submittedQuery]
   )
 
   useEffect(() => {

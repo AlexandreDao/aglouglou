@@ -8,7 +8,6 @@ import { useCallback, useEffect, useRef } from 'react'
 import { BottomTabNavigationProp, useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { useIsFocused } from '@react-navigation/native'
 import { TabParamList } from '@/types/navigation'
-import useFavoritesStore from '@/store/favoritesStore'
 import Separator from '@/components/ui/Separator'
 import useHistoryStore from '@/store/historyStore'
 import { useNavigation } from 'expo-router'
@@ -35,7 +34,6 @@ const styles = StyleSheet.create({
 
 const History = () => {
   const history = useHistoryStore((state) => state.history)
-  const favorites = useFavoritesStore((state) => state.favorites)
   const insets = useSafeAreaInsets()
   const tabBarHeight = useBottomTabBarHeight()
   const windowSize = useWindowDimensions()
@@ -43,14 +41,9 @@ const History = () => {
   const isFocused = useIsFocused()
   const listRef = useRef<FlashList<CocktailDetail>>(null)
 
-  const renderItem: ListRenderItem<CocktailDetail> = useCallback(
-    ({ item }) => {
-      const isFavorite = favorites.findIndex((favorite) => favorite.id === item.id) !== -1
-
-      return <FavoriteItem item={item} isFavorite={isFavorite} />
-    },
-    [favorites]
-  )
+  const renderItem: ListRenderItem<CocktailDetail> = useCallback(({ item }) => {
+    return <FavoriteItem item={item} />
+  }, [])
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabPress', (e) => {
