@@ -29,3 +29,6 @@ jestSetup.js
 # Tests
 e2e/**
 coverage/
+
+# Scripts
+scripts/**

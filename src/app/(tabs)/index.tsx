@@ -5,7 +5,7 @@ import { FlashList, ListRenderItem } from '@shopify/flash-list'
 import { BACKGROUND_COLOR, INACTIVE_COLOR, TEXT_COLOR } from '@/constants/colors'
 import { CocktailDetail } from '@/types/cocktail'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { BottomTabNavigationProp, useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { useIsFocused } from '@react-navigation/native'
 import { TabParamList } from '@/types/navigation'
@@ -49,9 +49,9 @@ const Index = () => {
   const isFocused = useIsFocused()
   const listRef = useRef<FlashList<CocktailDetail>>(null)
 
-  const renderItem: ListRenderItem<CocktailDetail> = useCallback(({ item }) => {
+  const renderItem: ListRenderItem<CocktailDetail> = ({ item }) => {
     return <FavoriteItem item={item} />
-  }, [])
+  }
 
   useEffect(() => {
     setIsFetchingNext(false)

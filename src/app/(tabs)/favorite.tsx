@@ -4,7 +4,7 @@ import useSortedFavorites from '@/hooks/useSortedFavorites'
 import { CocktailDetail } from '@/types/cocktail'
 import { BottomTabNavigationProp, useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { FlashList, ListRenderItem } from '@shopify/flash-list'
-import { useCallback, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { Button, Platform, StyleSheet, Text, useWindowDimensions, View } from 'react-native'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { TabParamList } from '@/types/navigation'
@@ -45,9 +45,9 @@ const Favorite = () => {
   const navigation = useNavigation<BottomTabNavigationProp<TabParamList>>()
   const isFocused = useIsFocused()
 
-  const renderItem: ListRenderItem<CocktailDetail> = useCallback(({ item }) => {
+  const renderItem: ListRenderItem<CocktailDetail> = ({ item }) => {
     return <FavoriteItem shouldAnimateRemove item={item} listRef={listRef} />
-  }, [])
+  }
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabPress', (e) => {

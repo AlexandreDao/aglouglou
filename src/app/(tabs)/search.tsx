@@ -1,6 +1,6 @@
 import { ANDROID_RIPPLE_COLOR, BACKGROUND_COLOR, INACTIVE_COLOR, TEXT_COLOR } from '@/constants/colors'
 import { FlashList, ListRenderItem } from '@shopify/flash-list'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   ActivityIndicator,
   Keyboard,
@@ -87,12 +87,9 @@ const Search = () => {
   const navigation = useNavigation<BottomTabNavigationProp<TabParamList>>()
   const isFocused = useIsFocused()
 
-  const renderItem: ListRenderItem<CocktailDetail> = useCallback(
-    ({ item }) => {
-      return <FavoriteItem item={item} textToHighlight={submittedQuery} />
-    },
-    [submittedQuery]
-  )
+  const renderItem: ListRenderItem<CocktailDetail> = ({ item }) => {
+    return <FavoriteItem item={item} textToHighlight={submittedQuery} />
+  }
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabPress', (e) => {

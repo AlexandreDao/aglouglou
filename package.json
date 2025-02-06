@@ -2,8 +2,11 @@
   "name": "aglouglou",
   "main": "expo-router/entry",
   "version": "1.0.0",
+  "engines" : {
+    "node": ">=18.0.0"
+  },
   "scripts": {
-    "prebuild": "expo prebuild --clean",
+    "prebuild": "expo prebuild && node scripts/update-gradle.js",
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
@@ -13,8 +16,7 @@
     "test": "jest --coverage=false",
     "test-coverage": "jest",
     "test-update": "jest --updateSnapshot --coverage=false",
-    "lint": "expo lint",
-    "lint-fix": "eslint . --fix",
+    "lint": "eslint .",
     "e2e": "maestro test e2e",
     "prepare": "husky install"
   },
@@ -125,5 +127,5 @@
     }
   },
   "private": true,
-  "packageManager": "pnpm@9.15.1+sha512.1acb565e6193efbebda772702950469150cf12bcc764262e7587e71d19dc98a423dff9536e57ea44c49bdf790ff694e83c27be5faa23d67e0c033b583be4bfcf"
+  "packageManager": "pnpm@9.15.2"
 }
