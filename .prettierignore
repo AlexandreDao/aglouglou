@@ -13,9 +13,6 @@ assets/**
 ios/**
 android/**
 
-# IDE
-.vscode
-
 # Test
 e2e/**
 coverage/

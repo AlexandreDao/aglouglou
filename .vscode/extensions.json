@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "orta.vscode-jest",
+    "msjsdiag.vscode-react-native",
+    "expo.vscode-expo-tools",
+    "swmansion.react-native-ide",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "streetsidesoftware.code-spell-checker"
+  ]
+}

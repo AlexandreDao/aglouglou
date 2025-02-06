@@ -36,7 +36,7 @@ This project use pnpm as a package manager you can follow their doc to install [
    pnpm prebuild
 ```
 
-3. Start the app on respective OS
+3. Start the app on respective OS locally
 
 ```bash
     pnpm android|ios

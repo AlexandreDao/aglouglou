@@ -126,7 +126,7 @@ const FavoriteItem = ({ item, listRef, textToHighlight, shouldAnimateRemove = fa
           source={`${item.thumbnail}/preview`}
           placeholder={{ blurhash }}
           contentFit="cover"
-          transition={1000}
+          transition={200}
           allowDownscaling
         />
         <View style={styles.infoContainer}>

@@ -1,0 +1,101 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Prebuild",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["prebuild"],
+      "group": "build",
+      "detail": "Runs 'expo prebuild' and updates Gradle properties."
+    },
+    {
+      "label": "Start Expo",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["start"],
+      "group": "build",
+      "detail": "Starts the Expo development server."
+    },
+    {
+      "label": "Run Android",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["android"],
+      "group": "build",
+      "detail": "Runs the app on an Android device or emulator."
+    },
+    {
+      "label": "Run iOS",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["ios"],
+      "group": "build",
+      "detail": "Runs the app on an iOS simulator."
+    },
+    {
+      "label": "Build Android",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["build-android"],
+      "group": "build",
+      "detail": "Builds the Android app using EAS."
+    },
+    {
+      "label": "Build iOS",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["build-ios"],
+      "group": "build",
+      "detail": "Builds the iOS app using EAS."
+    },
+    {
+      "label": "Test (Debug)",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["test-debug"],
+      "group": "test",
+      "detail": "Runs Jest in watch mode for debugging."
+    },
+    {
+      "label": "Test",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["test"],
+      "group": "test",
+      "detail": "Runs Jest tests without coverage."
+    },
+    {
+      "label": "Test Coverage",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["test-coverage"],
+      "group": "test",
+      "detail": "Runs Jest tests with coverage."
+    },
+    {
+      "label": "Update Snapshots",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["test-update"],
+      "group": "test",
+      "detail": "Updates Jest snapshots."
+    },
+    {
+      "label": "Lint",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["lint"],
+      "group": "build",
+      "detail": "Runs ESLint on the project."
+    },
+    {
+      "label": "End-to-End Tests",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["e2e"],
+      "group": "test",
+      "detail": "Runs end-to-end tests using Maestro."
+    }
+  ]
+}
