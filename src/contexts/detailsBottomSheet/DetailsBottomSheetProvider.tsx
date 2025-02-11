@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import DetailsBottomSheetContext from '@/contexts/detailsBottomSheet/DetailsBottomSheetContext'
 import { CocktailDetail } from '@/types/cocktail'
-import { DetailsRef } from '@/app/details'
+import { DetailsRef } from '@/app/cocktail'
 
 interface DetailBottomSheetProviderProps {
   children: React.ReactNode

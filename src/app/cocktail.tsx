@@ -14,14 +14,15 @@ import {
 } from '@/constants/colors'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import useHistoryStore from '@/store/historyStore'
-import { useNavigation, useRouter } from 'expo-router'
+import { useNavigation } from 'expo-router'
 import FavoriteButton from '@/components/ui/FavoriteButton'
 import Category from '@/components/ui/Category'
 import useFavoritesStore from '@/store/favoritesStore'
 import { Checkbox } from 'expo-checkbox'
+import useCocktailSearchById from '@/hooks/services/useCocktailSearchById'
 
 export interface DetailsRef {
-  open: (detail: CocktailDetail) => void
+  open: (detail?: CocktailDetail | string) => void
   close: () => void
 }
 
@@ -91,9 +92,10 @@ const styles = StyleSheet.create({
   },
 })
 
-const Details = forwardRef((props, ref) => {
+const Cocktail = forwardRef((props, ref) => {
   const bottomSheetModalRef = useRef<BottomSheet>(null)
   const [cocktailDetail, setCocktailDetail] = useState<CocktailDetail | null>(null)
+  const [cocktailId, setCocktailId] = useState<string | null>(null)
   const ingredients = cocktailDetail?.ingredients.filter((instruction) => instruction.trim()) || []
   const instructions = cocktailDetail?.instructions.split(/[.]/).filter((instruction) => instruction.trim()) || []
   const insets = useSafeAreaInsets()
@@ -107,38 +109,43 @@ const Details = forwardRef((props, ref) => {
   const addToFavorite = useFavoritesStore((state) => state.addToFavorite)
   const removeFromFavorite = useFavoritesStore((state) => state.removeFromFavorite)
   const [isCheckedArray, setIsCheckedArray] = useState<boolean[]>([])
-  const router = useRouter()
+  const onSuccess = (detail: CocktailDetail) => {
+    setCocktailDetail(detail)
+    const instructionLength = (detail?.instructions.split(/[.]/).filter((instruction) => instruction.trim()) || [])
+      .length
+    setIsCheckedArray(new Array(instructionLength).fill(false))
 
+    if (navigationState?.routes[0].state?.routes[navigationState?.routes[0].state?.index ?? 0].name !== 'history') {
+      addToHistory(detail)
+    }
+  }
+  const { isFetching } = useCocktailSearchById({ id: cocktailId, onSuccess })
   const backAction = () => {
     bottomSheetModalRef.current?.close()
     return true
   }
 
   useImperativeHandle(ref, () => ({
-    open: (detail: CocktailDetail) => {
-      setCocktailDetail(detail)
-      const instructionLength = (
-        cocktailDetail?.instructions.split(/[.]/).filter((instruction) => instruction.trim()) || []
-      ).length
-      setIsCheckedArray(new Array(instructionLength).fill(false))
-
-      if (navigationState?.routes[0].state?.routes[navigationState?.routes[0].state?.index ?? 0].name !== 'history') {
-        addToHistory(detail)
+    open: (cocktail?: CocktailDetail | string) => {
+      console.log('cocktail', cocktail)
+      if (!cocktail) {
+        console.log('null')
+        setCocktailDetail(null)
+      } else if (typeof cocktail === 'string') {
+        setCocktailId(cocktail)
+      } else {
+        onSuccess(cocktail)
       }
-      router.navigate('/detail/undefined')
       bottomSheetModalRef.current?.expand()
     },
-    close: () => {
-      bottomSheetModalRef.current?.close()
-      if (router.canGoBack()) {
-        router.back()
-      }
-    },
+    close: () => bottomSheetModalRef.current?.close(),
   }))
 
   useEffect(() => {
     return () => backHandler.current?.remove()
   }, [])
+
+  console.log('loading', isFetching)
 
   return (
     <BottomSheet
@@ -148,11 +155,7 @@ const Details = forwardRef((props, ref) => {
       backgroundStyle={styles.bottomSheetBackground}
       handleIndicatorStyle={styles.bottomSheetHandleIndicator}
       enablePanDownToClose
-      onClose={() => {
-        if (router.canGoBack()) {
-          router.back()
-        }
-      }}
+      index={-1}
       onChange={(index) => {
         if (index === 0) {
           backHandler.current = BackHandler.addEventListener('hardwareBackPress', backAction)
@@ -209,7 +212,6 @@ const Details = forwardRef((props, ref) => {
                     return (
                       <TouchableWithoutFeedback
                         key={`instruction-${index}`}
-                        style={styles.instructionContainer}
                         onPress={() => {
                           setIsCheckedArray((prev) => {
                             const tmp = [...prev]
@@ -218,16 +220,18 @@ const Details = forwardRef((props, ref) => {
                           })
                         }}
                       >
-                        <Text
-                          style={[
-                            styles.regular,
-                            { textDecorationLine: isCheckedArray[index] ? 'line-through' : 'none' },
-                          ]}
-                        >{`• ${capitalizeFirstLetter(instruction.trim())}\n`}</Text>
-                        <Checkbox
-                          value={isCheckedArray[index]}
-                          color={isCheckedArray[index] ? ACTIVE_COLOR : INACTIVE_COLOR}
-                        />
+                        <View style={styles.instructionContainer}>
+                          <Text
+                            style={[
+                              styles.regular,
+                              { textDecorationLine: isCheckedArray[index] ? 'line-through' : 'none' },
+                            ]}
+                          >{`• ${capitalizeFirstLetter(instruction.trim())}\n`}</Text>
+                          <Checkbox
+                            value={isCheckedArray[index]}
+                            color={isCheckedArray[index] ? ACTIVE_COLOR : INACTIVE_COLOR}
+                          />
+                        </View>
                       </TouchableWithoutFeedback>
                     )
                   })}
@@ -243,6 +247,6 @@ const Details = forwardRef((props, ref) => {
   )
 })
 
-Details.displayName = 'Details'
+Cocktail.displayName = 'Details'
 
-export default Details
+export default Cocktail

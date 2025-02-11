@@ -34,7 +34,7 @@ const useCocktailSearchByFirstLetter = () => {
       return nextLetterAsciiCode <= lastLetterAsciiCode ? nextLetterAsciiCode : undefined
     },
     staleTime: 7 * 24 * 60 * 60 * 1000, // 7 days valid cache
-    gcTime: 1000 * 60 * 20, // 20 minutes garbage collected
+    gcTime: 1000 * 60 * 60 * 4, // 4 hour garbage collected
   })
 }
 

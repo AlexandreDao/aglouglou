@@ -72,6 +72,10 @@ export interface CocktailSearchResult {
   drinks: CocktailSearchDrink[] | null | 'no data found'
 }
 
+export interface CocktailLookupResponse {
+  drinks: [CocktailSearchDrink] | 'no data found'
+}
+
 export interface CocktailLookupResult {
   drinks: [CocktailSearchDrink]
 }
