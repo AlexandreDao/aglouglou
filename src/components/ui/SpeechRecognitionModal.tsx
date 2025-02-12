@@ -1,20 +1,10 @@
-import {
-  View,
-  Text,
-  Modal,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  Pressable,
-  Button,
-  Alert,
-  Linking,
-  Platform,
-} from 'react-native'
+import { View, Text, Modal, StyleSheet, Button, Alert, Linking, Platform } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { IconSymbol } from '@/components/ui/IconSymbol'
 import { ACTIVE_COLOR, BACKDROP_COLOR, BACKGROUND_COLOR, TEXT_COLOR } from '@/constants/colors'
 import { ExpoSpeechRecognitionModule, useSpeechRecognitionEvent } from 'expo-speech-recognition'
 import { PermissionStatus } from 'expo-modules-core'
+import { GestureHandlerRootView, Pressable } from 'react-native-gesture-handler'
 
 const styles = StyleSheet.create({
   backdrop: {
@@ -124,35 +114,40 @@ const SpeechRecognitionModal = ({ isOpen, setIsOpen, onResult }: SpeechRecogniti
       transparent
       statusBarTranslucent
       visible={isOpen}
-      animationType="slide"
+      animationType="fade"
       onRequestClose={() => setIsOpen?.(false)}
     >
-      <TouchableWithoutFeedback onPress={() => setIsOpen?.(false)}>
+      <GestureHandlerRootView>
         <View style={styles.backdrop}>
-          <TouchableWithoutFeedback>
-            <View style={styles.modalContainer}>
-              <Pressable
-                style={styles.iconContainer}
-                onPress={() => {
-                  if (isRecognizing) {
-                    ExpoSpeechRecognitionModule.stop()
-                  } else {
-                    startSpeechRecognition()
-                  }
-                }}
-              >
-                <IconSymbol name="mic.fill" color={BACKGROUND_COLOR} size={42} />
-              </Pressable>
-              <Text style={styles.text} numberOfLines={2}>
-                {transcript ? `"${transcript}"` : !isRecognizing ? "Didn't catch that" : 'Speak now'}
-              </Text>
-              {!isRecognizing && !transcript && (
-                <Button title="Try again" color={ACTIVE_COLOR} onPress={startSpeechRecognition} />
-              )}
-            </View>
-          </TouchableWithoutFeedback>
+          <Pressable
+            style={StyleSheet.absoluteFill}
+            onPress={() => {
+              setIsOpen?.(false)
+            }}
+            accessible={false}
+          />
+          <View style={styles.modalContainer}>
+            <Pressable
+              style={styles.iconContainer}
+              onPress={() => {
+                if (isRecognizing) {
+                  ExpoSpeechRecognitionModule.stop()
+                } else {
+                  startSpeechRecognition()
+                }
+              }}
+            >
+              <IconSymbol name="mic.fill" color={BACKGROUND_COLOR} size={42} />
+            </Pressable>
+            <Text style={styles.text} numberOfLines={2}>
+              {transcript ? `"${transcript}"` : !isRecognizing ? "Didn't catch that" : 'Speak now'}
+            </Text>
+            {!isRecognizing && !transcript && (
+              <Button title="Try again" color={ACTIVE_COLOR} onPress={startSpeechRecognition} />
+            )}
+          </View>
         </View>
-      </TouchableWithoutFeedback>
+      </GestureHandlerRootView>
     </Modal>
   )
 }

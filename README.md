@@ -42,7 +42,7 @@ This project use pnpm as a package manager you can follow their doc to install [
     pnpm android|ios
 ```
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
 ## Running unit test
 

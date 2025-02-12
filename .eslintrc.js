@@ -27,7 +27,18 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'warn',
     '@typescript-eslint/no-var-requires': 'off',
     'react-native/no-inline-styles': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-floating-promises': 'off',
   },
+  overrides: [
+    {
+      files: ['*.test.tsx'],
+      rules: {
+        '@typescript-eslint/no-unsafe-assignment': 'off',
+        '@typescript-eslint/no-unsafe-return': 'off',
+      },
+    },
+  ],
   settings: {
     'import/resolver': {
       typescript: {

@@ -6,6 +6,7 @@ import {
   CocktailLookupResult,
 } from '@/types/cocktail'
 import { parseDate } from '@/utils/dateUtils'
+import { capitalizeFirstLetter } from '@/utils/stringUtils'
 
 const INGREDIENT_PREFIX = 'strIngredient'
 const MEASURE_PREFIX = 'strMeasure'
@@ -24,13 +25,23 @@ export const mapCocktailDrinkToCocktailDetail = (drink: CocktailSearchDrink): Co
 
   cocktailDetail.alcoholic = drink.strAlcoholic
   cocktailDetail.instructions = drink.strInstructions
+    .split(/[.]/)
+    .filter((instruction) => instruction.trim())
+    .map((instruction) => capitalizeFirstLetter(instruction.trim().replace(/\s+/g, ' ').toLowerCase()))
   // Concatenate measure and ingredient props and map them to a single array
   cocktailDetail.ingredients = Array.from({ length: 15 }, (x, i) => i + 1)
     .map((nb) => {
       const measure = drink[`${MEASURE_PREFIX}${nb}` as keyof CocktailSearchDrink]
       const ingredient = drink[`${INGREDIENT_PREFIX}${nb}` as keyof CocktailSearchDrink]
 
-      return (measure ? `${measure} ` : '') + (ingredient ? ingredient : '')
+      return ((measure ? `${measure} ` : '') + (ingredient ? ingredient : '')).trim().replace(/\s+/g, ' ').toLowerCase()
+    })
+    .filter((ingredient) => ingredient !== '')
+  cocktailDetail.ingredientsOnly = Array.from({ length: 15 }, (x, i) => i + 1)
+    .map((nb) => {
+      const ingredient = drink[`${INGREDIENT_PREFIX}${nb}` as keyof CocktailSearchDrink]
+
+      return ingredient ? ingredient.trim().replace(/\s+/g, ' ').toLowerCase() : ''
     })
     .filter((ingredient) => ingredient !== '')
   cocktailDetail.category = drink.strCategory

@@ -17,3 +17,5 @@ export const DRINK_CATEGORY_COLOR = '#acab00'
 export const BACKDROP_COLOR = 'rgba(0, 0, 0, 0.4)'
 
 export const ANDROID_RIPPLE_COLOR = 'rgba(255, 255, 255, 0.6)'
+
+export const IOS_ONPRESS_COLOR = 'rgba(0, 0, 0, 0.3)'

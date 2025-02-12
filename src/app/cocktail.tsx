@@ -1,9 +1,16 @@
 import React, { useRef, forwardRef, useState, useEffect, useMemo, useImperativeHandle } from 'react'
-import { View, Text, StyleSheet, useWindowDimensions, BackHandler, NativeEventSubscription } from 'react-native'
-import BottomSheet, { BottomSheetScrollView, TouchableWithoutFeedback } from '@gorhom/bottom-sheet'
+import {
+  View,
+  Text,
+  StyleSheet,
+  useWindowDimensions,
+  BackHandler,
+  NativeEventSubscription,
+  Platform,
+} from 'react-native'
+import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import { CocktailDetail } from '@/types/cocktail'
 import { Image } from 'expo-image'
-import { capitalizeFirstLetter } from '@/utils/stringUtils'
 import {
   ACTIVE_COLOR,
   ALCOHOLIC_CATEGORY_COLOR,
@@ -20,6 +27,7 @@ import Category from '@/components/ui/Category'
 import useFavoritesStore from '@/store/favoritesStore'
 import { Checkbox } from 'expo-checkbox'
 import useCocktailSearchById from '@/hooks/services/useCocktailSearchById'
+import { Pressable } from 'react-native-gesture-handler'
 
 export interface DetailsRef {
   open: (detail?: CocktailDetail | string) => void
@@ -75,7 +83,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 14,
     lineHeight: 18,
-    paddingVertical: 4,
+    paddingVertical: Platform.select({ android: 4, ios: 0 }),
   },
 
   textContainer: {
@@ -96,8 +104,8 @@ const Cocktail = forwardRef((props, ref) => {
   const bottomSheetModalRef = useRef<BottomSheet>(null)
   const [cocktailDetail, setCocktailDetail] = useState<CocktailDetail | null>(null)
   const [cocktailId, setCocktailId] = useState<string | null>(null)
-  const ingredients = cocktailDetail?.ingredients.filter((instruction) => instruction.trim()) || []
-  const instructions = cocktailDetail?.instructions.split(/[.]/).filter((instruction) => instruction.trim()) || []
+  const ingredients = cocktailDetail?.ingredients || []
+  const instructions = cocktailDetail?.instructions || []
   const insets = useSafeAreaInsets()
   const { height: windowHeight } = useWindowDimensions()
   const backHandler = useRef<NativeEventSubscription>()
@@ -109,32 +117,20 @@ const Cocktail = forwardRef((props, ref) => {
   const addToFavorite = useFavoritesStore((state) => state.addToFavorite)
   const removeFromFavorite = useFavoritesStore((state) => state.removeFromFavorite)
   const [isCheckedArray, setIsCheckedArray] = useState<boolean[]>([])
-  const onSuccess = (detail: CocktailDetail) => {
-    setCocktailDetail(detail)
-    const instructionLength = (detail?.instructions.split(/[.]/).filter((instruction) => instruction.trim()) || [])
-      .length
-    setIsCheckedArray(new Array(instructionLength).fill(false))
-
-    if (navigationState?.routes[0].state?.routes[navigationState?.routes[0].state?.index ?? 0].name !== 'history') {
-      addToHistory(detail)
-    }
-  }
-  const { isFetching } = useCocktailSearchById({ id: cocktailId, onSuccess })
+  const { isFetching } = useCocktailSearchById({ id: cocktailId })
   const backAction = () => {
     bottomSheetModalRef.current?.close()
     return true
   }
 
   useImperativeHandle(ref, () => ({
-    open: (cocktail?: CocktailDetail | string) => {
-      console.log('cocktail', cocktail)
-      if (!cocktail) {
-        console.log('null')
-        setCocktailDetail(null)
-      } else if (typeof cocktail === 'string') {
-        setCocktailId(cocktail)
-      } else {
-        onSuccess(cocktail)
+    open: (cocktail: CocktailDetail) => {
+      setCocktailDetail(cocktail)
+      const instructionLength = (cocktail?.instructions || []).length
+      setIsCheckedArray(new Array(instructionLength).fill(false))
+
+      if (navigationState?.routes[0].state?.routes[navigationState?.routes[0].state?.index ?? 0].name !== 'history') {
+        addToHistory(cocktail)
       }
       bottomSheetModalRef.current?.expand()
     },
@@ -144,8 +140,6 @@ const Cocktail = forwardRef((props, ref) => {
   useEffect(() => {
     return () => backHandler.current?.remove()
   }, [])
-
-  console.log('loading', isFetching)
 
   return (
     <BottomSheet
@@ -194,12 +188,7 @@ const Cocktail = forwardRef((props, ref) => {
               {ingredients.length ? (
                 <View>
                   {ingredients.map((ingredient, index) => {
-                    return (
-                      <Text
-                        key={`ingredient-${index}`}
-                        style={styles.regular}
-                      >{`• ${ingredient.toLowerCase().trim()}\n`}</Text>
-                    )
+                    return <Text key={`ingredient-${index}`} style={styles.regular}>{`• ${ingredient}\n`}</Text>
                   })}
                 </View>
               ) : (
@@ -210,7 +199,7 @@ const Cocktail = forwardRef((props, ref) => {
                 <View>
                   {instructions.map((instruction, index) => {
                     return (
-                      <TouchableWithoutFeedback
+                      <Pressable
                         key={`instruction-${index}`}
                         onPress={() => {
                           setIsCheckedArray((prev) => {
@@ -226,13 +215,13 @@ const Cocktail = forwardRef((props, ref) => {
                               styles.regular,
                               { textDecorationLine: isCheckedArray[index] ? 'line-through' : 'none' },
                             ]}
-                          >{`• ${capitalizeFirstLetter(instruction.trim())}\n`}</Text>
+                          >{`• ${instruction}\n`}</Text>
                           <Checkbox
                             value={isCheckedArray[index]}
                             color={isCheckedArray[index] ? ACTIVE_COLOR : INACTIVE_COLOR}
                           />
                         </View>
-                      </TouchableWithoutFeedback>
+                      </Pressable>
                     )
                   })}
                 </View>

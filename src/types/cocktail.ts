@@ -8,8 +8,9 @@ type NullableString = string | null
 
 export interface CocktailDetail extends CocktailItem {
   alcoholic: string
-  instructions: string
+  instructions: string[]
   ingredients: string[]
+  ingredientsOnly: string[]
   category: string
   dateModified: NullableString
 }

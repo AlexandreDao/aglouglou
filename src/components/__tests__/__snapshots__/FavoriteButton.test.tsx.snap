@@ -12,7 +12,6 @@ exports[`<FavoriteButton /> FavoriteButton snapshot 1`] = `
       "top": 0,
     }
   }
-  onStartShouldSetResponder={[Function]}
   rippleColor={0}
   style={
     [

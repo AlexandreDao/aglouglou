@@ -1,4 +1,4 @@
-import { Text, StyleSheet, Alert, Pressable, View } from 'react-native'
+import { Text, StyleSheet, Alert, View, Platform } from 'react-native'
 import React, { RefObject, useEffect } from 'react'
 import { Image } from 'expo-image'
 import useFavoritesStore from '@/store/favoritesStore'
@@ -6,8 +6,8 @@ import { CocktailDetail } from '@/types/cocktail'
 import {
   ALCOHOLIC_CATEGORY_COLOR,
   ANDROID_RIPPLE_COLOR,
-  BACKGROUND_COLOR,
   DRINK_CATEGORY_COLOR,
+  IOS_ONPRESS_COLOR,
   TEXT_COLOR,
 } from '@/constants/colors'
 import FavoriteButton from '@/components/ui/FavoriteButton'
@@ -16,7 +16,8 @@ import { useDetailsBottomSheet } from '@/hooks/useDetailsBottomSheet'
 import { FlashList } from '@shopify/flash-list'
 import { capitalizeFirstLetter } from '@/utils/stringUtils'
 import Category from '@/components/ui/Category'
-import HighlightText from '@/components/ui/HightlightText'
+import HighlightText from '@/components/ui/HighlightText'
+import { Pressable } from 'react-native-gesture-handler'
 
 interface FavItemProps {
   item: CocktailDetail
@@ -38,14 +39,12 @@ const styles = StyleSheet.create({
   },
   container: {
     alignItems: 'center',
-    backgroundColor: BACKGROUND_COLOR,
     flexDirection: 'row',
     gap: 16,
     justifyContent: 'space-between',
     overflow: 'hidden',
     paddingLeft: 16,
   },
-  empty: {},
   flexContainer: {
     flex: 1,
   },
@@ -64,7 +63,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   pressed: {
-    opacity: 0.8,
+    backgroundColor: Platform.select({ ios: IOS_ONPRESS_COLOR, android: undefined }),
   },
   text: {
     color: TEXT_COLOR,
@@ -102,7 +101,9 @@ const FavoriteItem = ({ item, listRef, textToHighlight, shouldAnimateRemove = fa
     }
   }
 
-  const onPress = () => open(item)
+  const onPress = () => {
+    open(item)
+  }
 
   useEffect(() => {
     // Reset value when id changes (view was recycled for another item)
@@ -110,16 +111,7 @@ const FavoriteItem = ({ item, listRef, textToHighlight, shouldAnimateRemove = fa
   }, [item.id, height])
 
   return (
-    <Pressable
-      style={({ pressed }) => {
-        if (pressed) {
-          return styles.pressed
-        }
-        return styles.empty
-      }}
-      android_ripple={{ color: ANDROID_RIPPLE_COLOR }}
-      onPress={onPress}
-    >
+    <View style={{ overflow: 'hidden' }}>
       <Animated.View style={[styles.container, animatedStyle]}>
         <Image
           style={styles.image}
@@ -135,11 +127,9 @@ const FavoriteItem = ({ item, listRef, textToHighlight, shouldAnimateRemove = fa
               {item.name}
             </HighlightText>
             <Text style={styles.ingredient} ellipsizeMode="tail" numberOfLines={1}>
-              {item.ingredients
-                .map((i) => {
-                  const ingredients = i.split(' ')
-
-                  return capitalizeFirstLetter(ingredients[ingredients.length - 1] || '')
+              {item.ingredientsOnly
+                .map((ingredient) => {
+                  return capitalizeFirstLetter(ingredient)
                 })
                 .join(', ')}
             </Text>
@@ -149,6 +139,16 @@ const FavoriteItem = ({ item, listRef, textToHighlight, shouldAnimateRemove = fa
             {item.category && <Category title={item.category} backgroundColor={DRINK_CATEGORY_COLOR} />}
           </View>
         </View>
+        <Pressable
+          style={({ pressed }) => {
+            if (pressed) {
+              return [StyleSheet.absoluteFillObject, styles.pressed]
+            }
+            return [StyleSheet.absoluteFillObject]
+          }}
+          android_ripple={{ color: ANDROID_RIPPLE_COLOR }}
+          onPress={onPress}
+        />
         <FavoriteButton
           isFavorite={isFavorite}
           favorite={() => {
@@ -156,16 +156,16 @@ const FavoriteItem = ({ item, listRef, textToHighlight, shouldAnimateRemove = fa
           }}
           unfavorite={() => {
             Alert.alert('Unfavorite', `Are you sure you want to remove ${item.name} from your favorites ?`, [
-              { text: 'CANCEL' },
+              { text: 'Cancel' },
               {
-                text: 'REMOVE',
+                text: 'Remove',
                 onPress: onPressRemove,
               },
             ])
           }}
         />
       </Animated.View>
-    </Pressable>
+    </View>
   )
 }
 
