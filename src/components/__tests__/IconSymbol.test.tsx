@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from '@testing-library/react-native'
-import { IconSymbol as IconSymbolAndroid } from '@/components/ui/IconSymbol.android'
-import { IconSymbol as IconSymbolIOS } from '@/components/ui/IconSymbol.ios'
+import { IconSymbol as IconSymbolAndroid } from '@/components/IconSymbol.android'
+import { IconSymbol as IconSymbolIOS } from '@/components/IconSymbol.ios'
 
 describe('<IconSymbol />', () => {
   test('IconSymbol snapshot (Android)', () => {

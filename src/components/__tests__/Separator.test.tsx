@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from '@testing-library/react-native'
-import Separator from '@/components/ui/Separator'
+import Separator from '@/components/Separator'
 
 describe('<Separator />', () => {
   test('Separator snapshot', () => {

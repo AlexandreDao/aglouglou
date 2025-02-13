@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from '@testing-library/react-native'
-import Category from '@/components/ui/Category'
+import Category from '@/components/Category'
 
 describe('<Category />', () => {
   test('Category snapshot', () => {

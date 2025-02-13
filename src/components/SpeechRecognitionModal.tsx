@@ -1,6 +1,6 @@
 import { View, Text, Modal, StyleSheet, Button, Alert, Linking, Platform } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { IconSymbol } from '@/components/ui/IconSymbol'
+import { IconSymbol } from '@/components/IconSymbol'
 import { ACTIVE_COLOR, BACKDROP_COLOR, BACKGROUND_COLOR, TEXT_COLOR } from '@/constants/colors'
 import { ExpoSpeechRecognitionModule, useSpeechRecognitionEvent } from 'expo-speech-recognition'
 import { PermissionStatus } from 'expo-modules-core'

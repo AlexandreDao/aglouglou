@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 import React from 'react'
-import { IconSymbol } from '@/components/ui/IconSymbol'
+import { IconSymbol } from '@/components/IconSymbol'
 import { ACTIVE_COLOR, INACTIVE_COLOR } from '@/constants/colors'
 import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated'
 import { Pressable } from 'react-native-gesture-handler'

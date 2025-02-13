@@ -12,7 +12,7 @@ exports[`<IconSymbol /> IconSymbol snapshot (Android) 1`] = `
       },
       undefined,
       {
-        "fontFamily": "material",
+        "fontFamily": undefined,
         "fontStyle": "normal",
         "fontWeight": "normal",
       },

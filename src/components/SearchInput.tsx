@@ -1,8 +1,8 @@
 import { View, TextInput, StyleSheet } from 'react-native'
 import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 import { ACTIVE_COLOR, TAB_BAR_BACKGROUND_COLOR, TEXT_COLOR } from '@/constants/colors'
-import { IconSymbol } from '@/components/ui/IconSymbol'
-import SpeechRecognitionModal from '@/components/ui/SpeechRecognitionModal'
+import { IconSymbol } from '@/components/IconSymbol'
+import SpeechRecognitionModal from '@/components/SpeechRecognitionModal'
 import { Pressable } from 'react-native-gesture-handler'
 
 export interface SearchInputRef {

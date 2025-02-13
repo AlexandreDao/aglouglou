@@ -1,4 +1,4 @@
-import FavoriteItem from '@/components/ui/FavoriteItem'
+import FavoriteItem from '@/components/FavoriteItem'
 import useCocktailSearchByFirstLetter from '@/hooks/services/useCocktailSearchByFirstLetter'
 import { View, ActivityIndicator, StyleSheet, Text, Platform, useWindowDimensions } from 'react-native'
 import { FlashList, ListRenderItem } from '@shopify/flash-list'
@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from 'react'
 import { BottomTabNavigationProp, useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { useIsFocused } from '@react-navigation/native'
 import { TabParamList } from '@/types/navigation'
-import Separator from '@/components/ui/Separator'
+import Separator from '@/components/Separator'
 import { useNavigation } from 'expo-router'
 
 export const styles = StyleSheet.create({
@@ -94,7 +94,7 @@ const Index = () => {
           onEndReached={() => {
             if (!isFetching && hasNextPage) {
               setIsFetchingNext(true)
-              void fetchNextPage()
+              fetchNextPage()
             }
           }}
           ListFooterComponent={isFetchingNext ? <Text style={styles.loading}>Loading more...</Text> : null}

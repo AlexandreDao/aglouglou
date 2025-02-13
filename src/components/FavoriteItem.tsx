@@ -10,13 +10,13 @@ import {
   IOS_ONPRESS_COLOR,
   TEXT_COLOR,
 } from '@/constants/colors'
-import FavoriteButton from '@/components/ui/FavoriteButton'
+import FavoriteButton from '@/components/FavoriteButton'
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { useDetailsBottomSheet } from '@/hooks/useDetailsBottomSheet'
 import { FlashList } from '@shopify/flash-list'
 import { capitalizeFirstLetter } from '@/utils/stringUtils'
-import Category from '@/components/ui/Category'
-import HighlightText from '@/components/ui/HighlightText'
+import Category from '@/components/Category'
+import HighlightText from '@/components/HighlightText'
 import { Pressable } from 'react-native-gesture-handler'
 
 interface FavItemProps {

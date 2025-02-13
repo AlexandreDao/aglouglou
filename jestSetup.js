@@ -26,3 +26,17 @@ jest.mock('expo-speech-recognition', () => ({
   stopRecording: jest.fn(),
   isAvailable: true,
 }))
+
+jest.mock('expo-haptics', () => ({
+  impactAsync: jest.fn().mockResolvedValue(null),
+  ImpactFeedbackStyle: {
+    Light: 'LIGHT',
+    Medium: 'MEDIUM',
+    Heavy: 'HEAVY',
+  },
+}))
+
+jest.mock('react-native/Libraries/Utilities/Platform', () => ({
+  OS: 'ios',
+  select: jest.fn(),
+}))

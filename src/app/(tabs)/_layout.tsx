@@ -3,9 +3,9 @@ import React from 'react'
 import { Platform } from 'react-native'
 
 import { HapticTab } from '@/components/HapticTab'
-import { IconSymbol } from '@/components/ui/IconSymbol'
+import { IconSymbol } from '@/components/IconSymbol'
 import { ACTIVE_COLOR, INACTIVE_COLOR, TAB_BAR_BACKGROUND_COLOR } from '@/constants/colors'
-import BlurTabBarBackground from '@/components/ui/TabBarBackground'
+import BlurTabBarBackground from '@/components/TabBarBackground'
 
 const TabLayout = () => {
   return (

@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from '@testing-library/react-native'
-import HighlightText from '@/components/ui/HighlightText'
+import HighlightText from '@/components/HighlightText'
 
 describe('<HighlightText />', () => {
   test('HighlightText snapshot', () => {

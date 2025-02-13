@@ -1,5 +1,5 @@
 import React from 'react'
-import SearchInput from '@/components/ui/SearchInput'
+import SearchInput from '@/components/SearchInput'
 import { fireEvent, render } from '@testing-library/react-native'
 
 describe('<SearchInput />', () => {

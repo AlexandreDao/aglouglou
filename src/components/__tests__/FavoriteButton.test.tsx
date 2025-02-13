@@ -1,4 +1,4 @@
-import FavoriteButton from '@/components/ui/FavoriteButton'
+import FavoriteButton from '@/components/FavoriteButton'
 import { NOOP } from '@/constants/function'
 import { fireEvent, render } from '@testing-library/react-native'
 
