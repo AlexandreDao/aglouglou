@@ -60,7 +60,7 @@ Check the "Show Package Details" box in the bottom right corner.
 Expand the Android 15 (VanillaIceCream) entry then make sure the following items are checked:
 
 - `Android SDK Platform 35`
-- `Intel x86 Atom_64 System Image or Google APIs Intel x86 Atom System Image or (for Apple M1 Silicon) Google APIs ARM 64 v8a System Image`
+- `Google Play Intel x86_64 Atom System Image or Intel x86_64 Atom System Image or (for Apple M1 Silicon) Google APIs ARM 64 v8a System Image`
 
 ![Android studio expand](./AndroidStudio_expand.png)
 
@@ -98,3 +98,9 @@ _If you have macOs < 14.5:_
 Here is the [compatibility table of XCode](https://developer.apple.com/support/xcode/)
 
 And here you can look for the corresponding version on the [apple developer website](https://developer.apple.com/download/all/?q=xcode)
+
+## Install Xcode Command Line Tools
+
+![XCode settings](./XCode_settings.png)
+
+Open Xcode, choose Settings... from the Xcode menu (or press cmd ⌘ + ,). Go to the Locations and install the tools by selecting the most recent version in the Command Line Tools dropdown.

@@ -88,6 +88,14 @@ Update test snapshot with:
 pnpm test-update
 ```
 
+## Targeting element for e2e test
+
+You can get element id using:
+
+```bash
+maestro studio
+```
+
 ## Build app
 
 with eas:
