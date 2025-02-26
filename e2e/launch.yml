@@ -2,5 +2,7 @@ appId: com.anonymous.Aglouglou
 ---
 - launchApp
 
-- assertVisible: "Home, tab, 1 of 2"
-- assertVisible: "Favorites, tab, 2 of 2"
+- assertVisible: "Home, tab, 1 of 4"
+- assertVisible: "Search, tab, 2 of 4"
+- assertVisible: "Favorites, tab, 3 of 4"
+- assertVisible: "History, tab, 4 of 4"
