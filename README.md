@@ -14,13 +14,13 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 
 # Getting started
 
-## Setup your device or emulator/simulator in development build without EAS
+## Setup your environment
 
-Follow this [link](https://docs.expo.dev/get-started/set-up-your-environment/?mode=development-build&buildEnv=local)
+[Setup for mac](./docs//setup/MAC_SETUP.md)
 
-## Install PNPM
+[Setup for windows](./docs/setup/WINDOWS_SETUP.md)
 
-This project use pnpm as a package manager you can follow their doc to install [here](https://pnpm.io/installation)
+[Setup for linux](./docs/setup/LINUX_SETUP.md)
 
 ## Run the project
 
@@ -86,6 +86,14 @@ Update test snapshot with:
 
 ```bash
 pnpm test-update
+```
+
+## Targeting element for e2e test
+
+You can get element id using:
+
+```bash
+maestro studio
 ```
 
 ## Build app

@@ -17,7 +17,8 @@
     "test-coverage": "jest",
     "test-update": "jest --updateSnapshot --coverage=false",
     "lint": "eslint .",
-    "e2e": "maestro test e2e",
+    "e2e-android": "maestro --platform android test e2e",
+    "e2e-ios": "maestro --platform ios test e2e",
     "prepare": "husky install"
   },
   "husky": {
