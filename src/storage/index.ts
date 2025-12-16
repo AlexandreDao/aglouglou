@@ -1,3 +1,3 @@
-import { MMKV } from 'react-native-mmkv'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
-export const mmkv = new MMKV()
+export const mmkv = AsyncStorage

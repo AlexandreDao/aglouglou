@@ -7,6 +7,7 @@ import {
   BackHandler,
   NativeEventSubscription,
   Platform,
+  Pressable,
 } from 'react-native'
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import { CocktailDetail } from '@/types/cocktail'
@@ -27,7 +28,6 @@ import Category from '@/components/Category'
 import useFavoritesStore from '@/store/favoritesStore'
 import { Checkbox } from 'expo-checkbox'
 import useCocktailSearchById from '@/hooks/services/useCocktailSearchById'
-import { Pressable } from 'react-native-gesture-handler'
 
 export interface DetailsRef {
   open: (detail?: CocktailDetail | string) => void
@@ -60,11 +60,12 @@ const styles = StyleSheet.create({
     color: TEXT_COLOR,
     flex: 1,
     fontSize: 28,
-    fontWeight: 'bold',
+    fontWeight: '700',
   },
   h2: {
     color: TEXT_COLOR,
     fontSize: 20,
+    fontWeight: '500',
   },
   headerContainer: {
     gap: 4,
@@ -77,15 +78,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     gap: 16,
+    paddingRight: 4,
+  },
+  listContainer: {
+    gap: 10,
   },
   regular: {
     color: TEXT_COLOR,
     flex: 1,
     fontSize: 14,
     lineHeight: 18,
-    paddingVertical: Platform.select({ android: 4, ios: 0 }),
   },
-
   textContainer: {
     gap: 12,
     paddingBottom: 28,
@@ -108,7 +111,7 @@ const Cocktail = forwardRef((props, ref) => {
   const instructions = cocktailDetail?.instructions || []
   const insets = useSafeAreaInsets()
   const { height: windowHeight } = useWindowDimensions()
-  const backHandler = useRef<NativeEventSubscription>()
+  const backHandler = useRef<NativeEventSubscription>(undefined)
   const snapPoints = useMemo(() => [windowHeight - insets.top], [windowHeight, insets.top])
   const addToHistory = useHistoryStore((state) => state.addToHistory)
   const navigationState = useNavigation().getState()
@@ -186,9 +189,9 @@ const Cocktail = forwardRef((props, ref) => {
               </View>
               <Text style={styles.h2}>Ingredients</Text>
               {ingredients.length ? (
-                <View>
+                <View style={styles.listContainer}>
                   {ingredients.map((ingredient, index) => {
-                    return <Text key={`ingredient-${index}`} style={styles.regular}>{`• ${ingredient}\n`}</Text>
+                    return <Text key={`ingredient-${index}`} style={styles.regular}>{`• ${ingredient}`}</Text>
                   })}
                 </View>
               ) : (
@@ -196,27 +199,26 @@ const Cocktail = forwardRef((props, ref) => {
               )}
               <Text style={styles.h2}>Instructions</Text>
               {instructions.length ? (
-                <View>
+                <View style={styles.listContainer}>
                   {instructions.map((instruction, index) => {
+                    const toggleCheck = () =>
+                      setIsCheckedArray((prev) => {
+                        const tmp = [...prev]
+                        tmp[index] = !tmp[index]
+                        return tmp
+                      })
+
                     return (
-                      <Pressable
-                        key={`instruction-${index}`}
-                        onPress={() => {
-                          setIsCheckedArray((prev) => {
-                            const tmp = [...prev]
-                            tmp[index] = !tmp[index]
-                            return tmp
-                          })
-                        }}
-                      >
+                      <Pressable key={`instruction-${index}`} onPress={toggleCheck} hitSlop={5}>
                         <View style={styles.instructionContainer}>
                           <Text
                             style={[
                               styles.regular,
                               { textDecorationLine: isCheckedArray[index] ? 'line-through' : 'none' },
                             ]}
-                          >{`• ${instruction}\n`}</Text>
+                          >{`• ${instruction}`}</Text>
                           <Checkbox
+                            onValueChange={toggleCheck}
                             value={isCheckedArray[index]}
                             color={isCheckedArray[index] ? ACTIVE_COLOR : INACTIVE_COLOR}
                           />

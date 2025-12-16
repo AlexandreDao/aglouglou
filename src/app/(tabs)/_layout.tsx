@@ -1,30 +1,44 @@
 import { Tabs } from 'expo-router'
 import React from 'react'
-import { Platform } from 'react-native'
+import { Platform, View } from 'react-native'
 
 import { HapticTab } from '@/components/HapticTab'
 import { IconSymbol } from '@/components/IconSymbol'
 import { ACTIVE_COLOR, INACTIVE_COLOR, TAB_BAR_BACKGROUND_COLOR } from '@/constants/colors'
 import BlurTabBarBackground from '@/components/TabBarBackground'
+import { BottomTabBar } from '@react-navigation/bottom-tabs'
 
 const TabLayout = () => {
   return (
     <Tabs
-      screenOptions={{
-        //        tabBarHideOnKeyboard: true,
-        tabBarActiveTintColor: ACTIVE_COLOR,
-        tabBarInactiveTintColor: INACTIVE_COLOR,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: BlurTabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            position: 'absolute',
-          },
-          default: {
-            backgroundColor: TAB_BAR_BACKGROUND_COLOR,
-          },
-        }),
+      tabBar={(props) => (
+        <View testID="bottom-tab-bar">
+          <BottomTabBar {...props} />
+        </View>
+      )}
+      screenOptions={({ route, navigation }) => {
+        return {
+          //        tabBarHideOnKeyboard: true,
+          tabBarActiveTintColor: ACTIVE_COLOR,
+          tabBarInactiveTintColor: INACTIVE_COLOR,
+          headerShown: false,
+          tabBarButton: (props) => (
+            <HapticTab
+              {...props}
+              accessibilityState={{ selected: navigation.isFocused() }}
+              testID={`${route.name}-tab`}
+            />
+          ),
+          tabBarBackground: BlurTabBarBackground,
+          tabBarStyle: Platform.select({
+            ios: {
+              position: 'absolute',
+            },
+            default: {
+              backgroundColor: TAB_BAR_BACKGROUND_COLOR,
+            },
+          }),
+        }
       }}
     >
       <Tabs.Screen

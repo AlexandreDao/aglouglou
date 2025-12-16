@@ -5,6 +5,6 @@ const instance = axios.create({
   timeout: 7000,
 })
 
-const useCocktailApi = () => instance
+const cocktailApiSingleton = () => instance
 
-export default useCocktailApi
+export default cocktailApiSingleton

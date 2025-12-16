@@ -3,7 +3,7 @@ import { ACTIVE_COLOR, BACKGROUND_COLOR, TEXT_COLOR } from '@/constants/colors'
 import useSortedFavorites from '@/hooks/useSortedFavorites'
 import { CocktailDetail } from '@/types/cocktail'
 import { BottomTabNavigationProp, useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
-import { FlashList, ListRenderItem } from '@shopify/flash-list'
+import { FlashList, ListRenderItem, FlashListRef } from '@shopify/flash-list'
 import { useEffect, useRef } from 'react'
 import { Button, Platform, StyleSheet, Text, useWindowDimensions, View } from 'react-native'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentContainer: {
-    paddingBottom: Platform.select({ ios: 60, android: 10 }),
+    paddingVertical: Platform.select({ ios: 60, android: 10 }),
   },
   fallbackText: {
     color: TEXT_COLOR,
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
 
 const Favorite = () => {
   const favorites = useSortedFavorites()
-  const listRef = useRef<FlashList<CocktailDetail>>(null)
+  const listRef = useRef<FlashListRef<CocktailDetail> | null>(null)
   const insets = useSafeAreaInsets()
   const tabBarHeight = useBottomTabBarHeight()
   const windowSize = useWindowDimensions()
@@ -60,16 +60,11 @@ const Favorite = () => {
   }, [navigation, isFocused])
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['right', 'left', 'top']}>
       {favorites.length ? (
         <FlashList
           ref={listRef}
           contentContainerStyle={styles.contentContainer}
-          estimatedItemSize={100}
-          estimatedListSize={{
-            height: windowSize.height - tabBarHeight - insets.top - insets.bottom,
-            width: windowSize.width - insets.left - insets.right,
-          }}
           keyExtractor={(item) => `favorite-${item.id}`}
           data={favorites}
           ItemSeparatorComponent={Separator}

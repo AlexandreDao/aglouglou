@@ -2,7 +2,7 @@ import { View, Text, Modal, StyleSheet, Button, Alert, Linking, Platform } from 
 import React, { useEffect, useState } from 'react'
 import { IconSymbol } from '@/components/IconSymbol'
 import { ACTIVE_COLOR, BACKDROP_COLOR, BACKGROUND_COLOR, TEXT_COLOR } from '@/constants/colors'
-import { ExpoSpeechRecognitionModule, useSpeechRecognitionEvent } from 'expo-speech-recognition'
+// import { ExpoSpeechRecognitionModule, useSpeechRecognitionEvent } from 'expo-speech-recognition'
 import { PermissionStatus } from 'expo-modules-core'
 import { GestureHandlerRootView, Pressable } from 'react-native-gesture-handler'
 
@@ -48,65 +48,65 @@ const SpeechRecognitionModal = ({ isOpen, setIsOpen, onResult }: SpeechRecogniti
   //    // a value between -2 and 10. <= 0 is inaudible
   //    console.log('Volume changed to:', event.value)
   //  })
-  useSpeechRecognitionEvent('start', () => setIsRecognizing(true))
-  useSpeechRecognitionEvent('end', () => {
-    setIsRecognizing(false)
-  })
-  useSpeechRecognitionEvent('result', (event) => {
-    const result = event.results[0]?.transcript.toLowerCase() || ''
-    if (event.isFinal) {
-      onResult?.(result)
-      setIsOpen?.(false)
-    }
-    setTranscript(result)
-  })
-  useSpeechRecognitionEvent('error', (event) => {
-    console.error('speechRecognitionEvent:', event.error, event.message)
-  })
-  // TODO: history fav not working and add throttle to fav/unfav
-  const startSpeechRecognition = () => {
-    ExpoSpeechRecognitionModule.requestPermissionsAsync()
-      .then((result) => {
-        if (result.status === PermissionStatus.DENIED && Platform.OS === 'android') {
-          setIsRecognizing(false)
-          Alert.alert('', 'Microphone access need. Go to Android settings, tap permissions, and tap allow', [
-            { text: 'DiSMISS' },
-            {
-              text: 'GO TO SETTINGS',
-              onPress: () => {
-                Linking.openSettings().catch((e) => console.error('openSettings', e))
-              },
-            },
-          ])
-        }
-        if (result.granted) {
-          ExpoSpeechRecognitionModule.start({
-            lang: 'en-US',
-            interimResults: true,
-            maxAlternatives: 1,
-            continuous: false,
-            requiresOnDeviceRecognition: true,
-            addsPunctuation: false,
-            androidIntentOptions: { EXTRA_LANGUAGE_MODEL: 'web_search' },
-            iosTaskHint: 'confirmation',
-            iosCategory: {
-              category: 'record',
-              categoryOptions: ['allowBluetooth'],
-              mode: 'voicePrompt',
-            },
-            volumeChangeEventOptions: {
-              enabled: true,
-              intervalMillis: 300,
-            },
-          })
-        }
-      })
-      .catch((e) => console.error('speechRecognitionPermission', e))
-  }
+  // useSpeechRecognitionEvent('start', () => setIsRecognizing(true))
+  // useSpeechRecognitionEvent('end', () => {
+  //   setIsRecognizing(false)
+  // })
+  // useSpeechRecognitionEvent('result', (event) => {
+  //   const result = event.results[0]?.transcript.toLowerCase() || ''
+  //   if (event.isFinal) {
+  //     onResult?.(result)
+  //     setIsOpen?.(false)
+  //   }
+  //   setTranscript(result)
+  // })
+  // useSpeechRecognitionEvent('error', (event) => {
+  //   console.error('speechRecognitionEvent:', event.error, event.message)
+  // })
+  // // TODO: history fav not working and add throttle to fav/unfav
+  // const startSpeechRecognition = () => {
+  //   ExpoSpeechRecognitionModule.requestPermissionsAsync()
+  //     .then((result) => {
+  //       if (result.status === PermissionStatus.DENIED && Platform.OS === 'android') {
+  //         setIsRecognizing(false)
+  //         Alert.alert('', 'Microphone access need. Go to Android settings, tap permissions, and tap allow', [
+  //           { text: 'DiSMISS' },
+  //           {
+  //             text: 'GO TO SETTINGS',
+  //             onPress: () => {
+  //               Linking.openSettings().catch((e) => console.error('openSettings', e))
+  //             },
+  //           },
+  //         ])
+  //       }
+  //       if (result.granted) {
+  //         ExpoSpeechRecognitionModule.start({
+  //           lang: 'en-US',
+  //           interimResults: true,
+  //           maxAlternatives: 1,
+  //           continuous: false,
+  //           requiresOnDeviceRecognition: true,
+  //           addsPunctuation: false,
+  //           androidIntentOptions: { EXTRA_LANGUAGE_MODEL: 'web_search' },
+  //           iosTaskHint: 'confirmation',
+  //           iosCategory: {
+  //             category: 'record',
+  //             categoryOptions: ['allowBluetooth'],
+  //             mode: 'voicePrompt',
+  //           },
+  //           volumeChangeEventOptions: {
+  //             enabled: true,
+  //             intervalMillis: 300,
+  //           },
+  //         })
+  //       }
+  //     })
+  //     .catch((e) => console.error('speechRecognitionPermission', e))
+  // }
 
   useEffect(() => {
-    startSpeechRecognition()
-    return () => ExpoSpeechRecognitionModule.abort()
+    // startSpeechRecognition()
+    // return () => ExpoSpeechRecognitionModule.abort()
   }, [])
 
   return (
@@ -130,11 +130,11 @@ const SpeechRecognitionModal = ({ isOpen, setIsOpen, onResult }: SpeechRecogniti
             <Pressable
               style={styles.iconContainer}
               onPress={() => {
-                if (isRecognizing) {
-                  ExpoSpeechRecognitionModule.stop()
-                } else {
-                  startSpeechRecognition()
-                }
+                // if (isRecognizing) {
+                //   ExpoSpeechRecognitionModule.stop()
+                // } else {
+                //   startSpeechRecognition()
+                // }
               }}
             >
               <IconSymbol name="mic.fill" color={BACKGROUND_COLOR} size={42} />
@@ -143,7 +143,7 @@ const SpeechRecognitionModal = ({ isOpen, setIsOpen, onResult }: SpeechRecogniti
               {transcript ? `"${transcript}"` : !isRecognizing ? "Didn't catch that" : 'Speak now'}
             </Text>
             {!isRecognizing && !transcript && (
-              <Button title="Try again" color={ACTIVE_COLOR} onPress={startSpeechRecognition} />
+              <Button title="Try again" color={ACTIVE_COLOR} /> //onPress={startSpeechRecognition} />
             )}
           </View>
         </View>

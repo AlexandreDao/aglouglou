@@ -1,11 +1,12 @@
 import { ANDROID_RIPPLE_COLOR, BACKGROUND_COLOR, INACTIVE_COLOR, TEXT_COLOR } from '@/constants/colors'
-import { FlashList, ListRenderItem } from '@shopify/flash-list'
+import { FlashList, FlashListRef, ListRenderItem } from '@shopify/flash-list'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import {
   ActivityIndicator,
   InteractionManager,
   Keyboard,
   Platform,
+  Pressable,
   StyleSheet,
   Text,
   useWindowDimensions,
@@ -24,7 +25,7 @@ import { useIsFocused } from '@react-navigation/native'
 import FavoriteItem from '@/components/FavoriteItem'
 import Separator from '@/components/Separator'
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller'
-import { Pressable, ScrollView } from 'react-native-gesture-handler'
+import { ScrollView } from 'react-native-gesture-handler'
 
 const styles = StyleSheet.create({
   activityContainer: {
@@ -69,6 +70,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingHorizontal: 16,
     paddingVertical: 8,
+    fontWeight: '500',
   },
 })
 
@@ -80,7 +82,7 @@ const Search = () => {
   const addToRecentSearches = useRecentSearchStore((state) => state.addToRecentSearches)
   const { data, isFetching, isPlaceholderData } = useCocktailSearchByName(submittedQuery)
   const results = data?.drinks ? [...data.drinks] : []
-  const listRef = useRef<FlashList<CocktailDetail>>(null)
+  const listRef = useRef<FlashListRef<CocktailDetail> | null>(null)
   const insets = useSafeAreaInsets()
   const tabBarHeight = useBottomTabBarHeight()
   const windowSize = useWindowDimensions()
@@ -94,7 +96,7 @@ const Search = () => {
 
   useFocusEffect(
     useCallback(() => {
-      let timer: NodeJS.Timeout
+      let timer = 0
       const task = InteractionManager.runAfterInteractions(() => {
         timer = setTimeout(() => {
           searchInputRef.current?.focus()
@@ -132,14 +134,10 @@ const Search = () => {
 
   return (
     <SafeAreaView
-      edges={Platform.select({ ios: ['top', 'right', 'left'], android: undefined })}
+      edges={['top', 'right', 'left']}
       style={[styles.container, { paddingBottom: Platform.select({ ios: tabBarHeight, android: 0 }) }]}
     >
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.select({ android: 30, ios: 0 })}
-        style={styles.resultContainer}
-      >
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.resultContainer}>
         <Pressable style={styles.container} onPress={Keyboard.dismiss} accessible={false}>
           <View style={styles.resultContainer}>
             {isInputFocused && recentSearches.length ? (
@@ -179,16 +177,11 @@ const Search = () => {
               <FlashList
                 ref={listRef}
                 contentContainerStyle={styles.contentContainer}
-                estimatedItemSize={100}
-                estimatedListSize={{
-                  height: windowSize.height - tabBarHeight - insets.top - insets.bottom - 48 - 16, // minus input height and padding
-                  width: windowSize.width - insets.left - insets.right,
-                }}
                 keyExtractor={(item) => `search-${submittedQuery}}-${item.id}`}
                 data={results}
                 renderItem={renderItem}
                 ItemSeparatorComponent={Separator}
-                ListHeaderComponent={<Text style={styles.title}>Results for "{submittedQuery}"</Text>}
+                ListHeaderComponent={<Text style={styles.title}>Results for &quot;{submittedQuery}</Text>}
                 ListEmptyComponent={() => <Text style={styles.notFoundText}>No result found</Text>}
               />
             )}

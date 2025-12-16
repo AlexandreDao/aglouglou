@@ -2,5 +2,5 @@ appId: com.anonymous.Aglouglou
 ---
 - launchApp
 
-- assertVisible: "Home, tab, 1 of 2"
-- assertVisible: "Favorites, tab, 2 of 2"
+- assertVisible:
+    id: "bottom-tab-bar"

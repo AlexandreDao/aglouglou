@@ -1,4 +1,4 @@
-import useCocktailApi from '@/hooks/services/useCocktailApi'
+import cocktailApiSingleton from '@/hooks/services/useCocktailApi'
 import { CocktailDetail, CocktailSearchResult } from '@/types/cocktail'
 import { mapCocktailSearchResultToCocktailItems } from '@/utils/mapper/cocktailApiMapper'
 import { useQuery } from '@tanstack/react-query'
@@ -10,7 +10,7 @@ const useCocktailSearchByName = (searchQuery: string) => {
   const queryKey = useMemo(() => ['searchByName', searchQuery], [searchQuery])
   const queryFn = useCallback(
     async function useQueryFn() {
-      const axios = useCocktailApi()
+      const axios = cocktailApiSingleton()
 
       try {
         const { data } = await axios.get<CocktailSearchResult>(`search.php?s=${searchQuery}`)

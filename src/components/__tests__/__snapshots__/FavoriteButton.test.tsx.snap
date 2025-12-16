@@ -1,69 +1,39 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<FavoriteButton /> FavoriteButton snapshot 1`] = `
-<RNGestureHandlerButton
-  collapsable={false}
-  enabled={true}
-  hitSlop={
-    {
-      "bottom": 0,
-      "left": 0,
-      "right": 0,
-      "top": 0,
-    }
-  }
-  rippleColor={0}
+<Pressable
+  onPress={[Function]}
+  ref={null}
   style={
-    [
-      {},
-      {
-        "alignItems": "center",
-        "height": 48,
-        "justifyContent": "center",
-        "width": 48,
-      },
-    ]
+    {
+      "alignItems": "center",
+      "height": 48,
+      "justifyContent": "center",
+      "width": 48,
+    }
   }
   testID="favorite-button"
 >
   <View
-    style={
-      {
-        "transform": [
-          {
-            "rotateY": "0deg",
-          },
-          {
-            "translateY": 0,
-          },
-        ],
-      }
-    }
+    ref={null}
+    style={{}}
   >
-    <ViewManagerAdapter_SymbolModule
-      animated={false}
-      colors={[]}
+    <SymbolView
       name="star.fill"
+      ref={null}
       resizeMode="scaleAspectFit"
       style={
         [
           {
-            "height": 24,
-            "width": 24,
+            "height": 32,
+            "width": 32,
           },
-          [
-            {
-              "height": 32,
-              "width": 32,
-            },
-            undefined,
-          ],
+          undefined,
         ]
       }
       tintColor="#A7989D"
-      type="monochrome"
       weight="regular"
     />
   </View>
-</RNGestureHandlerButton>
+</Pressable>
 `;

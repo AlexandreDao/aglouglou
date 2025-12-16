@@ -2,6 +2,7 @@
 
 exports[`<Separator /> Separator snapshot 1`] = `
 <View
+  ref={null}
   style={
     {
       "height": 10,

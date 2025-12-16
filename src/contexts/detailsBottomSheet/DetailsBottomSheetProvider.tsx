@@ -5,7 +5,7 @@ import { DetailsRef } from '@/app/cocktail'
 
 interface DetailBottomSheetProviderProps {
   children: React.ReactNode
-  detailsBottomSheetRef: React.RefObject<DetailsRef>
+  detailsBottomSheetRef: React.RefObject<DetailsRef | null>
 }
 
 const DetailsBottomSheetProvider = ({ children, detailsBottomSheetRef }: DetailBottomSheetProviderProps) => {

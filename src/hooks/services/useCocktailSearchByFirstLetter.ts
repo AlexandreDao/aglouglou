@@ -1,4 +1,4 @@
-import useCocktailApi from '@/hooks/services/useCocktailApi'
+import cocktailApiSingleton from '@/hooks/services/useCocktailApi'
 import { CocktailSearchResult } from '@/types/cocktail'
 import { mapCocktailSearchResultToCocktailItems } from '@/utils/mapper/cocktailApiMapper'
 import { useInfiniteQuery } from '@tanstack/react-query'
@@ -8,7 +8,7 @@ const firstLetterAsciiCode = 'a'.charCodeAt(0)
 const lastLetterAsciiCode = 'z'.charCodeAt(0)
 
 const useFetchByFirstLetter = async ({ pageParam = firstLetterAsciiCode }) => {
-  const axios = useCocktailApi()
+  const axios = cocktailApiSingleton()
 
   try {
     const letter = String.fromCharCode(pageParam)

@@ -3,7 +3,6 @@
   "strict": true,
   "compilerOptions": {
     "strict": true,
-    "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"]
     },

@@ -1,9 +1,8 @@
-import { StyleSheet } from 'react-native'
+import { Pressable, StyleSheet } from 'react-native'
 import React from 'react'
 import { IconSymbol } from '@/components/IconSymbol'
 import { ACTIVE_COLOR, INACTIVE_COLOR } from '@/constants/colors'
 import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated'
-import { Pressable } from 'react-native-gesture-handler'
 import { useThrottle } from '@/hooks/useThrottle'
 
 interface FavoriteButtonProps {
@@ -40,16 +39,16 @@ const FavoriteButton = ({ isFavorite, favorite, unfavorite, size = 32 }: Favorit
           unfavorite?.()
         } else {
           if (favorite) {
-            rotation.value = withTiming(360, { duration: 600 }, () => {
+            rotation.value = withTiming(360, { duration: 500 }, () => {
               rotation.value = 0
             })
-            yPosition.value = withSpring(-20, { duration: 600 }, () => {
+            yPosition.value = withSpring(-20, { duration: 500 }, () => {
               yPosition.value = 0
             })
             favorite()
           }
         }
-      }, 400)}
+      }, 600)}
     >
       <Animated.View style={animatedStyle}>
         <IconSymbol name="star.fill" size={size} color={isFavorite ? ACTIVE_COLOR : INACTIVE_COLOR} />

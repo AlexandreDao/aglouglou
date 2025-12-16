@@ -1,6 +1,6 @@
 import FavoriteItem from '@/components/FavoriteItem'
 import { View, StyleSheet, Text, Platform, useWindowDimensions } from 'react-native'
-import { FlashList, ListRenderItem } from '@shopify/flash-list'
+import { FlashList, FlashListRef, ListRenderItem } from '@shopify/flash-list'
 import { BACKGROUND_COLOR, TEXT_COLOR } from '@/constants/colors'
 import { CocktailDetail } from '@/types/cocktail'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentContainer: {
-    paddingBottom: Platform.select({ ios: 60, android: 10 }),
+    paddingVertical: Platform.select({ ios: 60, android: 10 }),
   },
   fallbackText: {
     color: TEXT_COLOR,
@@ -39,7 +39,7 @@ const History = () => {
   const windowSize = useWindowDimensions()
   const navigation = useNavigation<BottomTabNavigationProp<TabParamList>>()
   const isFocused = useIsFocused()
-  const listRef = useRef<FlashList<CocktailDetail>>(null)
+  const listRef = useRef<FlashListRef<CocktailDetail>>(null)
 
   const renderItem: ListRenderItem<CocktailDetail> = ({ item }) => {
     return <FavoriteItem item={item} />
@@ -56,16 +56,11 @@ const History = () => {
   }, [navigation, isFocused])
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['right', 'left', 'top']}>
       {history.length ? (
         <FlashList
           ref={listRef}
           contentContainerStyle={styles.contentContainer}
-          estimatedItemSize={100}
-          estimatedListSize={{
-            height: windowSize.height - tabBarHeight - insets.top - insets.bottom,
-            width: windowSize.width - insets.left - insets.right,
-          }}
           keyExtractor={(item, index) => `history-${item.id}-${index}`}
           data={history}
           ItemSeparatorComponent={Separator}

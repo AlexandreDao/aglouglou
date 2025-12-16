@@ -1,41 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<TabBarBackground /> TabBarBackground snapshot (iOS) 1`] = `
-<View
+<BlurView
+  intensity={80}
+  ref={null}
   style={
     [
+      undefined,
       {
-        "backgroundColor": "transparent",
+        "backgroundColor": "rgba(67, 19, 39, 0.6)",
       },
-      [
-        {
-          "bottom": 0,
-          "left": 0,
-          "position": "absolute",
-          "right": 0,
-          "top": 0,
-        },
-        {
-          "backgroundColor": "rgba(67, 19, 39, 0.6)",
-        },
-      ],
     ]
   }
->
-  <ViewManagerAdapter_ExpoBlurView
-    blurReductionFactor={4}
-    experimentalBlurMethod="none"
-    intensity={80}
-    style={
-      {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      }
-    }
-    tint="default"
-  />
-</View>
+/>
 `;

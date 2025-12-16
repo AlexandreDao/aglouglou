@@ -1,4 +1,4 @@
-import { Text, StyleSheet, Alert, View, Platform } from 'react-native'
+import { Text, StyleSheet, Alert, View, Platform, Pressable } from 'react-native'
 import React, { RefObject, useEffect } from 'react'
 import { Image } from 'expo-image'
 import useFavoritesStore from '@/store/favoritesStore'
@@ -11,18 +11,17 @@ import {
   TEXT_COLOR,
 } from '@/constants/colors'
 import FavoriteButton from '@/components/FavoriteButton'
-import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { useDetailsBottomSheet } from '@/hooks/useDetailsBottomSheet'
-import { FlashList } from '@shopify/flash-list'
+import { FlashListRef } from '@shopify/flash-list'
 import { capitalizeFirstLetter } from '@/utils/stringUtils'
 import Category from '@/components/Category'
 import HighlightText from '@/components/HighlightText'
-import { Pressable } from 'react-native-gesture-handler'
-
+import { runOnJS } from 'react-native-worklets'
 interface FavItemProps {
   item: CocktailDetail
   shouldAnimateRemove?: boolean
-  listRef?: RefObject<FlashList<CocktailDetail>>
+  listRef?: RefObject<FlashListRef<CocktailDetail> | null>
   textToHighlight?: string
 }
 
@@ -43,7 +42,7 @@ const styles = StyleSheet.create({
     gap: 16,
     justifyContent: 'space-between',
     overflow: 'hidden',
-    paddingLeft: 16,
+    paddingHorizontal: 16,
   },
   flexContainer: {
     flex: 1,
@@ -69,7 +68,7 @@ const styles = StyleSheet.create({
     color: TEXT_COLOR,
     flex: 1,
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: '700',
   },
 })
 

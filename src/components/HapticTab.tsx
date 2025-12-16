@@ -7,7 +7,6 @@ export const HapticTab = (props: BottomTabBarButtonProps) => {
   return (
     <PlatformPressable
       {...props}
-      testID="haptic-tab"
       onPressIn={(ev) => {
         if (Platform.OS === 'ios') {
           // Add a soft haptic feedback when pressing down on the tabs.

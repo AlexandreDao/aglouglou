@@ -27,19 +27,19 @@ This project use pnpm as a package manager you can follow their doc to install [
 1. Install dependencies
 
 ```bash
-   pnpm i
+pnpm i
 ```
 
 2. Generate native modules (android/ios folders)
 
 ```bash
-   pnpm prebuild
+pnpm prebuild
 ```
 
 3. Start the app on respective OS locally
 
 ```bash
-    pnpm android|ios
+pnpm android|ios
 ```
 
 You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
@@ -47,7 +47,7 @@ You can start developing by editing the files inside the **src/app** directory. 
 ## Running unit test
 
 ```bash
- pnpm test
+pnpm test
 ```
 
 ## Running e2e test

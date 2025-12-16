@@ -31,7 +31,7 @@ const RootLayout = () => {
   useReactQueryDevTools(queryClient)
 
   const [fontsLoaded, setFontsLoaded] = useState(false)
-  const detailsBottomSheetRef = useRef<DetailsRef>(null)
+  const detailsBottomSheetRef = useRef<DetailsRef | null>(null)
 
   useEffect(() => {
     async function prepare() {

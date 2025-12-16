@@ -3,9 +3,13 @@
 exports[`<HighlightText /> HighlightText snapshot 1`] = `
 <Text
   ellipsizeMode="head"
+  ref={null}
 >
-  <Text />
   <Text
+    ref={null}
+  />
+  <Text
+    ref={null}
     style={
       {
         "color": "#FF8EB6",
@@ -14,7 +18,9 @@ exports[`<HighlightText /> HighlightText snapshot 1`] = `
   >
     Hello
   </Text>
-  <Text>
+  <Text
+    ref={null}
+  >
      world
   </Text>
 </Text>

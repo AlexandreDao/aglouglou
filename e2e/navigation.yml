@@ -3,17 +3,78 @@ appId: com.anonymous.Aglouglou
 - launchApp
 
 - assertVisible: 
-    text: "Home, tab, 1 of 2"
+    id: "index-tab"
     selected: true
-- assertVisible: 
-    text: "Favorites, tab, 2 of 2"
-    selected: false
-
-- tapOn: "Favorites, tab, 2 of 2"
 
 - assertVisible: 
-    text: "Home, tab, 1 of 2"
+    id: "search-tab"
     selected: false
+
 - assertVisible: 
-    text: "Favorites, tab, 2 of 2"
+    id: "favorite-tab"
+    selected: false
+
+- assertVisible: 
+    id: "history-tab"
+    selected: false
+
+- tapOn:
+    id: "search-tab"
+
+- tapOn:
+    id: "android:id/input_method_nav_back"
+
+
+- assertVisible: 
+    id: "index-tab"
+    selected: false
+
+- assertVisible: 
+    id: "search-tab"
+    selected: true
+
+- assertVisible: 
+    id: "favorite-tab"
+    selected: false
+
+- assertVisible: 
+    id: "history-tab"
+    selected: false
+
+- tapOn:
+    id: "favorite-tab"
+
+- assertVisible: 
+    id: "index-tab"
+    selected: false
+
+- assertVisible: 
+    id: "search-tab"
+    selected: false
+
+- assertVisible: 
+    id: "favorite-tab"
+    selected: true
+
+- assertVisible: 
+    id: "history-tab"
+    selected: false
+
+- tapOn:
+    id: "history-tab"
+
+- assertVisible: 
+    id: "index-tab"
+    selected: false
+
+- assertVisible: 
+    id: "search-tab"
+    selected: false
+
+- assertVisible: 
+    id: "favorite-tab"
+    selected: false
+
+- assertVisible: 
+    id: "history-tab"
     selected: true

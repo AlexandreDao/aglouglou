@@ -2,6 +2,7 @@
 
 exports[`<SearchInput /> SearchInput snapshot 1`] = `
 <View
+  ref={null}
   style={
     {
       "alignItems": "center",
@@ -12,6 +13,7 @@ exports[`<SearchInput /> SearchInput snapshot 1`] = `
   }
 >
   <View
+    ref={null}
     style={
       {
         "alignItems": "center",
@@ -36,6 +38,11 @@ exports[`<SearchInput /> SearchInput snapshot 1`] = `
       onSubmitEditing={[Function]}
       placeholder="Try typing "Irish""
       placeholderTextColor="#FF8EB6"
+      ref={
+        {
+          "current": null,
+        }
+      }
       returnKeyType="search"
       style={
         [
@@ -53,37 +60,24 @@ exports[`<SearchInput /> SearchInput snapshot 1`] = `
       testID="search-input"
     />
   </View>
-  <RNGestureHandlerButton
-    collapsable={false}
-    enabled={true}
-    hitSlop={
+  <Pressable
+    onPress={[Function]}
+    ref={null}
+    style={
       {
-        "bottom": 0,
-        "left": 0,
-        "right": 0,
-        "top": 0,
+        "alignItems": "center",
+        "borderColor": "#FF8EB6",
+        "borderRadius": 24,
+        "borderWidth": 2,
+        "height": 48,
+        "justifyContent": "center",
+        "width": 48,
       }
     }
-    rippleColor={0}
-    style={
-      [
-        {},
-        {
-          "alignItems": "center",
-          "borderColor": "#FF8EB6",
-          "borderRadius": 24,
-          "borderWidth": 2,
-          "height": 48,
-          "justifyContent": "center",
-          "width": 48,
-        },
-      ]
-    }
   >
-    <ViewManagerAdapter_SymbolModule
-      animated={false}
-      colors={[]}
+    <SymbolView
       name="mic"
+      ref={null}
       resizeMode="scaleAspectFit"
       style={
         [
@@ -91,19 +85,12 @@ exports[`<SearchInput /> SearchInput snapshot 1`] = `
             "height": 24,
             "width": 24,
           },
-          [
-            {
-              "height": 24,
-              "width": 24,
-            },
-            undefined,
-          ],
+          undefined,
         ]
       }
       tintColor="#EDEEF0"
-      type="monochrome"
       weight="regular"
     />
-  </RNGestureHandlerButton>
+  </Pressable>
 </View>
 `;
