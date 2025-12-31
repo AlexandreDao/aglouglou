@@ -1,11 +1,11 @@
 import { zustandStorage } from '@/storage/storageAdapter'
-import { CocktailDetail } from '@/types/cocktail'
+import { CocktailDetail, CocktailLookupDetail } from '@/types/cocktail'
 import { produce } from 'immer'
 import { create } from 'zustand'
 import { createJSONStorage, devtools, persist } from 'zustand/middleware'
 
 export interface HistoryState {
-  history: CocktailDetail[]
+  history: CocktailLookupDetail[]
   addToHistory: (cocktail: CocktailDetail) => void
 }
 
@@ -22,7 +22,7 @@ const useHistoryStore = create<HistoryState>()(
               if (state.history[0]?.id === cocktail.id) {
                 return
               }
-              state.history.unshift(cocktail)
+              state.history.unshift({ ...cocktail, consultedDate: new Date() })
               state.history.splice(MAX_HISTORY_LENGTH)
             })
           )

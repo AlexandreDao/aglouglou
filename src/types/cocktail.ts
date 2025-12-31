@@ -15,6 +15,10 @@ export interface CocktailDetail extends CocktailItem {
   dateModified: NullableString
 }
 
+export interface CocktailLookupDetail extends CocktailDetail {
+  consultedDate: Date
+}
+
 export interface CocktailSearchDrink {
   idDrink: string
   strDrink: string
